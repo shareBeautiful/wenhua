@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name=App-Config content="fullscreen=yes,useHistoryState=yes,transition=yes">
+    <meta content=yes name=apple-mobile-web-app-capable>
+    <meta name=”apple-touch-fullscreen” content=”yes”>
+    <meta name="theme-color" content="#1a1a1a">
+    <meta content="telephone=no,email=no" name=format-detection>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name=viewport
+        content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=yes,viewport-fit=cover">
+    <title></title>
+    <link rel="stylesheet" href="css/tongyi.css">
+    <link rel="stylesheet" href="css/content.css">
+</head>
+
+<body>
+    <div id="loading">
+        <div class="msg">内容加载中... 请稍后...</div>
+        <div class="tip text-success">提示：阅读时点击屏幕，可显示菜单</div>
+    </div>
+    <div id="app" v-cloak :class="'bg'+theme" class="theme">
+        <!-- 翻页 -->
+        <template v-if="isPage">
+            <div class="page-box up" @click="pageUp"></div>
+            <div class="page-box down" @click="pageDown(1)"></div>
+        </template>
+        <!--        <div class="tip text-danger">注意：双击空白处显示/隐藏 “目录”</div>-->
+        <!-- v-swipeleft="clickHideMenu" -->
+        <div @touchstart="switchScroll('s')" @touchend="switchScroll('e')">
+            <!-- <button class="btn btn-info btn-xs" @click="clickShowMenu">目录</button> -->
+            <!-- 目录 -->
+            <div id="menu" @dblclick.capture="clickHideMenu" v-swipeleft="clickHideMenu" class="list-group"
+                :class="{'show-a': showMenu}">
+                <div>
+                    <div>
+                        <span @click="addBook" class="add-book btn btn-xs bg-danger">添加书签</span>
+                        <span class="add-book btn btn-xs bg-success">
+                            总字数：{{total('', allTotal)}} -- 阅读：{{process}}
+                        </span>
+                    </div>
+                    <div class="search-box">
+                        <input type="search" class="form-control search" @input="search" @keyup.enter="enterSearch"
+                            v-model="word" placeholder="搜索...">
+                    </div>
+                    <div>
+                        <span class="list-group-item fz book" v-if="showRest" @click="reset('s')">重置设置</span>
+
+                        <span class="list-group-item fz book" :class="{active: item.id==theme}"
+                            v-for="(item, index) in themeL" @click="changeTheme(item)" :key="item.id">{{item.n}}</span>
+                        <span class="list-group-item fz book" @click.capture="switchDark">
+                            <i class="zhe"></i>
+                            <input class="switch" type="checkbox" v-model='isDark'>跟随系统</span>
+                    </div>
+                    <div>
+                        <span @click.capture="switchPage" class="list-group-item fz book"><i class="zhe"></i><input
+                                class="switch" type="checkbox" v-model='isPage'>翻页</span>
+                        <span @click.capture="switchLoad" class="list-group-item fz book"><i class="zhe"></i><input
+                                class="switch" type="checkbox" v-model='isOnPage'>分页</span>
+                        <span @click.capture="switchAuto" class="list-group-item fz book"><i class="zhe"></i><input
+                                class="switch" type="checkbox" v-model='isAuto'>自动 {{currTime>=100? currTime :
+                            '0'+currTime}}s</span>
+                        <span @click.capture="switchOrder" v-if="len>10" class="list-group-item fz book"><i
+                                class="zhe"></i><input class="switch" type="checkbox" v-model='isReverse'>倒序</span>
+                        <span class="list-group-item fz book" v-if="showRest" @click="reset('c')">清空缓存</span>
+                        <input v-if="isAuto" class="range" @change="setAutoTime" :step="step" v-model="currTime"
+                            type="range" name="points" min="5" max="250">
+                    </div>
+                    <div class="list-group-item fz book curr-pos" @click="toPos(currIdx, currItem);">
+                        {{subProcess}}-当前位置：{{currIdx+1}}-{{currItem.title}}({{currItem.total}})</div>
+                    <div>
+                        <span class="list-group-item fz book" style="margin-top: 10px" v-for="(item, index) in book"
+                            @click="toBook(item)" :key="item">书签{{index+1}} <span class="del"
+                                @click.stop="delBook(index)">×</span>
+                        </span>
+                    </div>
+                    <!-- 目录列表 -->
+                    <div class="menu-item" v-for="(item, idx) in menuList" :key="item.id" v-show="!item.hide">
+                        <a class="list-group-item " href="javascript:" @click="toPos(item.id, item);"
+                            :class="['list-group-item-'+colors[idx%4],{active: item.id===currIdx}]">
+                            {{item.id+1}}--{{item.title}}({{item.total}})
+                        </a>
+                    </div>
+                    <!-- 字体设置 -->
+                    <div>
+                        <span class="list-group-item fz" :key="item" :class="{'active': item == currFont}"
+                            v-for="item in font" @click="setFont(item)">{{item}}
+                        </span>
+                        <span class="list-group-item fz">当前字体：{{ currFont }}</span>
+                    </div>
+                    <!--  -->
+                    <div>
+                        <span class="list-group-item  fz" @click="setFont('+')">+</span>
+                        <span class="list-group-item fz" @click="setFont('-')">-</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 内容 -->
+            <div id="bodyBox">
+                <div class="panel-footer page-tap prev" v-if="isOnPage && memoryId > 0"
+                    @click.stop="loadUpdate(memoryId, '-')">
+                    上一章 -- {{list[memoryId-1].title}} <span v-if="isOnPage && memoryId < len-1"
+                        @click.stop="loadUpdate(memoryId, '+')">下一章</span>
+                </div>
+                <div class="panel-footer page-tap prev" v-if="isOnPage && memoryId == 0 && list.length > 1">
+                    <span @click.stop="loadUpdate(memoryId, '+')">下一章</span>
+                </div>
+
+                <div class="body-box" v-for="(item, idx) in list" :key="item.id">
+                    <div class="panel" v-show="(isOnPage===false || memoryId == item.id)"
+                        @dblclick.capture="clickShowMenu(item.id,item)" :class="'panel-'+colors[idx%4]"
+                        @click.stop="showReadOpt(item.id,item)" :id="'id'+item.id" :key="item.id">
+                        <!-- <div class="panel-footer page-tap prev" v-if="isOnPage && item.id > 0"
+                            @click.stop="loadUpdate(item.id, '-')">
+                            上一页 -- {{list[item.id-1].title}}
+                        </div> -->
+                        <div class="panel-heading">
+                            <h3 class="panel-title text-center">
+                                {{item.title}}
+                                <span class="author" v-show="item.author? true : list[0].author">作者：{{item.author?
+                                    item.author :
+                                    list[0].author}}</span>
+                                <!-- <span class="author">({{item.total}})</span> -->
+                            </h3>
+                        </div>
+                        <!-- 音频 -->
+                        <div class="nft-player block-flex-center" v-if="showAudio === 'm4a'" @click.stop>
+                            <div class="nft-player-ctrl block-flex_fixed block-flex-center">
+                                <a href="javascript:" class="nft-player-play"></a>
+                                <a href="javascript:" class="nft-player-stop"></a>
+                            </div>
+                            <div class="nft-player-progress block-flex_full">
+                                <i style="width: 0%;"></i>
+                                <input type="range" min="0" max="100" value="0">
+                            </div>
+                            <div class="nft-player-time block-flex_fixed">
+                                <span data-curr="">00:00</span>/<span data-duration="">00:00</span>
+                            </div>
+                        </div>
+                        <video id="video" v-else-if="showAudio === 'mp4'" controls autoplay :src="audioSrc"></video>
+                        <div class="panel-body" v-html="item.html"></div>
+                        <!-- <div class="panel-body" v-html="item.html"></div> -->
+                        <div class="panel-footer" v-if="['jiangji', 'qita'].includes(dirType) && item.date">
+                            发布时间：{{item.date}}</div>
+                        <!-- <div class="panel-footer page-tap next" v-if="isOnPage && item.id < len-1"
+                            @click.stop="loadUpdate(item.id, '+')">
+                            下一页 -- {{list[item.id+1].title}}
+                        </div> -->
+                    </div>
+                </div>
+                <div class="panel-footer page-tap next" v-if="isOnPage && memoryId < len-1"
+                    @click.stop="loadUpdate(memoryId, '+')">
+                    下一章 -- {{list[memoryId+1].title}}
+                </div>
+            </div>
+
+            <!-- 设置 -->
+            <div id="readOpt" @click.capture="hideReadOpt" @touchend="touchReadOpt" :class="{active: showOpt}">
+                <div class="header" v-if="currItem">
+                    <span class="h-l" @click="switchTheme">
+                        <template v-if="theme == 4">🔆</template><template v-else>🌙</template>
+                    </span>
+                    当前：{{subTit(currItem.title)}}-({{subProcess}})
+                    <span class="h-r" @click="clickShowMenu(memoryId)">目录</span>
+                </div>
+                <div class="footer">
+                    <!-- <div class="f-item" v-for="(item,idx) in footMenu" :key="idx" @click="clickShowMenu">
+                    <span class="icon"></span>
+                    <span class="txt">{{item.n}}</span>
+                </div> -->
+                    <div class="f-item">
+                        <span>{{tit}}-({{process}})</span>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- 自动时间 -->
+        <div class="auto-time" v-show="isAuto">{{autoTime}}</div>
+
+    </div>
+
+
+    <div id="script">
+        <script src="js/indexdb.js"></script>
+        <script src="js/comm.js"></script>
+        <script src="js/touch.js"></script>
+        <script src="js/jq.js"></script>
+        <script src="js/audio.js"></script>
+    </div>
+</body>
+<script src="js/content.js"></script>
+<script>
+   
+</script>
+
+</html>

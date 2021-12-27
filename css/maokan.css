@@ -1,0 +1,139 @@
+[v-cloak] {
+    display: none
+}
+
+html {
+    max-width: 960px;
+    margin: 0 auto;
+    height: 100%;
+    -webkit-user-select: none;
+
+}
+body {
+    /*background-image: url('images/bg.jpg');*/
+    /*background-repeat: repeat;*/
+}
+.h {
+    position: sticky;
+    top: 34px;
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+}
+.h .h-l {
+    color: #ac3a39;
+}
+
+.panel .panel-heading {
+    font-size: 18px;
+}
+
+.panel {
+    background: transparent;
+}
+
+.box {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.box .box-item {
+    display: flex;
+}
+.box .box-item .order {
+    padding-right: 5px;
+}
+.box .box-item .title {
+
+}
+.box .box-item .time {
+    font-size: 14px;
+}
+
+.intro-box {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 1;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, .3)
+}
+
+.intro-wrap {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    min-height: 50px;
+    background: #fff;
+    z-index: 2;
+    border-radius: 10px;
+    box-shadow: #e3e3e3 0 0 5px;
+    padding: 15px;
+}
+
+.intro-box .close {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: #ac3a39;
+    position: absolute;
+    right: -10px;
+    top: -10px;
+    z-index: 10;
+}
+
+.box-item {
+    display: flex;
+    padding: 6px;
+    width: 100%;
+    font-size: 18px;
+    color: #ac3a39;
+    vertical-align: bottom
+}
+
+.intro-box .intro {
+    font-size: 20px;
+    line-height: 1.5;
+    max-height: 80vh;
+    overflow-y: auto;
+    text-align: justify;
+}
+
+.fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+.form-control {
+    font-size: 16px;
+    text-align: center;
+    height: 36px;
+}
+.line {
+    width: 100%;
+    margin: 10px 0;
+    border-bottom: 5px dashed #666;
+}
+
+.search-box {
+    position: sticky !important;
+    top: 0;
+    left: 0;
+}
+.dark {
+    min-height: 100vh;
+    background-color: #222;
+}
+.dark .h,.dark .panel,.dark .form-control {
+    background-color: #222 !important;
+    color: #999 !important;
+}
+.dark .h {
+    color: #999 !important;
+}

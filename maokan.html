@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="Cache" content="no-cache">
+    <meta name=App-Config content="fullscreen=yes,useHistoryState=yes,transition=yes">
+    <meta content=yes name=apple-mobile-web-app-capable>
+    <meta content=yes name=apple-touch-fullscreen>
+    <meta content="telephone=no,email=no" name=format-detection>
+    <meta name="theme-color" content="#1a1a1a">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name=viewport
+        content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+    <link rel="stylesheet" href="css/maokan.css">
+    <title></title>
+</head>
+
+<body>
+    <div id="app" v-cloak :class="{'dark': isDark}">
+        <div class="input-group fixed search-box">
+            <input type="text" class="form-control" @input="search" v-model="keyword" placeholder="搜索...">
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading h">
+                <div class="h-r">{{title}}</div>
+                <div class="h-l" @click="switchSort">{{ sortStatus?"倒序↑":"正序↓" }}</div>
+            </div>
+            <div class="panel-body">
+                <div class="box">
+                    <a href="javascript:" @click="toPage(item)" class="box-item" :key="idx"
+                        v-for="(item,idx) in subList" v-show="!item.hide">
+                        <span class="order">{{sortStatus? subList.length-idx : idx+1}}.</span>
+                        <span class="title">{{item.title}}_</span>
+                        <span class="time">{{item.date}}</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="js/comm.js"></script>
+<script>
+    var that;
+    var key = $echo.getParams('key');
+    var path,title
+    if(key === 'mkdh') {
+        path = './data/猫砍大画.json'
+        title = "猫砍大画"
+    }else if(key === 'fjxz') {
+        path = './data/pdf.json'
+        title = "佛经注音版_点击下载"
+    }
+    document.title = title;
+    $echo.getJson(path).then(function (res) {
+        new Vue({
+            el: '#app',
+            data: function () {
+                return {
+                    list: res,
+                    subList: res,
+                    keyword: '',
+                    sortStatus: true,
+                    isDark: false,
+                    title: title
+                }
+            },
+            methods: {
+                // 跳转
+                toPage: function (item) {
+                    $echo.open(item.href, {}, true)
+                },
+                // 搜索
+                search: function () {
+                    this.subList.forEach(function(item,idx){
+                        if ((idx+item.title+item.date).indexOf(that.keyword) > -1) {
+                            item.hide = false
+                        }else {
+                            item.hide = true
+                        }
+                    });
+                    // this.subList = this.list.filter(item => {
+                    //     if ((item.title+item.date).indexOf(this.keyword) > -1) {
+                    //         return item;
+                    //     }
+                    // })
+                },
+                // 切换排序
+                switchSort: function () {
+                    this.sortStatus = !this.sortStatus;
+                    this.subList.reverse()
+                }
+            },
+            created: function () {
+                that = this;
+            },
+            mounted: function () {
+                if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    this.isDark = true;
+                } else {
+                    this.isDark = false;
+                }
+            }
+        })
+    })
+
+
+</script>
+
+</html>

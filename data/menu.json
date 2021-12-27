@@ -1,0 +1,1183 @@
+[
+  {
+    "tit": "佛咒",
+    "type": "fozhou",
+    "open": false,
+    "list": [
+      {
+        "tit": "早诵功课",
+        "id": 1,
+        "key": "zsgk"
+      },
+      {
+        "tit": "大悲咒",
+        "id": 2,
+        "key": "dbz"
+      },
+      {
+        "tit": "楞严咒",
+        "id": 3,
+        "key": "lyz"
+      },
+      {
+        "tit": "其它咒",
+        "id": 4,
+        "key": "fzdq"
+      },
+      {
+        "tit": "猫砍大画",
+        "id": 9,
+        "key": "mkdh",
+        "href": "maokan"
+      },
+      {
+        "tit": "佛学名词",
+        "id": 5,
+        "key": "fxmc",
+        "href": "fxmc"
+      },
+      {
+        "tit": "佛学名词2",
+        "id": 5,
+        "key": "fxmc2",
+        "href": "fxmc"
+      },
+      {
+        "tit": "佛学常识",
+        "id": 6,
+        "key": "fxcs",
+        "href": "fxmc"
+      },
+      {
+        "tit": "禅宗公案",
+        "id": 7,
+        "key": "czga",
+        "href": "fxmc"
+      },
+      {
+        "tit": "佛经下载",
+        "id": 8,
+        "key": "fjxz",
+        "href": "maokan"
+      }
+    ]
+  },
+  {
+    "tit": "佛经",
+    "type": "fojing",
+    "open": false,
+    "memory": true,
+    "list": [
+      {
+        "tit": "般若波罗蜜多心经",
+        "id": 1,
+        "key": "xj"
+      },
+      {
+        "tit": "金刚般若波罗蜜经",
+        "id": 2,
+        "key": "jgj"
+      },
+      {
+        "tit": "普贤行愿品",
+        "id": 3,
+        "key": "pxxyp"
+      },
+      {
+        "tit": "观世音菩萨普门品",
+        "id": 4,
+        "key": "pmp"
+      },
+      {
+        "tit": "大佛顶首楞严经",
+        "id": 5,
+        "key": "lyj"
+      },
+      {
+        "tit": "大乘妙法莲华经",
+        "id": 6,
+        "key": "fhj"
+      },
+      {
+        "tit": "六祖坛经",
+        "id": 7,
+        "key": "lztj"
+      },
+      {
+        "tit": "地藏菩萨本愿经",
+        "id": 8,
+        "key": "dzj"
+      },
+      {
+        "tit": "大方广佛华严经",
+        "id": 9,
+        "key": "hyj"
+      },
+      {
+        "tit": "大方广圆觉修多罗了义经",
+        "id": 10,
+        "key": "yjj"
+      },
+      {
+        "tit": "药师琉璃光如来本愿功德经",
+        "id": 11,
+        "key": "ysj"
+      },
+      {
+        "tit": "维摩诘经",
+        "id": 12,
+        "key": "wmjj"
+      },
+      {
+        "tit": "楞伽阿跋多罗宝经",
+        "id": 13,
+        "key": "lqj"
+      },
+      {
+        "tit": "十善业道经",
+        "id": 14,
+        "key": "ssydj"
+      },
+      {
+        "tit": "阿弥陀经",
+        "id": 15,
+        "key": "amtj"
+      },
+      {
+        "tit": "无量寿经",
+        "id": 16,
+        "key": "wlsj"
+      },
+      {
+        "tit": "观无量寿经",
+        "id": 17,
+        "key": "gwlsj"
+      },
+      {
+        "tit": "解深密经",
+        "id": 18,
+        "key": "jsmj"
+      },
+      {
+        "tit": "金刚经版本大全",
+        "id": 19,
+        "key": "jgjbbdq"
+      },
+      {
+        "tit": "大宝积经",
+        "id": 20,
+        "key": "dbjj"
+      },
+      {
+        "tit": "大般涅槃经",
+        "id": 26,
+        "key": "dbnpj"
+      },
+      {
+        "tit": "佛说八大人觉经",
+        "id": 21,
+        "key": "fsbdrjj"
+      },
+      {
+        "tit": "佛说四十二章经",
+        "id": 22,
+        "key": "fsssezj"
+      },
+      {
+        "tit": "佛说净业障经",
+        "id": 23,
+        "key": "fsjyzj"
+      },
+      {
+        "tit": "佛遗教经",
+        "id": 24,
+        "key": "fyjj"
+      },
+      {
+        "tit": "佛说疗痔病经",
+        "id": 25,
+        "key": "fslzbj"
+      }
+    ]
+  },
+  {
+    "tit": "佛论",
+    "type": "folun",
+    "open": false,
+    "memory": true,
+    "list": [
+      {
+        "tit": "中论",
+        "id": 1,
+        "key": "zl"
+      },
+      {
+        "tit": "百论",
+        "id": 8,
+        "key": "bl"
+      },
+      {
+        "tit": "俱舍论",
+        "id": 2,
+        "key": "jsl"
+      },
+      {
+        "tit": "大智度论",
+        "id": 3,
+        "key": "dzdl"
+      },
+      {
+        "tit": "成唯识论",
+        "id": 4,
+        "key": "cwsl"
+      },
+      {
+        "tit": "大乘起信论",
+        "id": 5,
+        "key": "dcqxl"
+      },
+      {
+        "tit": "大乘阿毗达磨集论",
+        "id": 8,
+        "key": "dcabdmjl"
+      },
+      {
+        "tit": "瑜伽师地论",
+        "id": 6,
+        "key": "yjsdl"
+      },
+      {
+        "tit": "菩提资粮论",
+        "id": 7,
+        "key": "ptzll"
+      },
+      {
+        "tit": "十二门论",
+        "id": 9,
+        "key": "seml"
+      },
+      {
+        "tit": "十二因缘论",
+        "id": 9,
+        "key": "seyyl"
+      },
+      {
+        "tit": "大乘五蕴论",
+        "id": 8,
+        "key": "dcwyl"
+      },
+      {
+        "tit": "传心法要",
+        "id": 8,
+        "key": "cxfy"
+      },
+      {
+        "tit": "论典大全",
+        "id": 9,
+        "href": "https://www.gming.org/fojing/qldzj/dcl/"
+      }
+    ]
+  },
+  {
+    "tit": "讲记",
+    "type": "jiangji",
+    "open": false,
+    "memory": true,
+    "list": [
+      {
+        "tit": "心经的大智慧(明向法师)",
+        "id": 1,
+        "key": "xjddzh"
+      },
+      {
+        "tit": "心经抉隐(元音老人)",
+        "id": 2,
+        "key": "xjjy"
+      },
+      {
+        "tit": "金刚经的秘密",
+        "id": 3,
+        "key": "jgjdmm"
+      },
+      {
+        "tit": "楞严经的秘密",
+        "id": 4,
+        "key": "lyjdmm"
+      },
+      {
+        "tit": "楞严经义贯(成观法师)",
+        "id": 5,
+        "key": "lyjyg"
+      },
+      {
+        "tit": "带你读懂楞严经",
+        "id": 6,
+        "key": "dnddlyj"
+      },
+      {
+        "tit": "首楞严经讲义(圆瑛法师)",
+        "id": 7,
+        "key": "slyjjy"
+      },
+      {
+        "tit": "楞严经浅释(宣化上人)",
+        "id": 8,
+        "key": "lyjqs"
+      },
+      {
+        "tit": "法华经浅释(宣化上人)",
+        "id": 9,
+        "key": "fhjqs"
+      },
+      {
+        "tit": "楞严大义今释(南怀瑾)",
+        "id": 10,
+        "key": "lydyjs"
+      },
+      {
+        "tit": "金刚经说什么(南怀瑾)",
+        "id": 11,
+        "key": "jgjssm"
+      },
+      {
+        "tit": "南禅七日(南怀瑾)",
+        "id": 12,
+        "key": "ncqr"
+      },
+      {
+        "tit": "略论明心见性(元音老人)",
+        "id": 13,
+        "key": "llmxjx"
+      },
+      {
+        "tit": "中有成就秘笈(元音老人)",
+        "id": 14,
+        "key": "zycjmj"
+      },
+      {
+        "tit": "心中心密法打七开示(元音老人)",
+        "id": 15,
+        "key": "xzxmfdqks"
+      },
+      {
+        "tit": "佛学十四讲记",
+        "id": 17,
+        "key": "fxssjj"
+      }
+    ]
+  },
+  {
+    "tit": "文化",
+    "type": "wenhua",
+    "open": false,
+    "list": [
+      {
+        "tit": "大学中庸",
+        "id": 0,
+        "key": "dxzy"
+      },
+      {
+        "tit": "大学",
+        "id": 1,
+        "href": "http://daxue.5000yan.com/"
+      },
+      {
+        "tit": "中庸",
+        "id": 2,
+        "href": "http://zhongyong.5000yan.com/"
+      },
+      {
+        "tit": "论语",
+        "id": 3,
+        "key": "ly"
+      },
+      {
+        "tit": "孟子",
+        "id": 4,
+        "href": "http://mengzi.5000yan.com/"
+      },
+      {
+        "tit": "易经",
+        "id": 5,
+        "href": "https://yijing.5000yan.com/"
+      },
+      {
+        "tit": "周易",
+        "id": 21,
+        "href": "https://www.gming.org/ctwh/sishuwujing/zhouyi/15932.html"
+      },
+      {
+        "tit": "庄子",
+        "id": 6,
+        "href": "http://zhuangzi.5000yan.com/"
+      },
+      {
+        "tit": "道德经",
+        "id": 7,
+        "key": "ddj"
+      },
+      {
+        "tit": "鬼谷子",
+        "id": 8,
+        "href": "http://guiguzi.5000yan.com/"
+      },
+      {
+        "tit": "罗织经",
+        "id": 9,
+        "href": "http://luozhijing.5000yan.com/"
+      },
+      {
+        "tit": "菜根谭",
+        "id": 10,
+        "href": "http://caigentan.5000yan.com/"
+      },
+      {
+        "tit": "山海经",
+        "id": 11,
+        "href": "http://shanhaijing.5000yan.com/"
+      },
+      {
+        "tit": "黄帝内经",
+        "id": 12,
+        "href": "http://neijing.5000yan.com/"
+      },
+      {
+        "tit": "三十六计",
+        "id": 13,
+        "href": "http://sunzi.5000yan.com/"
+      },
+      {
+        "tit": "中华上下五千年",
+        "id": 14,
+        "href": "http://zhonghua.5000yan.com/"
+      },
+      {
+        "tit": "史记",
+        "id": 15,
+        "href": "http://shiji.5000yan.com/"
+      },
+      {
+        "tit": "诗经",
+        "id": 16,
+        "href": "http://shijing.5000yan.com/"
+      },
+      {
+        "tit": "增广贤文",
+        "id": 17,
+        "href": "http://zengguang.5000yan.com/"
+      },
+      {
+        "tit": "唐诗宋词",
+        "id": 18,
+        "href": "https://5000yan.com/gushi/"
+      },
+      {
+        "tit": "四大名著",
+        "id": 19,
+        "href": "https://5000yan.com/sidamingzhu/"
+      },
+      {
+        "tit": "百家姓",
+        "id": 20,
+        "href": "http://baijiaxing.5000yan.com/"
+      },
+      {
+        "tit": "论语人物",
+        "id": 21,
+        "href": "https://lunyu.5000yan.com/renwu/"
+      }
+    ]
+  },
+  {
+    "tit": "翻译",
+    "type": "fanyi",
+    "open": false,
+    "memory": true,
+    "list": [
+      {
+        "tit": "心经译文",
+        "id": 1,
+        "key": "xjyw"
+      },
+      {
+        "tit": "金刚经译文",
+        "id": 2,
+        "key": "jgjyw"
+      },
+      {
+        "tit": "地藏经译文",
+        "id": 3,
+        "key": "dzjyw"
+      },
+      {
+        "tit": "药师经译文",
+        "id": 4,
+        "key": "ysjyw"
+      },
+      {
+        "tit": "楞严经译文",
+        "id": 5,
+        "key": "lyjyw"
+      },
+      {
+        "tit": "法华经译文",
+        "id": 6,
+        "key": "fhjyw"
+      },
+      {
+        "tit": "华严经白话文",
+        "id": 13,
+        "key": "hyjbhw"
+      },
+      {
+        "tit": "维摩诘经译文",
+        "id": 7,
+        "key": "wmjjyw"
+      },
+      {
+        "tit": "六祖坛经译文",
+        "id": 8,
+        "key": "lztjyw"
+      },
+      {
+        "tit": "佛遗教经译文",
+        "id": 9,
+        "key": "fyjjyw"
+      },
+      {
+        "tit": "十善业道经译文",
+        "id": 10,
+        "key": "ssydjyw"
+      },
+      {
+        "tit": "四十二章经译文",
+        "id": 11,
+        "key": "ssezjyw"
+      },
+      {
+        "tit": "佛说阿弥陀经白话文",
+        "id": 12,
+        "key": "fsamtjbhw"
+      },
+      {
+        "tit": "无量寿经白话解",
+        "id": 13,
+        "key": "wlsjbhj"
+      },
+      {
+        "tit": "观无量寿经译文",
+        "id": 14,
+        "key": "gwlsjyw"
+      },
+      {
+        "tit": "解深密经白话文",
+        "id": 15,
+        "key": "jsmjbhw"
+      },
+      {
+        "tit": "大般涅槃经白话文",
+        "id": 16,
+        "key": "dbnpjbhw"
+      },
+      {
+        "tit": "大乘起信论译文",
+        "id": 17,
+        "key": "dcqxlyw"
+      },
+      {
+        "tit": "阿毗达磨俱舍论研究",
+        "id": 18,
+        "key": "apdmjslyj"
+      },
+      {
+        "tit": "成唯识论译文",
+        "id": 19,
+        "key": "cwslyw"
+      },
+      {
+        "tit": "瑜伽师地论白话文",
+        "id": 20,
+        "key": "yjsdlbhw"
+      }
+    ]
+  },
+  {
+    "tit": "音乐",
+    "type": "foyin",
+    "open": false,
+    "list": [
+      {
+        "tit": "般禅梵唱妙音组",
+        "id": 3,
+        "href": "http://m.kuwo.cn/newh5app/singers/107152"
+      },
+      {
+        "tit": "般若心经(梵文版)",
+        "id": 3,
+        "href": "http://www.kuwo.cn/play_detail/10742355"
+      },
+      {
+        "tit": "普贤行愿",
+        "id": 3,
+        "href": "http://www.kuwo.cn/play_detail/72156733"
+      },
+      {
+        "tit": "六字真言颂",
+        "id": 1,
+        "href": "http://www.kuwo.cn/play_detail/40721640"
+      },
+      {
+        "tit": "大悲咒",
+        "id": 2,
+        "href": "http://www.kuwo.cn/play_detail/10759063"
+      },
+      {
+        "tit": "大悲咒(梵唱)",
+        "id": 2,
+        "href": "http://www.kuwo.cn/play_detail/10753046"
+      },
+      {
+        "tit": "药师咒",
+        "id": 3,
+        "href": "http://www.kuwo.cn/play_detail/4904261"
+      },
+      {
+        "tit": "药师心咒",
+        "id": 3,
+        "href": "http://www.kuwo.cn/play_detail/10758397"
+      },
+      {
+        "tit": "楞严咒(妙印)",
+        "id": 3,
+        "href": "https://y.qq.com/n/yqq/song/002u8IKi2feBi6.html"
+      },
+      {
+        "tit": "楞严咒(7分钟四师兄恭诵)",
+        "id": 3,
+        "href": "http://www.kuwo.cn/play_detail/3575535"
+      },
+      {
+        "tit": "楞严咒(庄严版)",
+        "id": 3,
+        "href": "http://www.kuwo.cn/play_detail/141221060"
+      },
+      {
+        "tit": "楞严五大心咒",
+        "id": 3,
+        "href": "https://y.qq.com/n/yqq/song/000MadwU2ULkf6.html"
+      },
+      {
+        "tit": "准提咒",
+        "id": 3,
+        "href": "http://www.kuwo.cn/play_detail/28640579"
+      },
+      {
+        "tit": "六字大明咒",
+        "id": 3,
+        "href": "http://www.kuwo.cn/play_detail/7199328"
+      },
+      {
+        "tit": "金刚萨埵心咒",
+        "id": 3,
+        "href": "http://www.kuwo.cn/play_detail/2755314"
+      },
+      {
+        "tit": "金刚萨埵百字明咒",
+        "id": 3,
+        "href": "http://www.kuwo.cn/play_detail/2755325"
+      },
+      {
+        "tit": "阿弥陀佛心咒",
+        "id": 3,
+        "href": "http://www.kuwo.cn/play_detail/11728351"
+      },
+      {
+        "tit": "般若心咒(梵文版)",
+        "id": 3,
+        "href": "http://www.kuwo.cn/play_detail/10742356"
+      },
+      {
+        "tit": "消灾吉祥咒",
+        "id": 3,
+        "href": "http://www.kuwo.cn/play_detail/7199323"
+      },
+      {
+        "tit": "往生咒",
+        "id": 3,
+        "href": "http://www.kuwo.cn/play_detail/45819525"
+      },
+      {
+        "tit": "观音治病真业",
+        "id": 3,
+        "href": "http://www.kuwo.cn/play_detail/61267280"
+      },
+      {
+        "tit": "绿度母心咒 (梵唱)",
+        "id": 3,
+        "href": "http://www.kuwo.cn/play_detail/40191029"
+      }
+    ]
+  },
+  {
+    "tit": "其它",
+    "type": "qita",
+    "open": false,
+    "memory": true,
+    "list": [
+      {
+        "tit": "了凡四训",
+        "id": 1,
+        "key": "lfsx"
+      },
+      {
+        "tit": "了凡四训白话文",
+        "id": 2,
+        "key": "lfsxbhw"
+      },
+      {
+        "tit": "了凡四训大意亲闻记",
+        "id": 3,
+        "key": "lfsxdy"
+      },
+      {
+        "tit": "寿康宝鉴",
+        "id": 4,
+        "key": "skbj"
+      },
+      {
+        "tit": "安士全书",
+        "id": 5,
+        "key": "asqs"
+      },
+      {
+        "tit": "周易",
+        "id": 7,
+        "key": "zy"
+      },
+      {
+        "tit": "老子",
+        "id": 8,
+        "key": "lz"
+      },
+      {
+        "tit": "道德经(马王堆)",
+        "id": 21,
+        "key": "ddj"
+      },
+      {
+        "tit": "论语",
+        "id": 9,
+        "key": "ly"
+      },
+      {
+        "tit": "孟子",
+        "id": 10,
+        "key": "mz"
+      },
+      {
+        "tit": "素书",
+        "id": 11,
+        "key": "ss"
+      },
+      {
+        "tit": "庄子",
+        "id": 12,
+        "key": "zz"
+      },
+      {
+        "tit": "诗经",
+        "id": 13,
+        "key": "sj"
+      },
+      {
+        "tit": "尚书",
+        "id": 14,
+        "key": "shangshu"
+      },
+      {
+        "tit": "尔雅",
+        "id": 15,
+        "key": "ey"
+      },
+      {
+        "tit": "孝经",
+        "id": 16,
+        "key": "xj"
+      },
+      {
+        "tit": "在线抄经念佛",
+        "id": 17,
+        "href": "https://www.gming.org/nf/"
+      },
+      {
+        "tit": "佛学导航",
+        "id": 18,
+        "href": "https://www.liaotuo.com/map/"
+      },
+      {
+        "tit": "一听就懂的领悟",
+        "id": 19,
+        "key": "ytjddlw"
+      },
+      {
+        "tit": "吴言生讲佛经",
+        "id": 20,
+        "key": "wysjfj"
+      }
+    ]
+  },
+  {
+    "tit": "南怀瑾文学",
+    "type": "nahuaijin",
+    "open": false,
+    "memory": true,
+    "list": [
+      {
+        "id": 1,
+        "tit": "禅海蠡测",
+        "key": "chlc"
+      },
+      {
+        "id": 2,
+        "tit": "习禅录影",
+        "key": "xcly"
+      },
+      {
+        "id": 3,
+        "tit": "论语别裁",
+        "key": "lybc"
+      },
+      {
+        "id": 4,
+        "tit": "南禅七日",
+        "key": "ncqr"
+      },
+      {
+        "id": 5,
+        "tit": "孟子旁通",
+        "key": "mzpt"
+      },
+      {
+        "id": 6,
+        "tit": "参禅日记",
+        "key": "ccrj"
+      },
+      {
+        "id": 7,
+        "tit": "老子他说",
+        "key": "lzts"
+      },
+      {
+        "id": 8,
+        "tit": "庄子諵譁",
+        "key": "zznh"
+      },
+      {
+        "id": 9,
+        "tit": "易经杂说",
+        "key": "yjzs"
+      },
+      {
+        "id": 10,
+        "tit": "定慧初修",
+        "key": "dhcx"
+      },
+      {
+        "id": 11,
+        "tit": "圆觉经略说",
+        "key": "yjjls"
+      },
+      {
+        "id": 12,
+        "tit": "禅 话",
+        "key": "ch"
+      },
+      {
+        "id": 13,
+        "tit": "禅宗与道家",
+        "key": "czydj"
+      },
+      {
+        "id": 14,
+        "tit": "历史的经验",
+        "key": "lsdjy"
+      },
+      {
+        "id": 15,
+        "tit": "如何修证佛法",
+        "key": "rhxzff"
+      },
+      {
+        "id": 16,
+        "tit": "金刚经说什么",
+        "key": "jgjssm"
+      },
+      {
+        "id": 17,
+        "tit": "禅观正脉研究",
+        "key": "cgzmyj"
+      },
+      {
+        "id": 18,
+        "tit": "原本大学微言",
+        "key": "ybdxwy"
+      },
+      {
+        "id": 19,
+        "tit": "易经系传别讲",
+        "key": "yjxzbj"
+      },
+      {
+        "id": 20,
+        "tit": "楞严大义今释",
+        "key": "lydyjs"
+      },
+      {
+        "id": 21,
+        "tit": "般若正观略讲",
+        "key": "brzglj"
+      },
+      {
+        "id": 22,
+        "tit": "楞伽大义今释",
+        "key": "lqdyjs"
+      },
+      {
+        "id": 23,
+        "tit": "维摩精舍丛书",
+        "key": "wmjscs"
+      },
+      {
+        "id": 24,
+        "tit": "亦新亦旧的一代",
+        "key": "yxyjdyd"
+      },
+      {
+        "id": 25,
+        "tit": "药师经的济世观",
+        "key": "ysjdjsg"
+      },
+      {
+        "id": 26,
+        "tit": "维摩诘的花雨满天",
+        "key": "wmjdhymt"
+      },
+      {
+        "id": 27,
+        "tit": "静坐修道与长生不老",
+        "key": "jzxdycsbl"
+      },
+      {
+        "id": 28,
+        "tit": "中国佛教发展史略",
+        "key": "zgfjfzsl"
+      },
+      {
+        "id": 29,
+        "tit": "中国道教发展史略",
+        "key": "zgdjfzsl"
+      },
+      {
+        "id": 30,
+        "tit": "南怀瑾先生著作诗词",
+        "key": "nhjxszzsc"
+      },
+      {
+        "id": 31,
+        "tit": "南怀瑾老师诗词选辑",
+        "key": "nhjlsssxj"
+      },
+      {
+        "id": 32,
+        "tit": "现代学佛者修证对话",
+        "key": "xdxfzxz"
+      },
+      {
+        "id": 33,
+        "tit": "学佛者的基本信念",
+        "key": "xfzdjbxn"
+      },
+      {
+        "id": 34,
+        "tit": "道家、密宗与东方神秘学",
+        "key": "djmzydfsmx"
+      },
+      {
+        "id": 35,
+        "tit": "唯识与中观(录音整理)",
+        "key": "wsyzg"
+      },
+      {
+        "id": 36,
+        "tit": "中庸讲记(录音整理)",
+        "key": "zyjj"
+      },
+      {
+        "id": 37,
+        "tit": "楞严经讲座(录音整理)",
+        "key": "lyjjz"
+      },
+      {
+        "id": 38,
+        "tit": "答问青壮年参禅者(部份)",
+        "key": "dwqznccz"
+      },
+      {
+        "id": 39,
+        "tit": "漫谈中国文化(部份)",
+        "key": "mtzgwh"
+      },
+      {
+        "id": 40,
+        "tit": "佛说入胎经今释",
+        "key": "fsrtjjs"
+      },
+      {
+        "id": 41,
+        "tit": "禅秘要法(录音整理)",
+        "key": "cmyf"
+      }
+    ]
+  },
+  {
+    "tit": "如来藏妙法",
+    "type": "rulaizang",
+    "open": false,
+    "hide": true,
+    "pwd": true,
+    "memory": true,
+    "word": true,
+    "list": [
+      {
+        "id": 1,
+        "tit": "过五关",
+        "key": "gwg"
+      },
+      {
+        "id": 2,
+        "tit": "如何生活中修一心三藏",
+        "key": "rhshzxyxsz"
+      },
+      {
+        "id": 3,
+        "tit": "楞严经讲记",
+        "key": "lyjjj"
+      },
+      {
+        "id": 4,
+        "tit": "法华经讲记",
+        "key": "fhjjj"
+      },
+      {
+        "id": 6,
+        "tit": "心经讲记",
+        "key": "xjjj"
+      },
+      {
+        "id": 7,
+        "tit": "阿弥陀经讲记",
+        "key": "amtjjj"
+      },
+      {
+        "id": 8,
+        "tit": "普门品讲记",
+        "key": "pmpjj"
+      },
+      {
+        "id": 9,
+        "tit": "楞严经168字",
+        "key": "lyj168z"
+      },
+      {
+        "id": 10,
+        "tit": "如来十号",
+        "key": "rlsh"
+      },
+      {
+        "id": 11,
+        "tit": "如是我闻真实义",
+        "key": "rswwzsy"
+      },
+      {
+        "id": 12,
+        "tit": "一心三藏",
+        "key": "yxsz",
+        "href": "fxmc"
+      }
+    ]
+  },
+  {
+    "tit": "虚空济讲记",
+    "type": "xukongji",
+    "open": false,
+    "hide": true,
+    "pwd": true,
+    "memory": true,
+    "word": true,
+    "list": [
+      {
+        "pwd": true,
+        "tit": "心经浅解",
+        "id": 1,
+        "key": "xjxx"
+      },
+      {
+        "pwd": true,
+        "tit": "直播精选",
+        "id": 2,
+        "key": "zbjx"
+      }
+    ]
+  },
+  {
+    "tit": "喜马拉雅音频",
+    "type": "ximalaya",
+    "open": false,
+    "pwd": false,
+    "memory": false,
+    "list": [
+      {
+        "tit": "佛经读诵",
+        "id": 1,
+        "key": "fjds",
+        "href": "xmly",
+        "audioType": "m4a"
+      },
+      {
+        "tit": "一听就懂的领悟",
+        "id": 1,
+        "key": "ytjddlw",
+        "href": "xmly",
+        "audioType": "m4a"
+      },
+      {
+        "tit": "吴言生讲佛经",
+        "id": 2,
+        "key": "wysjfj",
+        "href": "xmly",
+        "audioType": "m4a"
+      },
+      {
+        "tit": "佛学导读",
+        "id": 3,
+        "key": "fxdd",
+        "href": "xmly",
+        "audioType": "m4a"
+      },
+      {
+        "tit": "楞伽经导读",
+        "id": 1,
+        "key": "lqjdd",
+        "href": "xmly",
+        "audioType": "m4a"
+      },
+      {
+        "tit":"大帅",
+        "id": 5,
+        "key":"dszs",
+        "href": "xmly",
+        "audioType": "mp4"
+      }
+    ]
+  }
+]

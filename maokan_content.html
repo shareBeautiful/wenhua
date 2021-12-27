@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="Cache" content="no-cache">
+    <meta name=App-Config content="fullscreen=yes,useHistoryState=yes,transition=yes">
+    <meta content=yes name=apple-mobile-web-app-capable>
+    <meta content=yes name=apple-touch-fullscreen>
+    <meta content="telephone=no,email=no" name=format-detection>
+    <meta name="theme-color" content="#1a1a1a">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <meta name=viewport
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+    <title>猫砍大画</title>
+</head>
+<style>
+    [v-cloak] {
+        display: none
+    }
+
+    html {
+        max-width: 960px;
+        margin: 0 auto;
+        height: 100%;
+        -webkit-user-select: none;
+
+    }
+    .img-box {
+        width: 100%;
+    }
+    .img-box .img {
+        width: 100%;
+        font-size: 0;
+        line-height: 0;
+        padding: 0;
+        margin: 0;
+    }
+    .img-box .img img {
+        width: 100%;
+        height: auto;
+        font-size: 0;
+        line-height: 0;
+        padding: 0;
+        margin: 0;
+    }
+
+</style>
+<body>
+<div id="app" v-cloak>
+    <div class="img-box">
+        <div class="img" v-for="item in 50">
+            <img @error="error" :src="imgPath + item+'.jpg' " alt="">
+        </div>
+    </div>
+</div>
+</body>
+<script src="js/comm.js"></script>
+<script>
+    var that,tit,file;
+    var time = $echo.getParams('time')
+    $echo.getJson('./data/maokan.json').then(res => {
+        res.forEach(function (item) {
+            if (item.time === time) {
+                tit = item.title
+                file = tit+'_'+time
+            }
+        })
+    })
+    document.title = tit;
+    imgPath = 'images/猫砍大画/' + file + '/';
+    new Vue({
+        el: '#app',
+        data: function () {
+            return {
+                list: $maokan,
+                imgPath: imgPath
+            }
+        },
+        methods: {
+            error: function (){
+                let img = event.srcElement;
+                img.src = '';
+                img.onerror = null; //防止闪图
+            }
+        },
+        created: function () {
+            that = this;
+        },
+        mounted: function () {
+
+        }
+    })
+
+</script>
+
+</html>

@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="Cache" content="no-cache">
+    <meta name=App-Config content="fullscreen=yes,useHistoryState=yes,transition=yes">
+    <meta content=yes name=apple-mobile-web-app-capable>
+    <meta content=yes name=apple-touch-fullscreen>
+    <meta name="theme-color" content="#1a1a1a">
+    <meta content="telephone=no,email=no" name=format-detection>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name=viewport
+        content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+    <title></title>
+</head>
+<style>
+    [v-cloak] {
+        display: none
+    }
+
+    html {
+        max-width: 960px;
+        margin: 0 auto;
+        height: 100%;
+        -webkit-user-select: none;
+
+    }
+
+    body {
+        background-image: url('images/bg.jpg');
+        background-repeat: repeat;
+    }
+
+    .panel .panel-heading {
+        font-size: 18px;
+    }
+
+    .panel {
+        margin-top: 36px;
+        background: transparent;
+    }
+
+    .box {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .box.block a {
+        width: 100%;
+    }
+
+    .intro-box {
+        position: fixed;
+        left: 0;
+        top: 0;
+        z-index: 1;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, .3)
+    }
+
+    .intro-wrap {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 90%;
+        min-height: 50px;
+        text-align: center;
+        background: #fff;
+        z-index: 2;
+        border-radius: 10px;
+        box-shadow: #e3e3e3 0 0 5px;
+        padding: 15px;
+    }
+
+    .intro-box .close {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background: #ac3a39;
+        position: absolute;
+        right: -10px;
+        top: -10px;
+        z-index: 10;
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: .6;
+        font-weight: normal;
+    }
+
+    .box-item {
+        display: flex;
+        padding: 6px;
+        font-size: 18px;
+        color: #ac3a39;
+        -webkit-touch-callout: none;
+    }
+    .intro-box .title {
+        font-size: 20px;
+        display: inline-block;
+        line-height: 1;
+        padding-bottom: 15px;
+    }
+    .intro-box .intro {
+        font-size: 20px;
+        line-height: 1.5;
+        max-height: 80vh;
+        overflow-y: auto;
+        text-align: justify;
+    }
+
+    .intro-box .more {
+        display: inline-block;
+        line-height: 1;
+        padding-top: 15px;
+        font-size: 18px;
+    }
+
+    .fixed {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+    }
+
+    .form-control {
+        font-size: 16px;
+        text-align: center;
+        height: 36px;
+    }
+
+    .line {
+        width: 100%;
+        margin: 10px 0;
+        border-bottom: 5px dashed #666;
+    }
+
+    .dark {
+        min-height: 100vh;
+        background-color: #222;
+    }
+
+    .dark .h,
+    .dark .panel,
+    .dark .form-control,
+    .dark .intro-wrap {
+        background-color: #222 !important;
+        color: #999 !important;
+    }
+
+    .dark .h {
+        color: #999 !important;
+    }
+</style>
+
+<body>
+    <div id="app" v-cloak :class="{'dark': isDark}">
+        <div class="input-group fixed">
+            <input type="search" class="form-control" @input="search" v-model="keyword" placeholder="搜索...">
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading h">
+                {{title}}  长按可查看简介
+            </div>
+            <div class="panel-body">
+                <div class="box" :class="key.indexOf('fxmc')==-1? 'block' : ''">
+                    <!-- @touchmove="hideIntro" @touchstart="showIntro(item)" @touchend="hideIntro" -->
+                    <a :href="item.href" target="_blank" @touchmove="hideIntro" @touchstart="showIntro(item)"
+                        @touchend="hideIntro" class="box-item" :key="idx" v-for="(item,idx) in subList"
+                        v-show="!item.hide">
+                        {{idx+1 < 10? '0' +(idx+1) : idx+1}}. {{item.title}} </a>
+                </div>
+            </div>
+        </div>
+        <div class="intro-box" v-show="show" @click="closeIntro" @touchmove.prevent>
+            <div class="intro-wrap">
+                <div class="close" @click="closeIntro">×</div>
+                <a class="title" :href="currItem.href" target="_blank">{{currItem.title}}</a>
+                <div class="intro">
+                    {{currItem.describe}}
+                </div>
+                <a :href="currItem.href" target="_blank" class="more">查看详情</a>
+            </div>
+        </div>
+
+    </div>
+</body>
+<script src="js/comm.js"></script>
+<script>
+    var that;
+    var key = $echo.getParams('key');
+    var path, title
+    if (key === 'fxmc') {
+        title = "佛学名词"
+    } else if (key === 'fxmc2') {
+        title = "佛学名词2"
+    } else if (key === 'czga') {
+        title = "禅宗公案"
+    } else if (key === 'fxcs') {
+        title = "佛学常识"
+    } else if (key === 'yxsz') {
+        title = "一心三藏"
+    }
+    document.title = title;
+    path = './data/' + title + '.json'
+    $echo.getJson(path).then(function (res) {
+        new Vue({
+            el: '#app',
+            data: function () {
+                return {
+                    list: res,
+                    subList: res,
+                    key: key,
+                    show: false,
+                    timer: null,
+                    isDark: false,
+                    keyword: '',        // 搜索关键字
+                    currItem: '',          // 当前介绍内容
+                }
+            },
+            methods: {
+                // 跳转
+                toPage: function (item) {
+                    var params = { type: 'key', keyword: item.key, key: key };
+                    $echo.open('content', params, true)
+                },
+                getUrl: function (item) {
+                    var params = { type: 'key', keyword: item.key, key: key };
+                    return $echo.open('content', params, 'get')
+                },
+                // 搜索
+                search: function () {
+                    this.subList.forEach(function (item, idx) {
+                        if ((idx + item.title + item.key).indexOf(that.keyword) > -1) {
+                            item.hide = false
+                        } else {
+                            item.hide = true
+                        }
+                    });
+                    // this.subList = this.list.filter(item => {
+                    //     if (item.title.indexOf(this.keyword) > -1) {
+                    //         return item;
+                    //     }
+                    // })
+                },
+                // 介绍
+                showIntro: function (item) {
+                    if (item.describe) {
+                        clearTimeout(this.timer);
+                        this.currItem = item;
+                        this.timer = setTimeout(() => {
+                            this.show = true
+                            this.intro = item.describe;
+                        }, 300)
+                    }
+
+                },
+
+                hideIntro: function (item) {
+                    clearTimeout(this.timer);
+                },
+
+                closeIntro: function () {
+                    this.show = false;
+                },
+
+
+            },
+            created: function () {
+                that = this;
+            },
+            mounted: function () {
+                this.subList.forEach(item => { // 设置href值
+                    item.href = this.getUrl(item);
+                })
+                if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    this.isDark = true;
+                } else {
+                    this.isDark = false;
+                }
+            }
+        })
+    })
+
+
+</script>
+
+</html>
