@@ -1,0 +1,8 @@
+/node_modules/
+/.idea/
+/.vscode/
+/audio/
+/video/
+/public/
+**/node_modules/
+**/images/猫砍大画/
