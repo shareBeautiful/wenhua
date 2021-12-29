@@ -371,7 +371,12 @@ function getContent() {
 
                 // 跳转书签
                 toBook: function (item) {
-                    this.memoryTo(item.id, item.p)
+                    if(isOnPage) {
+                        this.loadUpdate(item.id, '=')
+                    }
+                    this.$nextTick(()=>{
+                        this.memoryTo(item.id, item.p)
+                    })
                 },
 
                 // 跳转目录位置
