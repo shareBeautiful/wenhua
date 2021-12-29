@@ -255,7 +255,7 @@ function getContent() {
                 clickShowMenu: function (id, item) {
                     this.hideReadOpt();
                     this.showMenu = true;
-                    //this.setCurr(id, item)
+                    this.setCurr(id, item)
                 },
 
                 // 向左滑动隐藏菜单
@@ -376,13 +376,12 @@ function getContent() {
 
                 // 跳转目录位置
                 toPos: function (id, item, time) {
-                    time = (time == 0 || time) ? time : 120
                     if (this.isOnPage) { // 如果是按需加载
                         this.loadUpdate(id, '=')
                         this.setCurr(id, item)
-                        this.setCurrentUrl(id); // 设置当前url位置
-                        return false;
+                        // this.setCurrentUrl(id); // 设置当前url位置
                     } else {
+                        time = (time == 0 || time) ? time : 120
                         if (id !== '') {
                             if (this.isAuto) this.switchScroll('s'); // 如果自动开启 停止
                             this.setCurrentUrl(id); // 设置当前url位置

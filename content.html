@@ -30,7 +30,6 @@
         <!--        <div class="tip text-danger">注意：双击空白处显示/隐藏 “目录”</div>-->
         <!-- v-swipeleft="clickHideMenu" -->
         <div @touchstart="switchScroll('s')" @touchend="switchScroll('e')">
-            <!-- <button class="btn btn-info btn-xs" @click="clickShowMenu">目录</button> -->
             <!-- 目录 -->
             <div id="menu" @dblclick.capture="clickHideMenu" v-swipeleft="clickHideMenu" class="list-group"
                 :class="{'show-a': showMenu}">
@@ -113,10 +112,6 @@
                     <div class="panel" v-show="(isOnPage===false || memoryId == item.id)"
                         @dblclick.capture="clickShowMenu(item.id,item)" :class="'panel-'+colors[idx%4]"
                         @click.stop="showReadOpt(item.id,item)" :id="'id'+item.id" :key="item.id">
-                        <!-- <div class="panel-footer page-tap prev" v-if="isOnPage && item.id > 0"
-                            @click.stop="loadUpdate(item.id, '-')">
-                            上一页 -- {{list[item.id-1].title}}
-                        </div> -->
                         <div class="panel-heading">
                             <h3 class="panel-title text-center">
                                 {{item.title}}
@@ -145,10 +140,6 @@
                         <!-- <div class="panel-body" v-html="item.html"></div> -->
                         <div class="panel-footer" v-if="['jiangji', 'qita'].includes(dirType) && item.date">
                             发布时间：{{item.date}}</div>
-                        <!-- <div class="panel-footer page-tap next" v-if="isOnPage && item.id < len-1"
-                            @click.stop="loadUpdate(item.id, '+')">
-                            下一页 -- {{list[item.id+1].title}}
-                        </div> -->
                     </div>
                 </div>
                 <div class="panel-footer page-tap next" v-if="isOnPage && memoryId < len-1"
