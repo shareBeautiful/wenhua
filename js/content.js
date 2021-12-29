@@ -371,9 +371,10 @@ function getContent() {
 
                 // 跳转书签
                 toBook: function (item) {
-                    if(isOnPage) {
+                    if(this.isOnPage) {
                         this.loadUpdate(item.id, '=')
                     }
+                    this.currIdx = item.id;
                     this.$nextTick(()=>{
                         this.memoryTo(item.id, item.p)
                     })
