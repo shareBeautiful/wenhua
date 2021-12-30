@@ -199,6 +199,8 @@ function getContent() {
                     docHeight: 0, // 文档总高度
                     idHeightL: [], // 每个id章节的高度列表
                     idOffTopL: [], // 每个id章节距离顶部的距离列表
+                    pageAll: 0,     // 总页码
+                    pageCurr:0      // 当前页面
 
                 }
             },
@@ -628,7 +630,9 @@ function getContent() {
                     var dH, allH;
                     if (this.isOnPage) {
                         allH = this.getAllHeight();
-                        dH = this.getIdHeight(id) + scrollTop;
+                        var idH = this.getIdHeight(id); // 获取当前文档距离顶部的高度
+                        dH = idH + scrollTop;
+                        
                     } else {
                         allH = this.getAllHeight(); // 获取全部高度
                         dH = scrollTop;
@@ -643,7 +647,13 @@ function getContent() {
                         var height = parseInt(el.offsetHeight); // 当前章节的高度
                         var dH = scrollTop - elTop; // 滚动高度 - 元素距离顶部高度差
                         this.subProcess = subs(dH, height, h);
-                        // if (this.isOnPage) this.process = this.subProcess;
+                        // 计算页面
+                        if (this.isOnPage) {
+                            this.pageAll = Math.ceil(height/h);
+                        }else {
+                            this.pageAll = Math.ceil(allH/h);
+                        }
+                        this.pageCurr = Math.ceil((scrollTop+10)/h);
                     }
 
                     // 计算百分比函数

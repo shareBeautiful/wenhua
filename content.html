@@ -158,14 +158,10 @@
                     <span class="h-r" @click="clickShowMenu(memoryId)">目录</span>
                 </div>
                 <div class="footer">
-                    <!-- <div class="f-item" v-for="(item,idx) in footMenu" :key="idx" @click="clickShowMenu">
-                    <span class="icon"></span>
-                    <span class="txt">{{item.n}}</span>
-                </div> -->
                     <div class="f-item">
                         <span>{{tit}}-({{process}})</span>
                     </div>
-
+                    <span class="f-page">{{pageCurr}}/{{pageAll}}</span>
                 </div>
             </div>
         </div>

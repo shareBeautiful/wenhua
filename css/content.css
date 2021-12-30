@@ -421,7 +421,12 @@ img {
     justify-content: center;
     align-items: center;
     flex: 1;
-
+}
+#readOpt .footer .f-page {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .page-tap {
