@@ -398,7 +398,7 @@ function getContent() {
                     if (this.isOnPage) { // 如果是按需加载
                         this.loadUpdate(id, '=')
                         this.setCurr(id, item)
-                        this.setCurrentUrl(id); // 设置当前url位置
+                        // this.setCurrentUrl(id); // 设置当前url位置
                     } else {
                         time = (time == 0 || time) ? time : 120
                         if (id !== '') {
