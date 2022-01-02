@@ -805,8 +805,8 @@ function getContent() {
                 setCurr: function (id, item) {
                     this.currItem = item ? item : this.list[id];
                     this.currIdx = id;
-                    this.memoryId = id; // 当前钱的id
                     this.getProcess(id); // 更新
+                    this.memorySave(id); // this.memoryId = id; // 当前钱的id
                 },
 
                 // 匹配关键名词 太卡以后做
