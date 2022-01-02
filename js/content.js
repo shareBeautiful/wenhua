@@ -6,8 +6,8 @@ var idx = $echo.getParams('idx'); // 当前文件位置id 只显示某一部分
 var posId = location.hash.replace('#', ''); // 当前hash滚动的目录位置
 var memory, tit, file, audioType;
 var $elLoad = document.querySelector('#loading');
-setTimeout(function(){
-    $elLoad.style.visibility="visible"
+setTimeout(function () {
+    $elLoad.style.visibility = "visible"
 }, 2000)
 
 if (keyword) {
@@ -128,8 +128,8 @@ function getContent() {
         } else {
             dataList = list
         }
-        
-        if(keyword) {
+
+        if (keyword) {
             tit = dataList[0].title;
         }
         document.title = tit; // 标题
@@ -188,7 +188,7 @@ function getContent() {
                     currItem: '', // 当前标题名称
                     currIdx: '', // 当前索引
                     showAudio: false, // 是否显示音频
-                    audioSrc: '',     // 视频连接地址
+                    audioSrc: '', // 视频连接地址
                     showOpt: false, // 是否显示设置
                     dbTime: null, // 双击单机时间计时器
                     startTime: null, // 启动自动滚动计时器
@@ -199,8 +199,8 @@ function getContent() {
                     docHeight: 0, // 文档总高度
                     idHeightL: [], // 每个id章节的高度列表
                     idOffTopL: [], // 每个id章节距离顶部的距离列表
-                    pageAll: 0,     // 总页码
-                    pageCurr:0      // 当前页面
+                    pageAll: 0, // 总页码
+                    pageCurr: 0 // 当前页面
 
                 }
             },
@@ -292,18 +292,29 @@ function getContent() {
                 },
                 // 回车
                 enterSearch: function () {
-                    if (this.word.indexOf('%') > -1) {
-                        var re = /\d+(\.\d+)?/img
-                        var p = this.word.match(re)[0]
-                        if (p > 0 && p <= 100) {
-                            this.process = (+p).toFixed(3) + '%';
-                            var allH = document.documentElement.offsetHeight - this.height // 页面总高度
-                            p = p / 100;
-                            p = p <= 1 ? p : 1;
-                            window.scrollTo(0, parseFloat(p * (allH)));
-                            event.target.blur();
-                            this.clickHideMenu();
+                    var isp = this.word.indexOf('%') > -1;
+                    var isg = this.word.indexOf('/') > -1
+                    if (isp || isg) {
+                        if (isp) {
+                            var re = /\d+(\.\d+)?/img
+                            var p = this.word.match(re)[0]
+                            if (p > 0 && p <= 100) {
+                                this.process = (+p).toFixed(3) + '%';
+                                var allH = document.documentElement.offsetHeight - this.height // 页面总高度
+                                p = p / 100;
+                                p = p <= 1 ? p : 1;
+                                window.scrollTo(0, parseFloat(p * (allH)));
+                            }
+                        } else if (isg) {
+                            var re = /\d+/img
+                            var p = this.word.match(re)[0]
+                            if (p >= 1) {
+                                window.scrollTo(0, this.height * p);
+                            }
                         }
+                        this.memorySave(this.memoryId);
+                        event.target.blur();
+                        this.clickHideMenu();
                     }
                 },
 
@@ -373,11 +384,11 @@ function getContent() {
 
                 // 跳转书签
                 toBook: function (item) {
-                    if(this.isOnPage) {
+                    if (this.isOnPage) {
                         this.loadUpdate(item.id, '=')
                     }
                     this.currIdx = item.id;
-                    this.$nextTick(()=>{
+                    this.$nextTick(() => {
                         this.memoryTo(item.id, item.p)
                     })
                 },
@@ -632,7 +643,7 @@ function getContent() {
                         allH = this.getAllHeight();
                         var idH = this.getIdHeight(id); // 获取当前文档距离顶部的高度
                         dH = idH + scrollTop;
-                        
+
                     } else {
                         allH = this.getAllHeight(); // 获取全部高度
                         dH = scrollTop;
@@ -649,11 +660,11 @@ function getContent() {
                         this.subProcess = subs(dH, height, h);
                         // 计算页面
                         if (this.isOnPage) {
-                            this.pageAll = Math.ceil(height/h);
-                        }else {
-                            this.pageAll = Math.ceil(allH/h);
+                            this.pageAll = Math.ceil(height / h);
+                        } else {
+                            this.pageAll = Math.ceil(allH / h);
                         }
-                        this.pageCurr = Math.ceil((scrollTop+10)/h);
+                        this.pageCurr = Math.ceil((scrollTop + 10) / h);
                     }
 
                     // 计算百分比函数
@@ -875,14 +886,14 @@ function getContent() {
                         // var tit = this.list[0].title;
                         // document.title = tit
                         this.showAudio = audioType; // 显示音频
-                        if(audioType === 'mp4') {
+                        if (audioType === 'mp4') {
                             var src = '/video/' + file + '/' + tit + '.' + audioType;
                             this.audioSrc = src;
-                        }else {
+                        } else {
                             var src = '/audio/' + file + '/' + tit + '.' + audioType;
                             var audio = playAudio(src);
                         }
-                        
+
                         // audio.loop = true  // 设置循环播放
                     }
 
