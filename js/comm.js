@@ -191,7 +191,8 @@
          * @param params    参数对象
          */
         open: function (url, params, type) {
-            if (url.indexOf('http') === -1 && url.indexOf('.html') === -1) {
+            var re = /(https?)|(.pdf)|(.html)/img
+            if (re.test(url) === false) {
                 url = url + '.html';
             }
             if (params && typeof params === 'object') {

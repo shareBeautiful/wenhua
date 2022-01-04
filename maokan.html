@@ -57,7 +57,7 @@
     $echo.getJson(path).then(function (res) {
         if(key === 'fjxz') {
             res.forEach(item => {
-                item.href = '/pdf/'+item.title+'.pdf';
+                item.href = './pdf/'+item.title+'.pdf';
             })
         }
         new Vue({
