@@ -848,7 +848,7 @@ function getContent() {
                         // 自动保存8秒
                         setInterval(() => {
                             if (!this.isOnPage) this.memoryId = this.updateCurrId(); // 获取当前所处的ID位置
-                            // this.memorySave(this.memoryId)
+                            this.memorySave(this.memoryId)
                         }, 8000);
 
                     } else {
@@ -942,11 +942,15 @@ function getContent() {
 
                 // 指定条件 是否按需加载
                 var isOnPage = $echo.getStorage('isOnPage');
-                this.isOnPage = (this.allTotal > (2 * 100000) && this.len >= 5) ? true : Boolean(eval(isOnPage));
+                if(this.allTotal <=100000) {
+                    this.isOnPage = false;
+                }else {
+                    this.isOnPage = this.len >= 5 ? true : Boolean(eval(isOnPage));
+                }
+                
                 if (this.isOnPage) {
                     this.loadUpdate(this.memoryId, '=');
                 }
-
 
             },
 
