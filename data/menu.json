@@ -498,7 +498,6 @@
     "type": "fanyi",
     "open": false,
     "memory": true,
-    "hide": true,
     "list": [
       {
         "tit": "心经译文",

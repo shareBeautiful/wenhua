@@ -312,6 +312,8 @@ function getContent() {
                                 window.scrollTo(0, this.height * p);
                             }
                         }
+                        this.word = '';
+                        this.search();
                         this.memorySave(this.memoryId);
                         event.target.blur();
                         this.clickHideMenu();
