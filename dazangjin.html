@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="Cache" content="no-cache">
+    <meta name=App-Config content="fullscreen=yes,useHistoryState=yes,transition=yes">
+    <meta content=yes name=apple-mobile-web-app-capable>
+    <meta content=yes name=apple-touch-fullscreen>
+    <meta name="theme-color" content="#1a1a1a">
+    <meta content="telephone=no,email=no" name=format-detection>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name=viewport
+        content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=yes,viewport-fit=cover">
+    <title>典经</title>
+    <link rel="stylesheet" href="./css/index.css">
+</head>
+
+<body>
+    <div id="app" v-cloak :class="{dark: isDark}">
+        <div class="input-group" id="search">
+            <input type="search" class="form-control search" @input="search" v-model="keyword" placeholder="搜索...">
+            <div class="del" @click="del()" v-show="keyword.length">×</div>
+        </div>
+        <!-- 内容列表 -->
+        <div class="list-box">
+            <!-- 所有 -->
+            <div class="panel panel-default" :key="idxA" v-for="(itemA,idxA) in subList">
+                <div class="panel-heading" @click="openMenu(itemA)" :class="{'sticky': itemA.open}">
+                    <div class="title">
+                        {{itemA.tit}}
+                        <span class="num">({{itemA.list.length}})</span>
+                        <span v-if="itemA.pwd" class="pwd-icon">*</span>
+                    </div>
+                    <div class="icon">{{itemA.open? '关闭' : '展开'}}</div>
+                </div>
+                <div class="panel-body" v-if="itemA.list.length" v-show="itemA.open">
+                    <div class="list-group panel-success">
+                        <!-- @click="clickItem(itemB, itemA)" -->
+                        <template v-for="(itemB,idxB) in itemA.list" :key="idxB">
+                            <a :href="itemB.href" target="_blank" class="list-group-item">
+                                <span class="l">{{idxB+1}}. {{itemB.tit}}
+                                    <span v-if="itemB.pwd" class="pwd-icon">*</span>
+                                </span>
+                                <span class="r">{{itemB.parent}}</span>
+                            </a>
+                        </template>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="js/comm.js"></script>
+<script>
+    var that;
+    $echo.getJson('./data/大藏经.json').then(function (res) {
+        $echo.setStorage('menuData', res)
+        new Vue({
+            el: '#app',
+            data: function () {
+                return {
+                    keyword: '',    // 搜索关键
+                    list: res,
+                    subList: [],
+                    currItem: {},   // 当前点击的item
+                    currType: '',    // 当前点击的类型
+                    isDark: false,  // 是否夜间
+
+                }
+            },
+            computed: {
+
+            },
+            methods: {
+
+                // 获取url地址
+                getUrl: function (itemB, itemA) {
+                    var currItem = itemB;
+                    var currType = itemA.type ? itemA.type : itemB.type;
+                    if (currItem.href) {
+                        var params = { key: currItem.key, type: currType };
+                        return $echo.open(currItem.href, params, 'get')
+                    } else {
+                        var params = { type: currType, key: currItem.key };
+                        return $echo.open('content', params, 'get')
+                    }
+                },
+
+
+                // 跳转事件 已废弃
+                toPage: function () {
+                    if (this.currItem.href) {
+                        var params = { key: this.currItem.key, type: this.currType };
+                        $echo.open(this.currItem.href, params, true)
+                    } else {
+                        var params = { type: this.currType, key: this.currItem.key };
+                        // var type = $echo.getBrowser('pc');
+                        $echo.open('content', params, true)
+                    }
+                },
+
+                // 展开目录
+                openMenu: function (item) {
+                    $echo.setStorage('menuOpen', { type: item.type, open: item.open })
+                    this.subList.forEach(obj => {
+                        if (obj.type === item.type) {
+                            this.$set(obj, 'open', !item.open);
+                        } else {
+                            this.$set(obj, 'open', false);
+                        }
+                    })
+
+                },
+
+                // 清空搜索关键词
+                del: function () {
+                    this.keyword = ''
+                    this.search();
+                },
+
+                // 搜索
+                search: function () {
+                    if (this.keyword) {
+                        if (this.keyword === 'dark') {
+                            this.isDark = true;
+                            this.updateList(); // 更新数据
+                            event.target.blur()
+                            this.keyword = ""
+                            return;
+                        } else if (this.keyword === 'white') {
+                            this.isDark = false;
+                            this.updateList(); // 更新数据
+                            event.target.blur()
+                            this.keyword = ""
+                            return;
+                        }
+
+                        // 过滤搜索的内容
+                        var list = []
+                        this.copyList(this.list).forEach(itemA => {
+                            itemA.list.forEach(itemB => {
+                                var key = itemB.tit + itemB.key;
+                                if (key.indexOf(this.keyword.toLowerCase()) > -1) {
+                                    itemB.type = itemA.type;
+                                    itemB.parent = itemA.tit;
+                                    list.push(itemB)
+                                }
+                            })
+                        })
+                        this.subList = [{ tit: '搜索结果2', open: true, list: list }];
+                    } else {
+                        this.updateList();
+                    }
+                },
+
+
+                // 复制引用对象
+                copyList: function (list) {
+                    list = list || this.list;
+                    return JSON.parse(JSON.stringify(list))
+                },
+
+                // 初始化数据
+                updateList: function (isClose) {                  
+                    this.subList = this.copyList();
+                }
+            },
+            created: function () {
+                that = this;
+
+                // 设置地址的url链接
+                this.list.forEach(itemA => {
+                    itemA.list.forEach(itemB => {
+                        itemB.href = this.getUrl(itemB, itemA);
+                    })
+                })
+
+                // 初始化更新数据
+                this.updateList();
+
+            },
+            mounted: function () {
+
+                // 白天还是黑夜
+                if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    this.isDark = true;
+                } else {
+                    this.isDark = false;
+                }
+                // var time = parseInt($echo.getTime().replace(/:.*/img, ''));
+                // if (21 <= time || time < 7) {
+                //     this.isDark = true;
+                // } else {
+                //     this.isDark = false;
+                // }
+
+            }
+        })
+    })
+
+
+</script>
+
+</html>
