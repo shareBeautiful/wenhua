@@ -56,7 +56,14 @@
 <script src="js/comm.js"></script>
 <script>
     var that;
-    $echo.getJson('./data/大藏经.json').then(function (res) {
+    var key = $echo.getParams('key');
+    var path;
+    if (key === 'dzj') {
+        path = './data/大藏经.json'
+    } else if (key === 'qldzj') {
+        path = './data/乾隆大藏经.json'
+    }
+    $echo.getJson(path).then(function (res) {
         $echo.setStorage('menuData', res)
         new Vue({
             el: '#app',
@@ -68,7 +75,6 @@
                     currItem: {},   // 当前点击的item
                     currType: '',    // 当前点击的类型
                     isDark: false,  // 是否夜间
-
                 }
             },
             computed: {
@@ -77,34 +83,15 @@
             methods: {
 
                 // 获取url地址
-                getUrl: function (itemB, itemA) {
+                getUrl: function (itemA, itemB) {
                     var currItem = itemB;
-                    var currType = itemA.type ? itemA.type : itemB.type;
-                    if (currItem.href) {
-                        var params = { key: currItem.key, type: currType };
-                        return $echo.open(currItem.href, params, 'get')
-                    } else {
-                        var params = { type: currType, key: currItem.key };
-                        return $echo.open('content', params, 'get')
-                    }
+                    var params = { type: itemA.tit, key: currItem.tit, keyword: key };
+                    return $echo.open('content', params, 'get')
                 },
 
-
-                // 跳转事件 已废弃
-                toPage: function () {
-                    if (this.currItem.href) {
-                        var params = { key: this.currItem.key, type: this.currType };
-                        $echo.open(this.currItem.href, params, true)
-                    } else {
-                        var params = { type: this.currType, key: this.currItem.key };
-                        // var type = $echo.getBrowser('pc');
-                        $echo.open('content', params, true)
-                    }
-                },
 
                 // 展开目录
                 openMenu: function (item) {
-                    $echo.setStorage('menuOpen', { type: item.type, open: item.open })
                     this.subList.forEach(obj => {
                         if (obj.type === item.type) {
                             this.$set(obj, 'open', !item.open);
@@ -150,7 +137,7 @@
                                 }
                             })
                         })
-                        this.subList = [{ tit: '搜索结果2', open: true, list: list }];
+                        this.subList = [{ tit: '搜索结果', open: true, list: list }];
                     } else {
                         this.updateList();
                     }
@@ -164,7 +151,7 @@
                 },
 
                 // 初始化数据
-                updateList: function (isClose) {                  
+                updateList: function (isClose) {
                     this.subList = this.copyList();
                 }
             },
@@ -174,7 +161,7 @@
                 // 设置地址的url链接
                 this.list.forEach(itemA => {
                     itemA.list.forEach(itemB => {
-                        itemB.href = this.getUrl(itemB, itemA);
+                        itemB.href = this.getUrl(itemA, itemB);
                     })
                 })
 

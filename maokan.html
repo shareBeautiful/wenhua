@@ -86,11 +86,11 @@
                             item.hide = true
                         }
                     });
-                    // this.subList = this.list.filter(item => {
-                    //     if ((item.title+item.date).indexOf(this.keyword) > -1) {
-                    //         return item;
-                    //     }
-                    // })
+                    this.subList = this.list.filter(item => {
+                        if ((item.title+item.date).indexOf(this.keyword) > -1) {
+                            return item;
+                        }
+                    })
                 },
                 // 切换排序
                 switchSort: function () {

@@ -42,6 +42,11 @@ if (keyword) {
                     }
                 })
             })
+        }else if(keyword === 'dzj' || keyword === 'qldzj') { // 大藏经
+            if(keyword === 'dzj')  dirType = '大藏经/'+dirType;
+            if(keyword === 'qldzj')  dirType = '乾隆大藏经/'+dirType;
+            file = key
+            r();
         }
     })
     pro.then(() => {
