@@ -1,6 +1,6 @@
 [
   {
-    "tit": "佛咒",
+    "tit": "日常",
     "type": "fozhou",
     "open": false,
     "list": [
@@ -1187,14 +1187,6 @@
         "key": "lqjdd",
         "href": "xmly",
         "audioType": "m4a"
-      },
-      {
-        "pwd": true,
-        "tit": "大帅",
-        "id": 1,
-        "key": "dszs",
-        "href": "xmly",
-        "audioType": "mp4"
       }
     ]
   }
