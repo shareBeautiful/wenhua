@@ -257,8 +257,8 @@ function getContent() {
                     var num = 0
                     for (i = 0; i < str.length; i++) {
                         s = str.charAt(i)
-                        if('\u4e00' <= s && s <= '\u9fef') {
-                            num+=1;
+                        if ('\u4e00' <= s && s <= '\u9fef') {
+                            num += 1;
                         }
                     }
                     if (num >= 1000 && num < 10000) {
@@ -938,11 +938,16 @@ function getContent() {
                         })
                         this.allTotal += t.num
                     })
-                    INDEXDB.putItem(type, {
-                        list: dataList,
-                        menu: this.menuList,
-                        allTotal: this.allTotal
-                    }); // 存入indexdb
+                    if (keyword || dirType === 'ximalaya') { // 不存入
+                        
+                    } else {
+                        INDEXDB.putItem(type, {
+                            list: dataList,
+                            menu: this.menuList,
+                            allTotal: this.allTotal
+                        }); // 存入indexdb
+                    }
+
                 } else {
                     this.menuList = res.menu;
                     this.allTotal = res.allTotal;
