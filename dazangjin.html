@@ -73,6 +73,7 @@
                     subList: [],
                     currOpen: '',   // 当前打开
                     isDark: false,  // 是否夜间
+                    t: null
                 }
             },
             methods: {
@@ -104,37 +105,41 @@
 
                 // 搜索
                 search: function () {
+                    clearTimeout(this.t)
                     if (this.keyword) {
-                        if (this.keyword === 'dark') {
-                            this.isDark = true;
-                            this.updateList(); // 更新数据
-                            event.target.blur()
-                            this.keyword = ""
-                            return;
-                        } else if (this.keyword === 'white') {
-                            this.isDark = false;
-                            this.updateList(); // 更新数据
-                            event.target.blur()
-                            this.keyword = ""
-                            return;
-                        }
+                        this.t = setTimeout(() => {
+                            if (this.keyword === 'dark') {
+                                this.isDark = true;
+                                this.updateList(); // 更新数据
+                                event.target.blur()
+                                this.keyword = ""
+                                return;
+                            } else if (this.keyword === 'white') {
+                                this.isDark = false;
+                                this.updateList(); // 更新数据
+                                event.target.blur()
+                                this.keyword = ""
+                                return;
+                            }
 
-                        // 过滤搜索的内容
-                        var list = []
-                        this.copyList(this.list).forEach(itemA => {
-                            itemA.list.forEach(itemB => {
-                                var key = itemB.tit + itemB.key;
-                                if (key.indexOf(this.keyword.toLowerCase()) > -1) {
-                                    itemB.type = itemA.type;
-                                    itemB.parent = itemA.tit;
-                                    list.push(itemB)
-                                }
+                            // 过滤搜索的内容
+                            var list = []
+                            this.copyList(this.list).forEach(itemA => {
+                                itemA.list.forEach(itemB => {
+                                    var key = itemB.tit + itemB.key;
+                                    if (key.indexOf(this.keyword.toLowerCase()) > -1) {
+                                        itemB.type = itemA.type;
+                                        itemB.parent = itemA.tit;
+                                        list.push(itemB)
+                                    }
+                                })
                             })
-                        })
-                        this.subList = [{ tit: '搜索结果', open: true, list: list }];
+                            this.subList = [{ tit: '搜索结果', open: true, list: list }];
+                        }, 300)
                     } else {
                         this.updateList();
                     }
+
                 },
 
 
@@ -149,7 +154,7 @@
                     var list = this.copyList()
                     if (this.currOpen) {
                         list.forEach(item => {
-                            if(item.type === this.currOpen) {
+                            if (item.type === this.currOpen) {
                                 this.$set(item, 'open', true);
                             }
                         });
