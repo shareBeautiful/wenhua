@@ -99,6 +99,7 @@ body {
     font-size: 12px;
 }
 .panel .list-group-item {
+    padding: 10px;
     font-size: 16px;
     color: #333;
     font-weight: bolder;
@@ -111,7 +112,7 @@ body {
 }
 
 .panel .list-group-item .r {
-    font-size: 14px;
+    font-size: 13px;
     color: #673921;
 }
 

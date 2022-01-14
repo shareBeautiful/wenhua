@@ -44,7 +44,7 @@
                                 <span class="l">{{idxB+1}}. {{itemB.tit}}
                                     <span v-if="itemB.pwd" class="pwd-icon">*</span>
                                 </span>
-                                <span class="r">{{itemB.parent}}</span>
+                                <span class="r">{{itemB.parent || itemB.author}}</span>
                             </a>
                         </template>
                     </div>
