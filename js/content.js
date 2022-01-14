@@ -42,9 +42,9 @@ if (keyword) {
                     }
                 })
             })
-        }else if(keyword === 'dzj' || keyword === 'qldzj') { // 大藏经
-            if(keyword === 'dzj')  dirType = '大藏经/'+dirType;
-            if(keyword === 'qldzj')  dirType = '乾隆大藏经/'+dirType;
+        } else if (keyword === 'dzj' || keyword === 'qldzj') { // 大藏经
+            if (keyword === 'dzj') dirType = '大藏经/' + dirType;
+            if (keyword === 'qldzj') dirType = '乾隆大藏经/' + dirType;
             file = key
             r();
         }
@@ -244,10 +244,23 @@ function getContent() {
                         }
                         return n;
                     }
+                    /*
                     var re = /[\u4e00-\u9fa5]/mg;
                     var arr = str.match(re);
                     var num = arr ? arr.length : 0;
                     var s = num;
+                    if (num >= 1000 && num < 10000) {
+                        s = num / 1000 + 'k'
+                    } else if (num >= 10000) {
+                        s = num / 10000 + 'w'
+                    }*/
+                    var num = 0
+                    for (i = 0; i < str.length; i++) {
+                        s = str.charAt(i)
+                        if('\u4e00' <= s && s <= '\u9fef') {
+                            num+=1;
+                        }
+                    }
                     if (num >= 1000 && num < 10000) {
                         s = num / 1000 + 'k'
                     } else if (num >= 10000) {
@@ -258,6 +271,7 @@ function getContent() {
                         num: num
                     }
                 },
+
                 // 显示菜单切换
                 clickShowMenu: function (id, item) {
                     this.hideReadOpt();
@@ -319,7 +333,7 @@ function getContent() {
                         }
                         this.word = '';
                         this.search();
-                        this.memorySave(this.memoryId);
+                        if (memory) this.memorySave(this.memoryId);
                         event.target.blur();
                         this.clickHideMenu();
                     }
@@ -737,7 +751,7 @@ function getContent() {
                         this.dbTime = setTimeout(() => {
                             this.showOpt = true;
                             this.setCurr(id, item);
-                            this.memorySave(id);
+                            if (memory) this.memorySave(id);
                         }, 230);
                     }
 
@@ -813,7 +827,7 @@ function getContent() {
                     this.currItem = item ? item : this.list[id];
                     this.currIdx = id;
                     this.getProcess(id); // 更新
-                    this.memorySave(id); // this.memoryId = id; // 当前钱的id
+                    if (memory) this.memorySave(id); // this.memoryId = id; // 当前钱的id
                 },
 
                 // 匹配关键名词 太卡以后做
@@ -949,12 +963,12 @@ function getContent() {
 
                 // 指定条件 是否按需加载
                 var isOnPage = $echo.getStorage('isOnPage');
-                if(this.allTotal <=100000) {
+                if (this.allTotal <= 100000) {
                     this.isOnPage = false;
-                }else {
+                } else {
                     this.isOnPage = this.len >= 5 ? true : Boolean(eval(isOnPage));
                 }
-                
+
                 if (this.isOnPage) {
                     this.loadUpdate(this.memoryId, '=');
                 }

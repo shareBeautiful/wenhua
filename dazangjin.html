@@ -17,6 +17,11 @@
     <title>典经</title>
     <link rel="stylesheet" href="./css/index.css">
 </head>
+<style>
+    .count {
+        font-size: 12px;
+    }
+</style>
 
 <body>
     <div id="app" v-cloak :class="{dark: isDark}">
@@ -32,7 +37,7 @@
                     <div class="title">
                         {{itemA.tit}}
                         <span class="num">({{itemA.list.length}})</span>
-                        <span v-if="itemA.pwd" class="pwd-icon">*</span>
+                        <span class="count">{{total(itemA.count)}}</span>
                     </div>
                     <div class="icon">{{itemA.open? '关闭' : '展开'}}</div>
                 </div>
@@ -42,7 +47,7 @@
                         <template v-for="(itemB,idxB) in itemA.list" :key="idxB">
                             <a :href="itemB.href" target="_blank" class="list-group-item">
                                 <span class="l">{{idxB+1}}. {{itemB.tit}}
-                                    <span v-if="itemB.pwd" class="pwd-icon">*</span>
+                                    <span class="count">{{total(itemB.count)}}</span>
                                 </span>
                                 <span class="r">{{itemB.parent || itemB.author}}</span>
                             </a>
@@ -120,6 +125,30 @@
                                 event.target.blur()
                                 this.keyword = ""
                                 return;
+                            } else if (/[><=]|>=|<=/.test(this.keyword)) {
+                                var re = /.*?(>|<|=|>=|<=).*?(\d+)/img
+                                var s = re.exec(this.keyword)
+                                console.log(s)
+                                if (s) {
+                                    var str = s[1]
+                                    var num = parseInt(s[2])
+                                    var list = []
+                                    this.copyList().forEach(itemA => {
+                                        itemA.list.forEach(itemB => {
+                                            var count = parseInt(itemB.count)
+                                            if (num < count && str === '>') {
+                                                list.push(itemB)
+                                            }else if (num > count && str === '<') {
+                                                list.push(itemB)
+                                            }else if (num == count && str === '=') {
+                                                list.push(itemB)
+                                            }
+                                        })
+                                    })
+                                    this.subList = [{ tit: '搜索结果', open: true, list: list }];
+                                }
+                                
+                                return false;
                             }
 
                             // 过滤搜索的内容
@@ -147,6 +176,18 @@
                 copyList: function (list) {
                     list = list || this.list;
                     return JSON.parse(JSON.stringify(list))
+                },
+
+                total: function (num) {
+                    var str;
+                    if (num >= 1000 && num <= 10000) {
+                        str = num / 1000 + 'k'
+                    } else if (num > 10000) {
+                        str = num / 10000 + 'w'
+                    } else {
+                        str = num
+                    }
+                    return str;
                 },
 
                 // 初始化数据
