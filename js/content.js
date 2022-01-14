@@ -265,6 +265,8 @@ function getContent() {
                         s = num / 1000 + 'k'
                     } else if (num >= 10000) {
                         s = num / 10000 + 'w'
+                    }else {
+                        s = num
                     }
                     return {
                         str: s,
