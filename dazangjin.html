@@ -58,11 +58,10 @@
     var that;
     var key = $echo.getParams('key');
     var path;
-    if (key === 'dzj') {
-        path = './data/大藏经.json'
-    } else if (key === 'qldzj') {
-        path = './data/乾隆大藏经.json'
-    }
+    title = key === 'dzj' ? '大藏经' : '乾隆大藏经'
+    path = './data/' + title + '.json'
+    document.title = title
+
     $echo.getJson(path).then(function (res) {
         $echo.setStorage('menuData', res)
         new Vue({
@@ -72,20 +71,14 @@
                     keyword: '',    // 搜索关键
                     list: res,
                     subList: [],
-                    currItem: {},   // 当前点击的item
-                    currType: '',    // 当前点击的类型
+                    currOpen: '',   // 当前打开
                     isDark: false,  // 是否夜间
                 }
             },
-            computed: {
-
-            },
             methods: {
-
                 // 获取url地址
                 getUrl: function (itemA, itemB) {
-                    var currItem = itemB;
-                    var params = { type: itemA.tit, key: currItem.tit, keyword: key };
+                    var params = { type: itemA.tit, key: itemB.tit, keyword: key };
                     return $echo.open('content', params, 'get')
                 },
 
@@ -95,6 +88,7 @@
                     this.subList.forEach(obj => {
                         if (obj.type === item.type) {
                             this.$set(obj, 'open', !item.open);
+                            this.currOpen = obj.open ? item.type : false;
                         } else {
                             this.$set(obj, 'open', false);
                         }
@@ -151,8 +145,16 @@
                 },
 
                 // 初始化数据
-                updateList: function (isClose) {
-                    this.subList = this.copyList();
+                updateList: function () {
+                    var list = this.copyList()
+                    if (this.currOpen) {
+                        list.forEach(item => {
+                            if(item.type === this.currOpen) {
+                                this.$set(item, 'open', true);
+                            }
+                        });
+                    }
+                    this.subList = list
                 }
             },
             created: function () {
