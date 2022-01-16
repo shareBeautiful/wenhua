@@ -11,10 +11,6 @@ body {
     font-family: 'canger';
     src: url('苍耳玄三.ttf');
 }
-@font-face {
-    font-family: 'shengshi';
-    src: url('盛世楷书.ttf');
-}
 
 /* 获取屏幕的高度 */
 #loading {
