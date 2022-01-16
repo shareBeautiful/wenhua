@@ -154,7 +154,7 @@ function getContent() {
                     allTotal: 0, // 总字数
                     font: [18, 20, 22, 24, 26, 28],
                     fontF: [{n:'默认',v:'inherit'},{n:'苍耳', v:'canger'}, {n:'少儿',v:'shaoer'}],
-                    currFont: 21,
+                    currFont: 22,
                     currFontF: 'inherit',
                     // footMenu: [{n:'目录'},{n:'进度'},{n:'设置'},{n:'夜间'}],
                     footMenu: [{
@@ -357,6 +357,7 @@ function getContent() {
                 // 设置字体
                 setFontF: function(item) {
                     this.currFontF = item.v;
+                    $echo.setStorage('font', this.currFontF);
                     document.body.style.fontFamily = this.currFontF
                     // 由于字体改变后页面高度变化，需要延迟重新计算回到当前位置
                     setTimeout(() => {
