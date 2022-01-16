@@ -357,9 +357,15 @@ function getContent() {
                 // 设置字体
                 setFontF: function(item) {
                     this.currFontF = item.v;
+                    document.body.style.fontFamily = this.currFontF
+                    // 由于字体改变后页面高度变化，需要延迟重新计算回到当前位置
                     setTimeout(() => {
-                        document.body.style.fontFamily = this.currFontF
-                    }, 100);
+                        this.$nextTick(() => {
+                            if (!is) this.getAllHeight(true); // 太卡，不搞了，由于字体改变需要重新更新高度 
+                            // 由于字体改变需要重新获取每一个id的高度
+                            this.memoryTo(); // 重新计算
+                        })
+                    }, 30)
                 },
 
                 // 设置字体大小
