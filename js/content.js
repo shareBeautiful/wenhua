@@ -153,7 +153,7 @@ function getContent() {
                     showMenu: false, // 切换显示菜单
                     allTotal: 0, // 总字数
                     font: [18, 20, 22, 24, 26, 28],
-                    fontF: [{n:'默认',v:'inherit'},{n:'苍耳', v:'canger'}, {n:'少儿',v:'fangm'}],
+                    fontF: [{n:'默认',v:'inherit'},{n:'苍耳', v:'canger'}, {n:'少儿',v:'shaoer'}],
                     currFont: 21,
                     currFontF: 'inherit',
                     // footMenu: [{n:'目录'},{n:'进度'},{n:'设置'},{n:'夜间'}],
