@@ -82,12 +82,18 @@
                             {{item.id+1}}--{{item.title}}({{item.total}})
                         </a>
                     </div>
-                    <!-- 字体设置 -->
+                    <!-- 字体大小设置 -->
                     <div>
                         <span class="list-group-item fz" :key="item" :class="{'active': item == currFont}"
                             v-for="item in font" @click="setFont(item)">{{item}}
                         </span>
                         <span class="list-group-item fz">当前字体：{{ currFont }}</span>
+                    </div>
+                    <!-- 字体设置 -->
+                    <div>
+                        <span class="list-group-item fz" :key="item" :class="{'active': item.v == currFontF}"
+                            v-for="(item) in fontF" @click="setFontF(item)">{{item.n}}
+                        </span>
                     </div>
                     <!--  -->
                     <div>

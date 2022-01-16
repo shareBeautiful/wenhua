@@ -195,13 +195,13 @@ body {
 }
 
 .dark {
-    background-color: #2d2d2d !important;
+    background-color: #222222 !important;
     min-height: 100%;
 }
 
 .dark * {
-    background-color: #2d2d2d !important;
-    color: #999 !important;
+    background-color: #222222 !important;
+    color: #b3b3b3 !important;
     border-color: #666 !important;
 }
 
@@ -210,7 +210,7 @@ body {
 }
 
 .dark .panel {
-    background-color: #2d2d2d !important;
+    background-color: #222222 !important;
 }
 
 .sticky {

@@ -60,7 +60,7 @@ if (keyword) {
 function getData() {
     new Promise((r, s) => {
         var menuList = $echo.getStorage('menuData');
-        if (menuList) {
+        if (menuList && menuList.lenght) {
             r(menuList);
         } else {
             $echo.getJson('./data/menu.json').then(res => {
@@ -153,7 +153,9 @@ function getContent() {
                     showMenu: false, // 切换显示菜单
                     allTotal: 0, // 总字数
                     font: [18, 20, 22, 24, 26, 28],
+                    fontF: [{n:'默认',v:'inherit'},{n:'苍耳', v:'canger'}, {n:'少儿',v:'fangm'}],
                     currFont: 21,
+                    currFontF: 'inherit',
                     // footMenu: [{n:'目录'},{n:'进度'},{n:'设置'},{n:'夜间'}],
                     footMenu: [{
                         n: '设置'
@@ -352,8 +354,15 @@ function getContent() {
                     this.theme = item.id
                     $echo.setStorage('theme', this.theme);
                 },
-
                 // 设置字体
+                setFontF: function(item) {
+                    this.currFontF = item.v;
+                    setTimeout(() => {
+                        document.body.style.fontFamily = this.currFontF
+                    }, 100);
+                },
+
+                // 设置字体大小
                 setFont: function (size, is) {
                     var s = this.getInfo('size');
                     if (isNaN(s) || s == false) {
@@ -1003,7 +1012,6 @@ function getContent() {
                 }
 
                 this.init(); // 初始设置
-
             },
         })
     })

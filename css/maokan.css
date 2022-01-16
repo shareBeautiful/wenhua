@@ -132,8 +132,8 @@ body {
 }
 .dark .h,.dark .panel,.dark .form-control {
     background-color: #222 !important;
-    color: #999 !important;
+    color: #b3b3b3 !important;
 }
 .dark .h {
-    color: #999 !important;
+    color: #b3b3b3 !important;
 }
