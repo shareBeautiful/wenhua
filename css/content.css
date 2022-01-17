@@ -10,17 +10,31 @@ body {
 }
 
 @font-face {
-    font-family: 'cangerk';
+    font-family: 'jinkai';
     src: url('font/仓耳今楷.woff2'),
     url('font/仓耳今楷.woff'),
     url('font/仓耳今楷.ttf')
 }
 
 @font-face {
-    font-family: 'cangerx';
+    font-family: 'canger';
     src: url('font/仓耳玄三.woff2'),
     url('font/仓耳玄三.woff'),
     url('font/仓耳玄三.ttf')
+}
+
+@font-face {
+    font-family: 'xinghei';
+    src: url('font/方正行黑.woff2'),
+    url('font/方正行黑.woff'),
+    url('font/方正行黑.ttf')
+}
+
+@font-face {
+    font-family: 'katong';
+    src: url('font/方正卡通.woff2'),
+    url('font/方正卡通.woff'),
+    url('font/方正卡通.ttf')
 }
 
 
