@@ -5,7 +5,8 @@ body {
 
 @font-face {
     font-family: 'shaoer';
-    src: url('font/方正少儿.woff')
+    src: url('font/方正少儿.woff'),
+    url('font/方正少儿.ttf')
 }
 
 @font-face {
