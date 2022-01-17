@@ -8,16 +8,13 @@ body {
     src: url('font/方正少儿.woff')
 }
 
-/* @font-face {
+@font-face {
     font-family: 'cangerk';
     src: url('font/仓耳今楷.woff2'),
     url('font/仓耳今楷.woff'),
     url('font/仓耳今楷.ttf')
-} */
-@font-face {
-    font-family: 'cangerk';
-    src: url('font/仓耳今楷.ttf')
 }
+
 @font-face {
     font-family: 'cangerx';
     src: url('font/仓耳玄三.woff2'),
