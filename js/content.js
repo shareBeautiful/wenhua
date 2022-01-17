@@ -153,7 +153,7 @@ function getContent() {
                     showMenu: false, // 切换显示菜单
                     allTotal: 0, // 总字数
                     font: [18, 20, 22, 24, 26, 28],
-                    fontF: [{n:'默认',v:'inherit'},{n:'苍耳', v:'canger'}, {n:'少儿',v:'shaoer'}],
+                    fontF: [{n:'默认',v:'inherit'},{n:'苍耳', v:'cangerx'},{n:'今楷', v:'cangerk'}, {n:'少儿',v:'shaoer'}],
                     currFont: 22,
                     currFontF: 'inherit',
                     // footMenu: [{n:'目录'},{n:'进度'},{n:'设置'},{n:'夜间'}],
@@ -356,17 +356,13 @@ function getContent() {
                 },
                 // 设置字体
                 setFontF: function(item) {
-                    this.currFontF = item.v;
-                    $echo.setStorage('font', this.currFontF);
-                    document.body.style.fontFamily = this.currFontF
-                    // 由于字体改变后页面高度变化，需要延迟重新计算回到当前位置
-                    setTimeout(() => {
-                        this.$nextTick(() => {
-                            if (!is) this.getAllHeight(true); // 太卡，不搞了，由于字体改变需要重新更新高度 
-                            // 由于字体改变需要重新获取每一个id的高度
-                            this.memoryTo(); // 重新计算
-                        })
-                    }, 30)
+                    if(item) {
+                        this.currFontF = item.v;
+                        $echo.setStorage('font', this.currFontF);
+                    }
+                    setTimeout(()=>{
+                        document.body.style.fontFamily = this.currFontF
+                    }, 16)
                 },
 
                 // 设置字体大小
@@ -1002,8 +998,16 @@ function getContent() {
                 this.height = $elLoad.offsetHeight; // 获取屏幕的高度
                 $elLoad.style.display = 'none'
                 this.localInfo = this.getInfo(); // 获取当前页本地信息
+                // 字体大小
                 var size = this.localInfo['size'];
                 if (size) this.setFont(size, true);
+                // 字体
+                var font = localStorage.getItem('font')
+                if(font) {
+                    this.currFontF = font;
+                    this.setFontF();
+                }
+                // 书签
                 var book = this.localInfo['book'];
                 this.book = book ? book : [];
                 this.isDark = Boolean(eval($echo.getStorage('isDark'))); // 转换布尔值

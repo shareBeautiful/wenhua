@@ -343,7 +343,6 @@
                     return data
                 }
             } catch (e) {
-                alert(data)
                 return data
             }
         },
