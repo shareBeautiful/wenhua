@@ -3,38 +3,36 @@ body {
     margin: 0 auto;
 }
 
-@font-face {
-    font-family: 'shaoer';
-    src: url('font/方正少儿.woff'),
-    url('font/方正少儿.ttf')
-}
 
 @font-face {
     font-family: 'jinkai';
-    src: url('font/仓耳今楷.woff2'),
-    url('font/仓耳今楷.woff'),
+    src:  url('font/仓耳今楷.otf'),
+    url('font/仓耳今楷.woff2'),
     url('font/仓耳今楷.ttf')
 }
 
 @font-face {
     font-family: 'canger';
     src: url('font/仓耳玄三.woff2'),
-    url('font/仓耳玄三.woff'),
     url('font/仓耳玄三.ttf')
 }
 
 @font-face {
     font-family: 'xinghei';
     src: url('font/方正行黑.woff2'),
-    url('font/方正行黑.woff'),
     url('font/方正行黑.ttf')
 }
 
 @font-face {
     font-family: 'katong';
     src: url('font/方正卡通.woff2'),
-    url('font/方正卡通.woff'),
     url('font/方正卡通.ttf')
+}
+
+@font-face {
+    font-family: 'hanyi';
+    src: url('font/汉仪楷体.woff2'),
+    url('font/汉仪楷体.ttf')
 }
 
 
