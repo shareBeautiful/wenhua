@@ -5,13 +5,6 @@ body {
 
 
 @font-face {
-    font-family: 'jinkai';
-    src:  url('font/仓耳今楷.otf'),
-    url('font/仓耳今楷.woff2'),
-    url('font/仓耳今楷.ttf')
-}
-
-@font-face {
     font-family: 'canger';
     src: url('font/仓耳玄三.woff2'),
     url('font/仓耳玄三.ttf')
@@ -28,11 +21,10 @@ body {
     src: url('font/方正卡通.woff2'),
     url('font/方正卡通.ttf')
 }
-
 @font-face {
-    font-family: 'hanyi';
-    src: url('font/汉仪楷体.woff2'),
-    url('font/汉仪楷体.ttf')
+    font-family: 'shengshi';
+    src: url('font/方正盛世.woff2'),
+    url('font/方正盛世.ttf')
 }
 
 

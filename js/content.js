@@ -154,8 +154,8 @@ function getContent() {
                     allTotal: 0, // 总字数
                     font: [20, 22, 24, 26, 28],
                     fontF: 
-                    [{n:'默认',v:'inherit'},{n:'汉仪',v:'hanyi'},{n:'仓耳', v:'canger'},{n:'今楷', v:'jinkai'},{n:'行黑',v:'xinghei'},{n:'卡通',v:'katong'}],
-                    currFont: 22,
+                    [{n:'默认',v:'inherit'},{n:'盛世', v:'shengshi'},{n:'仓耳', v:'canger'},{n:'行黑',v:'xinghei'},{n:'卡通',v:'katong'}],
+                    currFont: 22,                                               
                     currFontF: 'inherit',
                     // footMenu: [{n:'目录'},{n:'进度'},{n:'设置'},{n:'夜间'}],
                     footMenu: [{
