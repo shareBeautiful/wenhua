@@ -158,7 +158,6 @@ em, i {
 .B1_text_xin p {
     overflow: hidden;
     margin-bottom: 4px;
-    font-size: 21px;
     color: #993300;
     line-height: 1.8 !important;
 }
@@ -192,19 +191,19 @@ em, i {
 
 }
 
-.B1_text_xin p span:first-line {
+/* .B1_text_xin p span:first-line {
     font-size: 22px;
-}
+} */
 
 .B1_text_xin h2 {
-    font-size: 22px;
+    font-size: inherit;
 }
 
 .B1_text_xin div {
     padding: 5px 0 0;
     margin: 0 25px;
     letter-spacing: 1px;
-    font-size: 18px;
+    
 }
 
 .B1_text_xin a {

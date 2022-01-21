@@ -153,9 +153,12 @@ function getContent() {
                     showMenu: false, // 切换显示菜单
                     allTotal: 0, // 总字数
                     font: [20, 22, 24, 26, 28],
-                    fontF: 
-                    [{n:'默认',v:'inherit'},{n:'盛世', v:'shengshi'},{n:'仓耳', v:'canger'},{n:'行黑',v:'xinghei'},{n:'卡通',v:'katong'}],
-                    currFont: 22,                                               
+                    fontF: [
+                        {n:'默认',v:'inherit'},{n:'盛世', v:'shengshi'},
+                        {n:'今楷', v:'jinkai'},{n:'云黑', v:'yunhei'},
+                        {n:'玄三', v:'xuansan'},{n:'行黑',v:'xinghei'},{n:'卡通',v:'katong'}
+                    ],
+                    currFont: 22,                                   
                     currFontF: 'inherit',
                     // footMenu: [{n:'目录'},{n:'进度'},{n:'设置'},{n:'夜间'}],
                     footMenu: [{
@@ -387,7 +390,7 @@ function getContent() {
                         this.$nextTick(() => {
                             if (!is) this.getAllHeight(true); // 太卡，不搞了，由于字体改变需要重新更新高度 
                             // 由于字体改变需要重新获取每一个id的高度
-                            this.memoryTo(); // 重新计算
+                            if(memory) this.memoryTo(); // 重新计算
                         })
                         this.currFont = s;
                     }, 30)

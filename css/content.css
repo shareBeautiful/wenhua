@@ -1,30 +1,35 @@
 body {
     max-width: 960px;
     margin: 0 auto;
+    font-family: inherit;
 }
 
 
 @font-face {
-    font-family: 'canger';
-    src: url('font/仓耳玄三.woff2'),
-    url('font/仓耳玄三.ttf')
+    font-family: 'jinkai';
+    src: url('font/仓耳今楷.woff2')
+}
+@font-face {
+    font-family: 'yunhei';
+    src: url('font/仓耳云黑.woff2')
+}
+@font-face {
+    font-family: 'xuansan';
+    src: url('font/仓耳玄三.woff2')
 }
 
 @font-face {
     font-family: 'xinghei';
-    src: url('font/方正行黑.woff2'),
-    url('font/方正行黑.ttf')
+    src: url('font/方正行黑.woff2')
 }
 
 @font-face {
     font-family: 'katong';
-    src: url('font/方正卡通.woff2'),
-    url('font/方正卡通.ttf')
+    src: url('font/方正卡通.woff2')
 }
 @font-face {
     font-family: 'shengshi';
-    src: url('font/方正盛世.woff2'),
-    url('font/方正盛世.ttf')
+    src: url('font/方正盛世.woff2')
 }
 
 
@@ -75,7 +80,7 @@ body {
 }
 
 #bodyBox {
-    font-size: 21px;
+    
 }
 
 .theme {
