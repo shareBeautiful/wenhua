@@ -388,20 +388,16 @@
     "type": "wenhua",
     "open": false,
     "list": [
-      {
-        "tit": "大学中庸",
-        "id": 0,
-        "key": "dxzy"
-      },
+      
       {
         "tit": "大学",
         "id": 1,
-        "href": "http://daxue.5000yan.com/"
+        "key": "dx"
       },
       {
         "tit": "中庸",
         "id": 2,
-        "href": "http://zhongyong.5000yan.com/"
+        "key": "zy"
       },
       {
         "tit": "论语",
@@ -409,9 +405,24 @@
         "key": "ly"
       },
       {
+        "tit": "大学中庸",
+        "id": 0,
+        "key": "dxzy"
+      },
+      {
         "tit": "孟子",
         "id": 4,
         "href": "http://mengzi.5000yan.com/"
+      },
+      {
+        "tit": "道德经",
+        "id": 7,
+        "key": "ddj"
+      },
+      {
+        "tit": "庄子",
+        "id": 6,
+        "href": "http://zhuangzi.5000yan.com/"
       },
       {
         "tit": "易经",
@@ -422,16 +433,6 @@
         "tit": "周易",
         "id": 21,
         "href": "https://www.gming.org/ctwh/sishuwujing/zhouyi/15932.html"
-      },
-      {
-        "tit": "庄子",
-        "id": 6,
-        "href": "http://zhuangzi.5000yan.com/"
-      },
-      {
-        "tit": "道德经",
-        "id": 7,
-        "key": "ddj"
       },
       {
         "tit": "鬼谷子",
@@ -459,7 +460,7 @@
         "href": "http://neijing.5000yan.com/"
       },
       {
-        "tit": "三十六计",
+        "tit": "孙子兵法",
         "id": 13,
         "href": "http://sunzi.5000yan.com/"
       },
@@ -484,7 +485,12 @@
         "href": "http://zengguang.5000yan.com/"
       },
       {
-        "tit": "唐诗宋词",
+        "tit": "传习录",
+        "id": 17,
+        "href": "https://chuanxilu.5000yan.com/"
+      },
+      {
+        "tit": "诗词歌赋",
         "id": 18,
         "href": "https://5000yan.com/gushi/"
       },
@@ -492,6 +498,11 @@
         "tit": "四大名著",
         "id": 19,
         "href": "https://5000yan.com/sidamingzhu/"
+      },
+      {
+        "tit": "四书五经",
+        "id": 19,
+        "href": "https://5000yan.com/fenlei/sswj/"
       },
       {
         "tit": "百家姓",
