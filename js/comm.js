@@ -5,7 +5,7 @@
      */
     // 定义通用变量
     function Echo() {
-        this.VERSION = '0.01';
+        this.VERSION = '0.02';
         this.apiUrl = "http://192.168.0.27:8080/lingjuyi"; // 兰工本地
         // this.apiUrl = "https://isv.first-zone.cn/llt_api/lingjuyi";  //正式环境 1
         // this.apiUrl = "https://isv.first-zone.cn/mall_api/lingjuyi";  //正式环境 2
