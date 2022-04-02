@@ -3,6 +3,7 @@
     "tit": "日常",
     "type": "fozhou",
     "open": false,
+    "memory": false,
     "list": [
       {
         "tit": "早诵功课",
@@ -788,9 +789,9 @@
         "key": "lz"
       },
       {
-        "tit": "道德经(马王堆)",
+        "tit": "帛书老子",
         "id": 21,
-        "key": "ddj"
+        "key": "bslz"
       },
       {
         "tit": "论语",
