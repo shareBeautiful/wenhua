@@ -195,7 +195,7 @@ function getContent() {
                     step: 5, // 自动调步
                     currTime: 100, // 当前选择时间
                     scrollTime: null, // 滚动日期
-                    showRest: false, // 显示重新设置
+                    showRest: true, // 显示重新设置
                     currItem: '', // 当前标题名称
                     currIdx: '', // 当前索引
                     showAudio: false, // 是否显示音频
