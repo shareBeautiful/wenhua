@@ -101,12 +101,14 @@
         color: #ac3a39;
         -webkit-touch-callout: none;
     }
+
     .intro-box .title {
         font-size: 20px;
         display: inline-block;
         line-height: 1;
         padding-bottom: 15px;
     }
+
     .intro-box .intro {
         font-size: 20px;
         line-height: 1.5;
@@ -166,7 +168,7 @@
         </div>
         <div class="panel panel-default">
             <div class="panel-heading h">
-                {{title}}  长按可查看简介
+                {{title}} 长按可查看简介
             </div>
             <div class="panel-body">
                 <div class="box" :class="key.indexOf('fxmc')==-1? 'block' : ''">
@@ -237,14 +239,15 @@
                 // 搜索
                 search: function () {
                     this.subList.forEach(function (item, idx) {
-                        if ((idx + item.title + item.key).indexOf(that.keyword) > -1) {
+                        if ((idx + item.pinyin + item.title + item.key).indexOf(that.keyword) > -1) {
                             item.hide = false
                         } else {
                             item.hide = true
                         }
                     });
+
                     // this.subList = this.list.filter(item => {
-                    //     if (item.title.indexOf(this.keyword) > -1) {
+                    //     if (item.pinyin+item.title.indexOf(this.keyword) > -1) {
                     //         return item;
                     //     }
                     // })

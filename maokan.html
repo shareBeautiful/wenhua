@@ -80,17 +80,17 @@
                 // 搜索
                 search: function () {
                     this.subList.forEach(function(item,idx){
-                        if ((idx+item.title+item.date).indexOf(that.keyword) > -1) {
+                        if ((idx+item.pinyin+item.title+item.date).indexOf(that.keyword) > -1) {
                             item.hide = false
                         }else {
                             item.hide = true
                         }
                     });
-                    this.subList = this.list.filter(item => {
-                        if ((item.title+item.date).indexOf(this.keyword) > -1) {
-                            return item;
-                        }
-                    })
+                    // this.subList = this.list.filter(item => {
+                    //     if ((item.pinyin+item.title+item.date).indexOf(this.keyword) > -1) {
+                    //         return item;
+                    //     }
+                    // })
                 },
                 // 切换排序
                 switchSort: function () {
