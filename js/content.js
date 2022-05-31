@@ -930,7 +930,10 @@ function getContent() {
                             this.audioSrc = src;
                         } else {
                             var src = '/audio/' + file + '/' + tit + '.' + audioType;
-                            var audio = playAudio(src);
+                            this.$nextTick(()=>{
+                                var audio = playAudio(src);
+                            })
+                            
                         }
 
                         // audio.loop = true  // 设置循环播放
@@ -1025,8 +1028,10 @@ function getContent() {
                 } else {
                     this.theme = localStorage.getItem('theme') || 1;
                 }
-
-                this.init(); // 初始设置
+                this.$nextTick(()=>{
+                    this.init(); // 初始设置
+                })
+                
             },
         })
     })

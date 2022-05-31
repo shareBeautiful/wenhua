@@ -26,18 +26,23 @@ function playAudio(src) {
         init: function () {
             this.onDrag = false;
             nAudio.src = src; // 播放地址
-            nAudio.autoplay = "autoplay"; // 自动播放
+            // nAudio.autoplay = "autoplay"; // 自动播放
+            nAudio.autoplay = true;
+            nAudio.id = 'audio';
+            
             nAudio.loop = false; // 不循环
             this.timer = timer($.proxy(this.updatePos, this));
-            this.bindEvents();
-            // this.play();
+            setTimeout(()=>{
+                this.bindEvents();
+                // $playBtn.triggerHandler('click')
+            },100)
+            
         },
         bindEvents: function () {
             var self = this;
-
-            nAudio.addEventListener("loadeddata", function () {
-                self.play();
-            });
+            // nAudio.addEventListener("loadeddata", function () {
+            //     self.play();
+            // });
 
             // nAudio.addEventListener("loadedmetadata", function () {
             //     self.play()
@@ -47,10 +52,11 @@ function playAudio(src) {
             });
             nAudio.addEventListener("ended", function () {
                 self.stop();
+                // $playBtn.triggerHandler('click')
                 // self.play();//单曲循环
             });
             $progressRange
-                .bind('touchstart', function (e) {
+                .on('touchstart', function (e) {
                     self.onDrag = true;
                     var touches = e.originalEvent.touches;
                     if (touches.length > 0) {
@@ -60,22 +66,22 @@ function playAudio(src) {
                         self.updateProgressBar(percent, true);
                     }
                 })
-                .bind('touchmove', function () {
+                .on('touchmove', function () {
                     self.onDrag = true;
                     self.updateProgressBar(this.value, false);
                 })
-                .bind('touchend', function () {
+                .on('touchend', function () {
                     self.onDrag = false;
                     self.setProgress(this.value, false);
                 });
-            $playBtn.bind('click', function () {
+            $playBtn.on('click', function () {
                 if ($(this).hasClass('nft-player-pause')) {
                     self.pause();
                 } else {
                     self.play();
                 }
             });
-            $stopBtn.bind('click', function () {
+            $stopBtn.on('click', function () {
                 self.stop();
             });
         },
