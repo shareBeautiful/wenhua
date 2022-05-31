@@ -34,6 +34,7 @@ function playAudio(src) {
             this.timer = timer($.proxy(this.updatePos, this));
             setTimeout(()=>{
                 this.bindEvents();
+                this.timer.start();
                 // $playBtn.triggerHandler('click')
             },100)
             
