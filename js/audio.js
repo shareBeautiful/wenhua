@@ -27,7 +27,7 @@ function playAudio(src) {
             this.onDrag = false;
             nAudio.src = src; // 播放地址
             // nAudio.autoplay = "autoplay"; // 自动播放
-            nAudio.autoplay = true;
+            // nAudio.autoplay = false;
             nAudio.id = 'audio';
             
             nAudio.loop = false; // 不循环
@@ -35,7 +35,7 @@ function playAudio(src) {
             setTimeout(()=>{
                 this.bindEvents();
                 this.timer.start();
-                // $playBtn.triggerHandler('click')
+                $playBtn.triggerHandler('click')
             },100)
             
         },
