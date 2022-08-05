@@ -864,6 +864,7 @@ function getContent() {
                             var arra = []
                             item.html = item.html.replace(re, function (s) {
                                 var href = `/content.html?type=key&key=fxmc&keyword=${objK[s]}`
+                                // var href = `https://www.hrfjw.com/remen/${objK[s]}`;
                                 var has = arra.includes(s); // 判断是否存在
                                 arra.push(s);
                                 if (has) {
