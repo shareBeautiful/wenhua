@@ -22,14 +22,7 @@ var Salt = {
     version: 1,        // 版本号
     db: null,          // 
     table: 'foxueTable' // 表名字
-}
-/**
- * 增加或更新indexDB字段的值
- * @param {*} key 传递过来的键（在存储的时候）
- * @param {*} val 传递过来的值（在存储的时候）
- * @param {*} back 回调函数
- * @param {*} value 整个数据，需要更新的，是更新的值
- */
+};
 
 var INDEXDB = {
     openDB(name, version, table, callback) {
@@ -139,6 +132,6 @@ var INDEXDB = {
         //console.log(Salt);
         Salt.db.close();
     },
-}
+};
 //初始化数据库
 INDEXDB.openDB(Salt.name, Salt.version, Salt.table);
