@@ -60,7 +60,7 @@ if (keyword) {
 function getData() {
     new Promise((r, s) => {
         var menuList = $echo.getStorage('menuData');
-        if (menuList && menuList.lenght) {
+        if (menuList && menuList.length) {
             r(menuList);
         } else {
             $echo.getJson('./data/menu.json').then(res => {
