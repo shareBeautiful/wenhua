@@ -61,11 +61,13 @@
                         <span @click.capture="switchAuto" class="list-group-item fz book"><i class="zhe"></i><input
                                 class="switch" type="checkbox" v-model='isAuto'>自动 {{currTime>=100? currTime :
                             '0'+currTime}}s</span>
+                        <span @click.capture="switchSleep(!isNoSleep)" class="list-group-item fz book"><i class="zhe"></i><input
+                                class="switch" type="checkbox" v-model='isNoSleep'>常亮 </span>
                         <span @click.capture="switchOrder" v-if="len>10" class="list-group-item fz book"><i
                                 class="zhe"></i><input class="switch" type="checkbox" v-model='isReverse'>倒序</span>
                         <span class="list-group-item fz book" v-if="showRest" @click="reset('c')">清空缓存</span>
                         <input v-if="isAuto" class="range" @change="setAutoTime" :step="step" v-model="currTime"
-                            type="range" name="points" min="5" max="250">
+                            type="range" name="points" min="6" max="250">
                     </div>
                     <div class="list-group-item fz book curr-pos" @click="toPos(currIdx, currItem);">
                         {{subProcess}}-当前位置：{{currIdx+1}}-{{currItem.title}}({{currItem.total}})</div>
@@ -184,11 +186,12 @@
         <script src="js/touch.js"></script>
         <script src="js/jq.js"></script>
         <script src="js/audio.js"></script>
+        <script src="js/nosleep.js"></script>
     </div>
 </body>
 <script src="js/content.js"></script>
 <script>
-   
+
 </script>
 
 </html>

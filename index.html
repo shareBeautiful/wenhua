@@ -45,7 +45,7 @@
                     <div class="list-group panel-success">
                         <template v-for="(item,idx) in lookInfo.list" :key="idx">
                             <a :href="item.href" target="_blank" class="list-group-item">
-                                <span class="l">{{getOrder(idx+1)}}. {{item.tit}}
+                                <span class="l">{{idx+1}}. {{sliceStr(item.tit)}}
                                     <span v-if="item.pwd" class="pwd-icon">*</span>
                                 </span>
                                 <span class="r">{{item.parent}} <span style="padding-left: 20px;color: #a00 !important"
@@ -259,7 +259,7 @@
                                 var key = itemB.tit + itemB.key;
                                 if (key.indexOf(this.keyword.toLowerCase()) > -1) {
                                     itemB.type = itemA.type;
-                                    itemB.parent = itemA.tit;
+                                    itemB.parent = itemA.tit.slice(0,3);
                                     list.push(itemB)
                                 }
                             })
@@ -310,7 +310,7 @@
                         }
                     })
                     itemB = this.copyList(itemB)
-                    itemB.parent = itemA.tit;
+                    itemB.parent = itemA.tit.slice(0,3);
                     itemB.type = itemA.type;
                     this.lookInfo.list.unshift(itemB);
                     this.lookInfo.list.splice(6);
@@ -321,6 +321,13 @@
                 delLookInfo: function (idx) {
                     this.lookInfo.list.splice(idx, 1)
                     $echo.setStorage('lookInfo', this.lookInfo.list)
+                },
+
+                // 截取指定数目字符串
+                sliceStr: function(str, n) {
+                    n = n? n : 8;
+                    console.log(n)
+                    return str.slice(0,n)
                 },
 
                 // 复制引用对象

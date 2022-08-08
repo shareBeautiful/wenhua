@@ -152,13 +152,14 @@ function getContent() {
                     colors: ['success', 'info', 'warning', 'danger'],
                     showMenu: false, // 切换显示菜单
                     allTotal: 0, // 总字数
+                    noSleep: null, // 屏幕常亮对象
                     font: [20, 22, 24, 26, 28],
                     fontF: [
                         {n:'默认',v:'inherit'},{n:'盛世', v:'shengshi'},
                         {n:'今楷', v:'jinkai'},{n:'云黑', v:'yunhei'},
                         {n:'玄三', v:'xuansan'},{n:'行黑',v:'xinghei'},{n:'卡通',v:'katong'}
                     ],
-                    currFont: 22,                                   
+                    currFont: 24,                                   
                     currFontF: 'inherit',
                     // footMenu: [{n:'目录'},{n:'进度'},{n:'设置'},{n:'夜间'}],
                     footMenu: [{
@@ -190,9 +191,10 @@ function getContent() {
                     isPage: false, // 默认翻页
                     isOnPage: false, // 是否分页加载
                     isReverse: false, // 默认目录排序
+                    isNoSleep: false, // 默认屏幕不常亮
                     isAuto: false, // 默认不自动翻页
                     autoTime: null, // 自动时间
-                    step: 5, // 自动调步
+                    step: 2, // 自动调步
                     currTime: 100, // 当前选择时间
                     scrollTime: null, // 滚动日期
                     showRest: true, // 显示重新设置
@@ -585,6 +587,7 @@ function getContent() {
                         if (this.isAuto) {
                             this.stopScroll();
                             this.isAuto = null
+                            this.switchSleep(false); // 关闭常亮
                         }
 
                     }
@@ -628,9 +631,20 @@ function getContent() {
                     return idx;
                 },
 
+                // 切换屏幕常亮
+                switchSleep: function(is) {
+                    this.isNoSleep = is;
+                    if(this.isNoSleep) {
+                        this.noSleep.enable(); // 启用常亮
+                    }else {
+                        this.noSleep.disable(); // 关闭常亮
+                    }
+                },
+
                 // 开启自动翻页
                 switchAuto: function (time) {
                     // this.isPage = !this.isAuto;
+                    
                     if (!this.isAuto) {
                         this.isAuto = true;
                         this.setAutoTime()
@@ -643,7 +657,10 @@ function getContent() {
                         this.stopScroll();
                         this.isAuto = null
                     }
+                    this.switchSleep(this.isAuto); // 自动设置屏幕常亮
                 },
+
+                
 
                 // 停止滚动不关闭自动开关
                 stopScroll: function () {
@@ -919,6 +936,8 @@ function getContent() {
                         $("#bodyBox a").click(function () {
                             event.stopPropagation();
                         })
+                        // 实例化屏幕常亮对象
+                        this.noSleep = new NoSleep()
                     })
 
                     // 喜马拉雅音频
@@ -1008,7 +1027,7 @@ function getContent() {
                 this.localInfo = this.getInfo(); // 获取当前页本地信息
                 // 字体大小
                 var size = this.localInfo['size'];
-                if (size) this.setFont(size, true);
+                size? this.setFont(size, true) : this.setFont(this.currFont);
                 // 字体
                 var font = localStorage.getItem('font')
                 if(font) {
