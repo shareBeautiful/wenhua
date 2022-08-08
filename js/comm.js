@@ -14,9 +14,8 @@
         // 初始
         startInit: function () {
             self = this;
-
             this.addLink("css/bootstrap.css");
-            this.addScript('./js/vue.js');
+            this.addScript('./js/vue.js', false);
             // 加载通用css
             // this.addLink("css/vant.css");
             // 加载通用js
@@ -482,11 +481,14 @@
         },
 
         // 加载js函数
-        addScript: function (path, func) {
-            var script = '<script type="text/javascript" src=' + path + '?v=' + Number(Math.random() * 10000) + '></script>';
+        addScript: function (path, opt) {
+            opt = opt? opt : {func: null, isRan: false};
+            var v = opt.isRan? '?v=' + Number(Math.random() * 10000) : '';
+            var script = '<script type="text/javascript" src=' + path + v+ '></script>';
+            
             document.write(script)
-            func ? setTimeout(function () {
-                func()
+            opt.func ? setTimeout(function () {
+                opt.func()
             }, 16) : null;
         },
 
