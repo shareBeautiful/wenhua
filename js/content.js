@@ -634,11 +634,11 @@ function getContent() {
                 // 切换屏幕常亮
                 switchSleep: function(is) {
                     this.isNoSleep = is;
-                    if(this.isNoSleep) {
-                        this.noSleep.enable(); // 启用常亮
-                    }else {
-                        this.noSleep.disable(); // 关闭常亮
-                    }
+                    // if(this.isNoSleep) {
+                    //     this.noSleep.enable(); // 启用常亮
+                    // }else {
+                    //     this.noSleep.disable(); // 关闭常亮
+                    // }
                 },
 
                 // 开启自动翻页
@@ -937,7 +937,7 @@ function getContent() {
                             event.stopPropagation();
                         })
                         // 实例化屏幕常亮对象
-                        this.noSleep = new NoSleep()
+                        // this.noSleep = new NoSleep()
                     })
 
                     // 喜马拉雅音频
