@@ -45,18 +45,20 @@
 <script>
     var that;
     var key = $echo.getParams('key');
-    var path,title;
+    var type = $echo.getParams('type');
+    var path, title;
     var opt = {}
-    if(key === 'mkdh') {
+    if (key === 'mkdh') {
         path = './data/猫砍大画.json'
         title = "猫砍大画"
-    }else if(key === 'fjxz') {
+    } else if (key === 'fjxz') {
         path = './data/pdf.json'
         title = "佛经注音版_点击下载"
-    }else if(key === 'xkj') {
+    } else if (type === 'xukongji') {
         title = "虚空济文字"
-        path = 'https://api2022.xukongji.com/api/article/menu'
-        opt = {method: "post", body: JSON.stringify({a_id: 148})}
+        if (key === 'xkj') path = 'https://api2022.xukongji.com/api/article/menu?a_id=148'
+        if (key === 'xkjvideo') path = 'https://api2022.xukongji.com/api/article/menu?a_id=139'
+        opt = { method: "post" } // body: JSON.stringify({a_id: 148})
     }
     document.title = title;
     $echo.getJson(path, opt).then(function (res) {
@@ -65,12 +67,15 @@
         //         item.href = './pdf/'+item.title+'.pdf';
         //     })
         // }
-        if(key === 'xkj') {
+        if (type === 'xukongji') {
             // 填加href
             res = res['data'].reverse();
-            res.forEach(item => {
-                item.href = 'https://api2022.xukongji.com/api/article/menuInfoWeb?id='+item.id
-            })
+            if (key === 'xkj') {
+                res.forEach(item => item.href = 'https://api2022.xukongji.com/api/article/menuInfoWeb?id=' + item.id)
+            } else if (key === 'xkjvideo') {
+                res.forEach(item => item.href = item.video_url)
+            }
+
         }
         new Vue({
             el: '#app',
@@ -91,10 +96,10 @@
                 },
                 // 搜索
                 search: function () {
-                    this.subList.forEach(function(item,idx){
-                        if ((idx+item.pinyin+item.title+item.date).indexOf(that.keyword) > -1) {
+                    this.subList.forEach(function (item, idx) {
+                        if ((idx + item.pinyin + item.title + item.date).indexOf(that.keyword) > -1) {
                             item.hide = false
-                        }else {
+                        } else {
                             item.hide = true
                         }
                     });
