@@ -83,12 +83,14 @@
 
 
         getJson: function (url, config) {
-            config = {
+            opt = {
                 headers: {
-                    'Cache-Control': 'public,max-age=7200' //不缓存
+                    'Cache-Control': 'public,max-age=7200', //不缓存
+                    'Content-Type': 'application/json'
                 }
             }
-            return fetch(url, config).then((res) => {
+            if(config) Object.assign(opt,config)
+            return fetch(url, opt).then((res) => {
                 if (res.ok) {
                     // text() 获取字符串，json()获取json数据
                     return res.json()

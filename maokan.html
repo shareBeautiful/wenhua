@@ -45,21 +45,33 @@
 <script>
     var that;
     var key = $echo.getParams('key');
-    var path,title
+    var path,title;
+    var opt = {}
     if(key === 'mkdh') {
         path = './data/猫砍大画.json'
         title = "猫砍大画"
     }else if(key === 'fjxz') {
         path = './data/pdf.json'
         title = "佛经注音版_点击下载"
+    }else if(key === 'xkj') {
+        title = "虚空济文字"
+        path = 'https://api2022.xukongji.com/api/article/menu'
+        opt = {method: "post", body: JSON.stringify({a_id: 148})}
     }
     document.title = title;
-    $echo.getJson(path).then(function (res) {
+    $echo.getJson(path, opt).then(function (res) {
         // if(key === 'fjxz') {
         //     res.forEach(item => {
         //         item.href = './pdf/'+item.title+'.pdf';
         //     })
         // }
+        if(key === 'xkj') {
+            // 填加href
+            res = res['data'];
+            res.forEach(item => {
+                item.href = 'https://api2022.xukongji.com/api/article/menuInfoWeb?id='+item.id
+            })
+        }
         new Vue({
             el: '#app',
             data: function () {
@@ -110,8 +122,6 @@
             }
         })
     })
-
-
 </script>
 
 </html>

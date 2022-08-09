@@ -1144,6 +1144,12 @@
     "word": true,
     "list": [
       {
+        "tit": "《孟子》文字版",
+        "id": 0,
+        "key": "xkj",
+        "href": "maokan"
+      },
+      {
         "pwd": true,
         "tit": "《孟子》文字浅解（更新中）",
         "id": 1,
