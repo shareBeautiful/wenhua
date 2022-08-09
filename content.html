@@ -146,7 +146,7 @@
                         <video id="video" v-else-if="showAudio === 'mp4'" controls autoplay :src="audioSrc"></video>
                         <div class="panel-body" v-html="item.html"></div>
                         <!-- <div class="panel-body" v-html="item.html"></div> -->
-                        <div class="panel-footer" v-if="['jiangji', 'qita'].includes(dirType) && item.date">
+                        <div class="panel-footer" v-if="['jiangji', 'qita', 'xukongji'].includes(dirType) && item.date">
                             发布时间：{{item.date}}</div>
                     </div>
                 </div>

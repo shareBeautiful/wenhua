@@ -1227,28 +1227,35 @@
       },
       {
         "tit": "一听就懂的领悟",
-        "id": 1,
+        "id": 2,
         "key": "ytjddlw",
         "href": "xmly",
         "audioType": "m4a"
       },
       {
         "tit": "吴言生讲佛经",
-        "id": 2,
+        "id": 3,
         "key": "wysjfj",
         "href": "xmly",
         "audioType": "m4a"
       },
       {
         "tit": "佛学导读",
-        "id": 3,
+        "id": 4,
         "key": "fxdd",
         "href": "xmly",
         "audioType": "m4a"
       },
       {
+        "tit": "金刚经导读",
+        "id": 5,
+        "key": "jgjdd",
+        "href": "xmly",
+        "audioType": "m4a"
+      },
+      {
         "tit": "楞伽经导读",
-        "id": 1,
+        "id": 6,
         "key": "lqjdd",
         "href": "xmly",
         "audioType": "m4a"
