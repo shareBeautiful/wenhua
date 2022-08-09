@@ -67,7 +67,7 @@
         // }
         if(key === 'xkj') {
             // 填加href
-            res = res['data'];
+            res = res['data'].reverse();
             res.forEach(item => {
                 item.href = 'https://api2022.xukongji.com/api/article/menuInfoWeb?id='+item.id
             })
