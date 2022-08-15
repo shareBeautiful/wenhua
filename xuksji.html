@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="Cache" content="no-cache">
+    <meta name=App-Config content="fullscreen=yes,useHistoryState=yes,transition=yes">
+    <meta content=yes name=apple-mobile-web-app-capable>
+    <meta content=yes name=apple-touch-fullscreen>
+    <meta content="telephone=no,email=no" name=format-detection>
+    <meta name="theme-color" content="#1a1a1a">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name=viewport
+        content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+    <link rel="stylesheet" href="css/maokan.css">
+    <title></title>
+    <style>
+        .box-item {
+            padding: 10px 0;
+        }
+        .box-item .pic {
+            width: 100px;
+        }
+        .box-item .head {
+            position: relative;
+        }
+        .box-item .info {
+            flex: 1;
+            padding-left: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" v-cloak :class="{'dark': isDark}">
+        <div class="input-group fixed search-box">
+            <input type="text" class="form-control" @input="search" v-model="keyword" placeholder="搜索...">
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading h">
+                <div class="h-r">{{title}}</div>
+                <div><span class="tag" :class="{active: item.id === tagId}" v-for="item in tags" :key="item.id"
+                        @click="switchTag(item.id)">
+                        {{item.tit}}
+                    </span>
+                </div>
+                <div class="h-l">
+
+                    <span @click="switchSort">{{ sortStatus?"倒序↑":"正序↓" }}</span>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="box">
+                    <a href="javascript:" @click="toPage(item)" class="box-item" v-for="(item,idx) in list"
+                        :key="item.id" v-show="!item.hide">
+                        <!-- <div class="head">
+                            <img class="pic" :src="item.img_url" alt="" />
+                        </div> -->
+                        <div class="info">
+                            <div>
+                                <span class="order">{{sortStatus? list.length-idx : idx+1}}.</span>
+                                <span class="title">{{item.title}}</span>
+                            </div>
+                            <div class="time">
+                                <span>时间：{{item.date}}</span>
+                            </div>
+                            <div class="time">
+                                <span>共：{{item.menu_num}}讲 </span>
+                                <span> 阅读：{{getCount(item.plays_num)}} 次</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="js/comm.js"></script>
+<script>
+    var that;
+    var type = $echo.getParams('type');
+    var title = '虚空济'
+    document.title = title;
+    new Vue({
+        el: '#app',
+        data: function () {
+            return {
+                list: [],
+                keyword: '',
+                sortStatus: false,
+                isDark: false,
+                title: title,
+                tags: [
+                    { id: 1, tit: '视频' },
+                    { id: 2, tit: '音频' },
+                    { id: 3, tit: '文字' }],
+                tagId: 3
+            }
+        },
+        methods: {
+            // 跳转
+            toPage: function (item) {
+                $echo.open(item.href, false, true)
+            },
+            // 搜索
+            search: function () {
+                this.list.forEach((item, idx) => {
+                    if ((idx + item.pinyin + item.title + item.date).indexOf(this.keyword) > -1) {
+                        item.hide = false
+                    } else {
+                        item.hide = true
+                    }
+                });
+            },
+            getCount: function(n) {
+                if(n >=10000) {
+                    n = n/10000+'w'
+                }
+                return n;
+            },
+            // 切换排序
+            switchSort: function () {
+                this.sortStatus = !this.sortStatus;
+                this.list.reverse()
+            },
+            // 切换标签
+            switchTag: function (id) {
+                this.tagId = id;
+                var path = 'https://api2022.xukongji.com/api/article/list',
+                    opt = { method: 'post' },
+                    body = JSON.stringify({ "page_size": 100, "page_no": 1, "c_id": id });
+                opt = { method: "post", body: body } // body: JSON.stringify({a_id: 148})
+                $echo.getJson(path, opt).then((res) => {
+                    res = res['data'];
+                    res.forEach(item => {
+                        item.href = '/maokan.html?type=' + type + '&key=' + id + '&id=' + item.id;
+                        item.title = item.title
+                        item.date = item.add_time.slice(0, 11)
+                    })
+                    this.list = res;
+                })
+            }
+        },
+        created: function () {
+            that = this;
+        },
+        mounted: function () {
+            this.switchTag(3)
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                this.isDark = true;
+            } else {
+                this.isDark = false;
+            }
+        }
+    })
+</script>
+
+</html>

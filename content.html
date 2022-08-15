@@ -34,7 +34,7 @@
             <div id="menu" @dblclick.capture="clickHideMenu" v-swipeleft="clickHideMenu" class="list-group"
                 :class="{'show-a': showMenu}">
                 <div>
-                    <div>
+                    <div class="box-book">
                         <span @click="addBook" class="add-book btn btn-xs bg-danger">添加书签</span>
                         <span class="add-book btn btn-xs bg-success">
                             总字数：{{total('', allTotal)}} -- 阅读：{{process}}
@@ -61,8 +61,8 @@
                         <span @click.capture="switchAuto" class="list-group-item fz book"><i class="zhe"></i><input
                                 class="switch" type="checkbox" v-model='isAuto'>自动 {{currTime>=100? currTime :
                             '0'+currTime}}s</span>
-                        <!-- <span @click.capture="switchSleep(!isNoSleep)" class="list-group-item fz book"><i
-                                class="zhe"></i><input class="switch" type="checkbox" v-model='isNoSleep'>常亮 </span> -->
+                        <span @click.capture="switchSleep(!isNoSleep)" class="list-group-item fz book"><i
+                                class="zhe"></i><input class="switch" type="checkbox" v-model='isNoSleep'>常亮 </span>
                         <span @click.capture="switchOrder" v-if="len>10" class="list-group-item fz book"><i
                                 class="zhe"></i><input class="switch" type="checkbox" v-model='isReverse'>倒序</span>
                         <span class="list-group-item fz book" v-if="showRest" @click="reset('c')">清空缓存</span>
@@ -70,7 +70,8 @@
                             type="range" name="points" min="6" max="250">
                     </div>
                     <div class="list-group-item fz book curr-pos" @click="toPos(currIdx, currItem);">
-                        {{subProcess}}-当前位置：{{currIdx+1}}-{{currItem.title}}({{currItem.total}})</div>
+                        <!-- {{subProcess}}- -->
+                        当前：{{currIdx+1}}-{{currItem.title}}({{currItem.total}})</div>
                     <div>
                         <span class="list-group-item fz book" style="margin-top: 10px" v-for="(item, index) in book"
                             @click="toBook(item)" :key="item">书签{{index+1}} <span class="del"
@@ -184,6 +185,7 @@
         <script src="js/comm.js"></script>
         <script src="js/jq.js"></script>
         <script src="js/tools.js"></script>
+        <script src="js/nosleep.js"></script>
         <!-- <script src="js/indexdb.js"></script>
         <script src="js/touch.js"></script>
         <script src="js/audio.js"></script>

@@ -309,8 +309,11 @@ img {
     color: red;
 }
 
+.box-book {
+    display: flex;
+}
 .add-book {
-    width: 60%;
+    width: 65%;
     display: inline-block;
     color: red;
     font-size: 14px;
@@ -377,6 +380,8 @@ img {
     position: sticky !important;
     top: 0;
     z-index: 10;
+    font-weight: bolder;
+    color:#993300;
 }
 
 #menu .curr-pos {
@@ -385,7 +390,7 @@ img {
 }
 
 .search-box .search {
-    width: 80%;
+    width: 100%;
 }
 
 

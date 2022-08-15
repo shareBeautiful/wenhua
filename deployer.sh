@@ -4,7 +4,7 @@ git add *;
 sleep 1;
 git commit -m "foxue";
 sleep 2;
-git push origin main
+git push -u origin main
 echo "部署成功";
 sleep 3;
 

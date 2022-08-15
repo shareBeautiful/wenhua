@@ -284,8 +284,8 @@ function getContent() {
 
                 // 显示菜单切换
                 clickShowMenu: function (id, item) {
-                    this.hideReadOpt();
                     this.showMenu = true;
+                    setTimeout(this.hideReadOpt, 200)
                     this.setCurr(id, item)
                 },
 
@@ -296,7 +296,7 @@ function getContent() {
 
                 // 清空设置
                 reset: function (s) {
-                    var is = window.confirm('是否清空设置？')
+                    var is = window.confirm('是否清空？')
                     if (is) {
                         if (s === 's') {
                             localStorage.removeItem('localInfo_' + type)
@@ -634,11 +634,11 @@ function getContent() {
                 // 切换屏幕常亮
                 switchSleep: function(is) {
                     this.isNoSleep = is;
-                    // if(this.isNoSleep) {
-                    //     this.noSleep.enable(); // 启用常亮
-                    // }else {
-                    //     this.noSleep.disable(); // 关闭常亮
-                    // }
+                    if(this.isNoSleep) {
+                        this.noSleep.enable(); // 启用常亮
+                    }else {
+                        this.noSleep.disable(); // 关闭常亮
+                    }
                 },
 
                 // 开启自动翻页
@@ -787,7 +787,7 @@ function getContent() {
                             this.showOpt = true;
                             this.setCurr(id, item);
                             if (memory) this.memorySave(id);
-                        }, 230);
+                        }, 250);
                     }
 
                 },
@@ -937,7 +937,7 @@ function getContent() {
                             event.stopPropagation();
                         })
                         // 实例化屏幕常亮对象
-                        // this.noSleep = new NoSleep()
+                        this.noSleep = new NoSleep()
                     })
 
                     // 喜马拉雅音频
@@ -946,10 +946,10 @@ function getContent() {
                         // document.title = tit
                         this.showAudio = audioType; // 显示音频
                         if (audioType === 'mp4') {
-                            var src = '/video/' + file + '/' + tit + '.' + audioType;
+                            var src = 'https://zxin669666.cn/video/' + file + '/' + tit + '.' + audioType;
                             this.audioSrc = src;
                         } else {
-                            var src = '/audio/' + file + '/' + tit + '.' + audioType;
+                            var src = 'https://zxin669666.cn/audio/' + file + '/' + tit + '.' + audioType;
                             this.$nextTick(()=>{
                                 var audio = playAudio(src);
                             })

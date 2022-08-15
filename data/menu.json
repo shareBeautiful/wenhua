@@ -1149,16 +1149,10 @@
     "word": true,
     "list": [
       {
-        "tit": "《孟子》文字版",
+        "tit": "虚空济",
         "id": 0,
         "key": "xkj",
-        "href": "maokan"
-      },
-      {
-        "tit": "《孟子》视频版",
-        "id": 0,
-        "key": "xkjvideo",
-        "href": "maokan"
+        "href": "xuksji"
       },
       {
         "pwd": true,
@@ -1186,7 +1180,7 @@
       },
       {
         "pwd": true,
-        "tit": "心经浅解",
+        "tit": "《心经》文字浅解",
         "id": 5,
         "key": "xj"
       },

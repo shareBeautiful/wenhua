@@ -137,3 +137,9 @@ body {
 .dark .h {
     color: #b3b3b3 !important;
 }
+.h .tag {
+    padding: 0 10px;
+}
+.h .tag.active {
+    color: #ac3a39
+}
