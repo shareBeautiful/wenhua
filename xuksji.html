@@ -63,7 +63,7 @@
             <div class="panel-body">
                 <div class="box">
                     <!-- @click="toPage(item)" -->
-                    <a :href="item.href" class="box-item" v-for="(item,idx) in list" :key="item.id" v-show="!item.hide">
+                    <a :href="item.href" class="box-item" v-for="(item,idx) in list" :key="item.id" v-show="!item.hide" target="_blank">
                         <div class="head" v-if="item.img_url">
                             <img class="pic" :src="item.img_url" alt="" />
                         </div>
