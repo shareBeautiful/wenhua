@@ -169,7 +169,9 @@
                     if (id) {
                         this.sortStatus = true;
                         res.reverse();
-                        this.tags = [this.tags[tagId-1]];
+                        this.tags = this.tags.filter(item => {
+                            if(item.id === this.tagId) return item
+                        });
                         this.title = res[0]['title'].slice(0,11);
                         res.forEach(item => {
                             if (this.tagId == 3) {
@@ -184,7 +186,6 @@
                             item.href = './xuksji.html?id=' + item.id + '&tid='+tagId;
                             item.title = item.title
                             item.date = item.add_time.slice(0, 11)
-
                         })
                     }
                     document.title = this.title;
