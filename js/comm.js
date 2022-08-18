@@ -199,8 +199,7 @@
             // 获取url
             if (type === 'get') {
                 return url
-            }
-            if (type) {
+            }else if (type) {
                 window.open(url)
             } else {
                 window.location.href = url
