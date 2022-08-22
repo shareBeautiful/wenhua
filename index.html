@@ -254,7 +254,7 @@
 
                         // 过滤搜索的内容
                         var list = []
-                        this.copyList(this.subList).forEach(itemA => {
+                        this.copyList(this.list).forEach(itemA => {
                             itemA.list.forEach(itemB => {
                                 var key = itemB.tit + itemB.key;
                                 if (key.indexOf(this.keyword.toLowerCase()) > -1) {
