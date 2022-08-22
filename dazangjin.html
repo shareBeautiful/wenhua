@@ -49,7 +49,8 @@
                                 <span class="l">{{idxB+1}}. {{itemB.tit}}
                                     <span class="count">{{total(itemB.count)}}</span>
                                 </span>
-                                <span class="r">{{itemB.parent || itemB.author}}</span>
+                                <span class="r">{{itemB.author}}</span>
+                                <!-- <span class="r" v-if="itemB.parent">{{itemB.parent}}</span> -->
                             </a>
                         </template>
                     </div>
@@ -125,29 +126,33 @@
                                 event.target.blur()
                                 this.keyword = ""
                                 return;
-                            } else if (/[><=]|>=|<=/.test(this.keyword)) {
-                                var re = /.*?(>|<|=|>=|<=).*?(\d+)/img
+                            } else if (/[><=]/.test(this.keyword)) {
+                                var re = /(.*?)(>=|<=|>|<|=).*?(\d+)/img
                                 var s = re.exec(this.keyword)
-                                console.log(s)
                                 if (s) {
-                                    var str = s[1]
-                                    var num = parseInt(s[2])
-                                    var list = []
+                                    var keyword = s[1];
+                                    var sign = s[2];
+                                    var num = parseInt(s[3]);
+                                    var list = [];
                                     this.copyList().forEach(itemA => {
                                         itemA.list.forEach(itemB => {
                                             var count = parseInt(itemB.count)
-                                            if (num < count && str === '>') {
-                                                list.push(itemB)
-                                            }else if (num > count && str === '<') {
-                                                list.push(itemB)
-                                            }else if (num == count && str === '=') {
-                                                list.push(itemB)
+                                            itemB.type = itemA.type;
+                                            itemB.parent = itemA.tit;
+                                            if (keyword) {
+                                                var key = itemB.tit + itemB.key;
+                                                if (key.indexOf(keyword.toLowerCase()) > -1) {
+                                                    this.searchS(sign, count, num, itemB, list)
+                                                }
+                                            } else {
+                                                this.searchS(sign, count, num, itemB, list)
                                             }
+
+
                                         })
                                     })
                                     this.subList = [{ tit: '搜索结果', open: true, list: list }];
                                 }
-                                
                                 return false;
                             }
 
@@ -169,6 +174,19 @@
                         this.updateList();
                     }
 
+                },
+
+                // 计算搜索
+                searchS: function (sign, count, num, itemB, list) {
+                    if (count >= num && ['>','>='].includes(sign)) {
+                        list.push(itemB)
+                    } else if (count <= num && ['<','<='].includes(sign)) {
+                        // itemB.type = itemA.type;
+                        //     itemB.parent = itemA.tit;
+                        list.push(itemB)
+                    } else if (count === num && sign === '=') {
+                        list.push(itemB)
+                    }
                 },
 
 
