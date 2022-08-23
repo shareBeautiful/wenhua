@@ -65,7 +65,7 @@
     var key = $echo.getParams('key');
     var path;
     title = key === 'dzj' ? '大藏经' : '乾隆大藏经'
-    path = './data/' + title + '.json'
+    path = './data/ahome/' + title + '.json'
     document.title = title
 
     $echo.getJson(path).then(function (res) {

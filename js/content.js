@@ -32,7 +32,7 @@ if (keyword) {
         } else if (key === 'yxsz') {
             dirType = 'rulaizang/sub';
             key = keyword;
-            $echo.getJson('./data/一心三藏.json').then(res => {
+            $echo.getJson('./data/ahome/一心三藏.json').then(res => {
                 res.forEach((item) => {
                     if (keyword === item.key) {
                         memory = true // 记忆功能

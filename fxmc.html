@@ -210,7 +210,7 @@
         title = "一心三藏"
     }
     document.title = title;
-    path = './data/' + title + '.json'
+    path = './data/ahome/' + title + '.json'
     $echo.getJson(path).then(function (res) {
         new Vue({
             el: '#app',

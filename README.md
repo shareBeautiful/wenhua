@@ -13,6 +13,7 @@
 3. fxmc		佛学名词页面
 4. maokan 	猫砍目录页面
 5. maokan_content 猫砍内容页面(未做)
+6. xuksji   虚空接口页面
 
 ### ./data目录
 1. fojing	佛经数据
@@ -24,4 +25,5 @@
 8. wenhua	文化数据
 9. fxmc.js 	名词数据
 10. menu.json 首页数据
-11. maokan.json 猫砍目录数据
+11. 猫砍大画.json 猫砍目录数据
+12. pdf.json 佛经pdf下载数据
