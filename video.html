@@ -14,25 +14,35 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name=viewport
         content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-    <!-- <link href="css/video.css" rel="stylesheet" /> -->
     <title></title>
     <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        #app {
+            width: 100vw;
+            height: 100vh;
+            background: #000;
+        }
+
         #my-video {
             width: 100%;
             height: auto;
+            border: 1px solid #222;
         }
     </style>
 </head>
 
 <body>
     <div id="app" v-cloak>
-        <video id="my-video" class="video-js" :src="videoSrc" controls preload="auto">
+        <video id="my-video" :src="videoSrc" controls preload="auto">
             <source :src="videoSrc" type="video/mp4" />
         </video>
     </div>
 </body>
-<script src="js/comm.js"></script>
-<!-- <script src="js/video.js"></script> -->
+<script src="js/vue.js"></script>
 <script>
     var that;
     new Vue({
@@ -42,24 +52,52 @@
                 title: '虚空济',
                 apiUrl: 'https://api2022.xukongji.com',
                 videoSrc: '',
-                w: '',
-                h: ''
             }
         },
         methods: {
-
+            // 获取url参数
+            getParams: function (name) {
+                var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+                var r = window.location.search.substr(1).match(reg);
+                if (r != null) return decodeURI(r[2]);
+                return null;
+            },
+            getJson: function (url, config) {
+                opt = {
+                    headers: {
+                        'Cache-Control': 'public,max-age=7200', //不缓存
+                        'Content-Type': 'application/json'
+                    }
+                }
+                if (config) Object.assign(opt, config)
+                return fetch(url, opt).then((res) => {
+                    if (res.ok) {
+                        // text() 获取字符串，json()获取json数据
+                        return res.json()
+                    } else {
+                        if (res.status === 404) {
+                            alert('当前网页维护中...，请点击确定关闭')
+                            window.close();
+                        }
+                        // 服务器异常
+                        throw Error('')
+                    }
+                }).catch((error) => {
+                    console.log('errorMessage', error)
+                })
+            }
         },
         created: function () {
             that = this;
-            
+
         },
         mounted: function () {
-            var id = parseInt($echo.getParams('id'));
-            var vid = parseInt($echo.getParams('vid'));
+            var id = parseInt(this.getParams('id'));
+            var vid = parseInt(this.getParams('vid'));
             var path = this.apiUrl + '/api/article/menu';
             var body = JSON.stringify({ "a_id": id });
             var opt = { method: "post", body: body };
-            $echo.getJson(path, opt).then((res) => {
+            this.getJson(path, opt).then((res) => {
                 res = res['data'];
                 res.forEach(item => {
                     if (item.id === vid) {
