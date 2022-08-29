@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="Cache" content="no-cache">
+    <meta name=App-Config content="fullscreen=yes,useHistoryState=yes,transition=yes">
+    <meta content=yes name=apple-mobile-web-app-capable>
+    <meta content=yes name=apple-touch-fullscreen>
+    <meta content="telephone=no,email=no" name=format-detection>
+    <meta name="theme-color" content="#1a1a1a">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name=viewport
+        content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+    <!-- <link href="css/video.css" rel="stylesheet" /> -->
+    <title></title>
+    <style>
+        #my-video {
+            width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" v-cloak>
+        <video id="my-video" class="video-js" :src="videoSrc" controls preload="auto">
+            <source :src="videoSrc" type="video/mp4" />
+        </video>
+    </div>
+</body>
+<script src="js/comm.js"></script>
+<!-- <script src="js/video.js"></script> -->
+<script>
+    var that;
+    new Vue({
+        el: '#app',
+        data: function () {
+            return {
+                title: '虚空济',
+                apiUrl: 'https://api2022.xukongji.com',
+                videoSrc: '',
+                w: '',
+                h: ''
+            }
+        },
+        methods: {
+
+        },
+        created: function () {
+            that = this;
+            
+        },
+        mounted: function () {
+            var id = parseInt($echo.getParams('id'));
+            var vid = parseInt($echo.getParams('vid'));
+            var path = this.apiUrl + '/api/article/menu';
+            var body = JSON.stringify({ "a_id": id });
+            var opt = { method: "post", body: body };
+            $echo.getJson(path, opt).then((res) => {
+                res = res['data'];
+                res.forEach(item => {
+                    if (item.id === vid) {
+                        this.videoSrc = item.video_url;
+                        this.w = item.width;
+                        this.h = item.height;
+                        document.title = item.title;
+                    }
+                });
+            })
+        }
+    })
+</script>
+
+</html>

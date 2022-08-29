@@ -56,7 +56,6 @@
                     </span>
                 </div>
                 <div class="h-l">
-
                     <span @click="switchSort">{{ sortStatus?"倒序↑":"正序↓" }}</span>
                 </div>
             </div>
@@ -177,7 +176,8 @@
                             if (this.tagId == 3) {
                                 res.forEach(item => item.href = 'https://api2022.xukongji.com/api/article/menuInfoWeb?id=' + item.id)
                             } else {
-                                item.href = item.video_url;
+                                // item.href = item.video_url;
+                                item.href = './video.html?id='+id+'&vid='+ item.id
                                 item.video_time = this.myTime(item.video_time)
                             }
                         })
