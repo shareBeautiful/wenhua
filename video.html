@@ -33,10 +33,10 @@
             max-width: 1000px;
             display: block;
             margin: 50px auto 0;
-            height: auto;
+            height: 56vw;
             max-height: 562px;
             border: 1px solid #222;
-            border-radius: 60px;
+            border-radius: 20px;
             overflow: hidden;
             object-fit: cover;
         }
@@ -46,7 +46,7 @@
 <body>
     <div id="app" v-cloak>
         <video id="my-video" :src="videoSrc" controls preload="auto" poster="https://api2022.xukongji.com/upload_file/20220830111608-630d80f8e497c.jpg">
-            <source :src="videoSrc" type="video/mp4" />
+            <!-- <source :src="videoSrc" type="video/mp4" /> -->
         </video>
     </div>
 </body>
