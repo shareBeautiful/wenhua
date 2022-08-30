@@ -35,13 +35,14 @@
             margin: 50px auto 0;
             height: auto;
             border: 1px solid #222;
+            border-radius: 60px;
         }
     </style>
 </head>
 
 <body>
     <div id="app" v-cloak>
-        <video id="my-video" :src="videoSrc" controls preload="auto">
+        <video id="my-video" :src="videoSrc" controls preload="auto" :poster="coverPic">
             <source :src="videoSrc" type="video/mp4" />
         </video>
     </div>
@@ -56,6 +57,7 @@
                 title: '虚空济',
                 apiUrl: 'https://api2022.xukongji.com',
                 videoSrc: '',
+                coverPic: ''
             }
         },
         methods: {
@@ -109,6 +111,7 @@
                         this.w = item.width;
                         this.h = item.height;
                         document.title = item.title;
+                        this.coverPic = this.videoSrc+'?x-oss-process=video/snapshot,t_1,m_fast'
                     }
                 });
             })
