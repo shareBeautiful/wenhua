@@ -869,6 +869,7 @@
     "type": "nahuaijin",
     "open": false,
     "memory": true,
+    "hide": true,
     "list": [
       {
         "id": 1,
@@ -1081,7 +1082,6 @@
     "tit": "如来藏妙法",
     "type": "rulaizang",
     "open": false,
-    "hide": true,
     "pwd": true,
     "memory": true,
     "word": true,
@@ -1148,7 +1148,6 @@
     "tit": "虚空济",
     "type": "xukongji",
     "open": false,
-    "hide": true,
     "pwd": true,
     "memory": true,
     "word": true,
@@ -1160,67 +1159,56 @@
         "href": "xuksji"
       },
       {
-        "pwd": true,
         "tit": "《孟子》文字浅解（更新中）",
         "id": 1,
         "key": "mz"
       },
       {
-        "pwd": true,
         "tit": "《素书》文字浅解",
         "id": 2,
         "key": "ss"
       },
       {
-        "pwd": true,
         "tit": "《太上感应篇》文字浅解",
         "id": 3,
         "key": "tsgyp"
       },
       {
-        "pwd": true,
         "tit": "《了凡四训》文字浅解",
         "id": 4,
         "key": "lfsx"
       },
       {
-        "pwd": true,
         "tit": "《心经》文字浅解",
         "id": 5,
         "key": "xj"
       },
       {
-        "pwd": true,
         "tit": "《大学》文字浅解",
         "id": 6,
         "key": "dx"
       },
       {
-        "pwd": true,
         "tit": "《中庸》文字浅解",
         "id": 7,
         "key": "zy"
       },
       {
-        "pwd": true,
         "tit": "《论语》1-8篇文字浅解",
         "id": 8,
         "key": "ly1-8"
       },
       {
-        "pwd": true,
         "tit": "《论语》9-13篇文字浅解",
         "id": 9,
         "key": "ly9-13"
       },
       {
-        "pwd": true,
         "tit": "《论语》14-20篇文字浅解",
         "id": 10,
         "key": "ly14-20"
       },
       {
-        "pwd": true,
         "tit": "直播精选",
         "id": 11,
         "key": "zbjx"

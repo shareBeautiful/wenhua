@@ -56,7 +56,7 @@
                 </div>
             </div>
             <!-- 所有 -->
-            <div class="panel panel-default" :key="idxA" v-for="(itemA,idxA) in subList">
+            <div class="panel panel-default" :key="idxA" v-for="(itemA,idxA) in subList" v-if="!itemA.hide">
                 <div class="panel-heading" @click="openMenu(itemA)" :class="{'sticky': itemA.open}">
                     <div class="title">
                         {{itemA.tit}}
