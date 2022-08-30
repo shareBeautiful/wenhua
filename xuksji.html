@@ -136,7 +136,9 @@
             // 切换排序
             switchSort: function () {
                 this.sortStatus = !this.sortStatus;
-                this.list.reverse()
+                Object.keys(this.allList).forEach(item => {
+                    this.allList[item].reverse();
+                })
             },
 
             // 将秒转换成分和秒
@@ -163,18 +165,18 @@
                 } else {
                     path = this.apiUrl + '/api/article/list';
                     body = JSON.stringify({ "page_size": 100, "page_no": 1, "c_id": tagId });
-                    this.tagId = parseInt(tagId);
-                    sessionStorage.setItem('tagId', tagId);
-                    if (this.allList[tagId + '']) {
-                        this.list = this.allList[tagId + '']
-                        return false;
-                    }
+                }
+                this.tagId = parseInt(tagId);
+                sessionStorage.setItem('tagId', tagId);
+                if (this.allList[tagId + '']) {
+                    this.list = this.allList[tagId + '']
+                    return false;
                 }
 
                 var opt = { method: "post", body: body };
                 $echo.getJson(path, opt).then((res) => {
                     res = res['data'];
-                    if (id) {
+                    if (id) { // 详情页面
                         this.sortStatus = true;
                         res.reverse();
                         this.tags = this.tags.filter(item => {
@@ -190,7 +192,8 @@
                                 item.video_time = this.myTime(item.video_time)
                             }
                         })
-                    } else {
+                    } else { // 课程页面
+                        if(this.sortStatus) res.reverse();
                         res.forEach(item => {
                             item.href = './xuksji.html?id=' + item.id + '&tid=' + tagId;
                             item.title = item.title
