@@ -33,9 +33,11 @@
             flex: 1;
             padding-left: 15px;
         }
+
         .info .time {
             display: flex;
         }
+
         .info .time span:first-child {
             padding-right: 20px;
         }
@@ -62,7 +64,8 @@
             <div class="panel-body">
                 <div class="box">
                     <!-- @click="toPage(item)" -->
-                    <a :href="item.href" class="box-item" v-for="(item,idx) in list" :key="item.id" v-show="!item.hide" target="_blank">
+                    <a :href="item.href" class="box-item" v-for="(item,idx) in list" :key="item.id" v-show="!item.hide"
+                        target="_blank">
                         <div class="head" v-if="item.img_url">
                             <img class="pic" :src="item.img_url" alt="" />
                         </div>
@@ -95,6 +98,7 @@
         data: function () {
             return {
                 list: [],
+                allList: {},
                 keyword: '',
                 sortStatus: false,
                 isDark: false,
@@ -159,9 +163,14 @@
                 } else {
                     path = this.apiUrl + '/api/article/list';
                     body = JSON.stringify({ "page_size": 100, "page_no": 1, "c_id": tagId });
+                    this.tagId = parseInt(tagId);
+                    sessionStorage.setItem('tagId', tagId);
+                    if (this.allList[tagId + '']) {
+                        this.list = this.allList[tagId + '']
+                        return false;
+                    }
                 }
-                this.tagId = parseInt(tagId);
-                sessionStorage.setItem('tagId', tagId);
+
                 var opt = { method: "post", body: body };
                 $echo.getJson(path, opt).then((res) => {
                     res = res['data'];
@@ -169,27 +178,28 @@
                         this.sortStatus = true;
                         res.reverse();
                         this.tags = this.tags.filter(item => {
-                            if(item.id === this.tagId) return item
+                            if (item.id === this.tagId) return item
                         });
-                        this.title = res[0]['title'].slice(0,11);
+                        this.title = res[0]['title'].slice(0, 11);
                         res.forEach(item => {
                             if (this.tagId == 3) {
                                 res.forEach(item => item.href = 'https://api2022.xukongji.com/api/article/menuInfoWeb?id=' + item.id)
                             } else {
                                 // item.href = item.video_url;
-                                item.href = './video.html?id='+id+'&vid='+ item.id
+                                item.href = './video.html?id=' + id + '&vid=' + item.id
                                 item.video_time = this.myTime(item.video_time)
                             }
                         })
                     } else {
                         res.forEach(item => {
-                            item.href = './xuksji.html?id=' + item.id + '&tid='+tagId;
+                            item.href = './xuksji.html?id=' + item.id + '&tid=' + tagId;
                             item.title = item.title
                             item.date = item.add_time.slice(0, 11)
                         })
                     }
                     document.title = this.title;
                     this.list = res;
+                    this.allList[tagId + ''] = res;
                 })
             }
         },
@@ -198,7 +208,7 @@
         },
         mounted: function () {
             var tagId = sessionStorage.getItem('tagId');
-            this.tagId = tagId? parseInt(tagId) : 3
+            this.tagId = tagId ? parseInt(tagId) : 3
             this.switchTag(this.tagId)
             if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
                 this.isDark = true;
