@@ -169,7 +169,7 @@
                     body = JSON.stringify({ "page_size": 100, "page_no": 1, "c_id": tagId });
                 }
                 this.tagId = parseInt(tagId);
-                sessionStorage.setItem('tagId', tagId);
+                sessionStorage.setItem('tagId', this.tagId);
                 if (this.allList[tagId + '']) {
                     this.list = this.allList[tagId + '']
                     return false;
@@ -213,7 +213,7 @@
         },
         mounted: function () {
             var tagId = sessionStorage.getItem('tagId');
-            this.tagId = tagId ? parseInt(tagId) : 3
+            this.tagId = tagId ? parseInt(tagId) : this.tagId;
             this.switchTag(this.tagId)
             if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
                 this.isDark = true;
