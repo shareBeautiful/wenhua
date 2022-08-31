@@ -107,9 +107,10 @@
                 tags: [
                     { id: 1, tit: '视频' },
                     { id: 2, tit: '音频' },
-                    { id: 3, tit: '文字' },
-                    { id: 13, tit: '直播' }],
-                tagId: 3
+                    { id: 13, tit: '直播' },
+                    { id: 3, tit: '文字' }
+                ],
+                tagId: 1
             }
         },
         methods: {
@@ -194,7 +195,7 @@
                             }
                         })
                     } else { // 课程页面
-                        if(this.sortStatus) res.reverse();
+                        if (this.sortStatus) res.reverse();
                         res.forEach(item => {
                             item.href = './xuksji.html?id=' + item.id + '&tid=' + tagId;
                             item.title = item.title
@@ -203,7 +204,7 @@
                     }
                     document.title = this.title;
                     this.list = res;
-                    this.$set(this.allList, tagId + '',res)
+                    this.$set(this.allList, tagId + '', res)
                 })
             }
         },
