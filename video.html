@@ -95,7 +95,7 @@
 
         <div :class="{'dark': isDark}" id="video-list">
             <div class="panel panel-default">
-                
+
                 <div class="panel-body">
                     <div class="box">
                         <!-- @click="toPage(item)" -->
@@ -248,13 +248,23 @@
                 this.getJson(path, opt).then((res) => {
                     res = res['data'];
                     this.list = res;
-                    res.forEach((item, idx) => {
+                    if (!vid) {
+                        var xkj_video = localStorage.getItem('xkj_video');
+                        if (xkj_video) this.xkj_video = JSON.parse(xkj_video);
+                        vid = this.xkj_video['v' + this.id];
+                    }
+                    this.list.forEach((item, idx) => {
                         item.video_time = this.myTime(item.video_time)
                         if (vid && item.id === vid) {
                             this.switchVideo(item, idx);
                             this.setDom(item);
                         }
                     });
+                    if (!vid) {
+                        this.switchVideo(this.list[0], 0);
+                        this.setDom(this.list[0]);
+                    }
+                    this.switchAuto(); // 开启自动播放
                 })
             }
         },
@@ -264,7 +274,6 @@
         },
         mounted: function () {
             this.getData();
-            this.switchAuto()
         }
     })
 </script>
