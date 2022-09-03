@@ -131,9 +131,12 @@
                 isDark: false,
                 apiUrl: 'https://api2022.xukongji.com',
                 videoSrc: '',
-                currId: null,
+                currId: 0,
+                currTime: 0,
                 currIdx: 0,
+                elevideo: null,
                 xkj_video: {},
+                xkj_time: {},
             }
         },
         methods: {
@@ -199,20 +202,15 @@
                 this.currIdx = idx;
                 document.title = item.title;
                 this.saveVideo();
-                // this.$nextTick(() => {
-                //     var elevideo = document.getElementById("my-video");
-                //     if (elevideo.paused) {
-                //         elevideo.muted = true;
-                //         elevideo.play();
-                //     }
+                // this.$nextTick(()=>{
+                //     this.elevideo.currentTime = 13;
                 // })
             },
 
             // 开启自动播放下一集
             switchAuto: function () {
                 this.$nextTick(() => {
-                    var elevideo = document.getElementById("my-video");
-                    elevideo.addEventListener('ended', function () { //结束
+                    this.elevideo.addEventListener('ended', function () { //结束
                         for (var idx = 0; idx < this.list.length; idx++) {
                             if (idx === this.currIdx + 1) {
                                 var item = this.list[idx];
@@ -236,6 +234,18 @@
                     var toH = dom.offsetTop
                     window.scrollTo(0, toH - 80)
                 });
+            },
+
+            // 获取设置视频播放位置
+            setPlayPos: function () {
+                this.$nextTick(() => {
+                    setInterval(() => {
+                        var time = this.elevideo.currentTime;
+                        this.xkj_time['v' + this.id] = time? time : 0;
+                        localStorage.setItem('xkj_time', JSON.stringify(this.xkj_time))
+                    }, 1000);
+                })
+
             },
 
             // 获取数据
@@ -264,7 +274,17 @@
                         this.switchVideo(this.list[0], 0);
                         this.setDom(this.list[0]);
                     }
-                    this.switchAuto(); // 开启自动播放
+                    // 初始化视频当前视频播放位置
+                    var xkj_time = localStorage.getItem('xkj_time');
+                    this.xkj_time = xkj_time ? JSON.parse(xkj_time) : {}
+                    this.currTime = this.xkj_time['v' + this.id]
+                    if (this.currTime) {
+                        this.elevideo.currentTime = this.currTime;
+                    } else {
+                        this.elevideo.currentTime = 0;
+                    }
+                    // 开启自动播放
+                    this.switchAuto();
                 })
             }
         },
@@ -273,7 +293,9 @@
 
         },
         mounted: function () {
+            this.elevideo = document.getElementById("my-video")
             this.getData();
+            this.setPlayPos();
         }
     })
 </script>
