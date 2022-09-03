@@ -197,7 +197,11 @@
                     } else { // 课程页面
                         if (this.sortStatus) res.reverse();
                         res.forEach(item => {
-                            item.href = './xuksji.html?id=' + item.id + '&tid=' + tagId;
+                            if(this.tagId === 3) {
+                                item.href = './xuksji.html?id=' + item.id + '&tid=' + tagId;
+                            }else {
+                                item.href = './video.html?id=' + item.id;
+                            }
                             item.title = item.title
                             item.date = item.add_time.slice(0, 11)
                         })
