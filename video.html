@@ -201,10 +201,12 @@
                 this.currId = item.id;
                 this.currIdx = idx;
                 document.title = item.title;
+                
                 this.saveVideo();
-                // this.$nextTick(()=>{
-                //     this.elevideo.currentTime = 13;
-                // })
+                this.$nextTick(()=>{
+                    this.elevideo.load()
+                    // this.elevideo.currentTime = 13;
+                })
             },
 
             // 开启自动播放下一集
@@ -283,6 +285,9 @@
                     } else {
                         this.elevideo.currentTime = 0;
                     }
+                    this.$nextTick(()=>{
+                        this.elevideo.load()
+                    })
                     // 开启自动播放
                     this.switchAuto();
                 })
