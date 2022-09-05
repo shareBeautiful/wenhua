@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="Cache" content="no-cache">
+    <meta name=App-Config content="fullscreen=yes,useHistoryState=yes,transition=yes">
+    <meta content=yes name=apple-mobile-web-app-capable>
+    <meta content=yes name=apple-touch-fullscreen>
+    <meta content="telephone=no,email=no" name=format-detection>
+    <meta name="theme-color" content="#1a1a1a">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name=viewport
+        content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+    <link rel="stylesheet" href="css/maokan.css">
+    <title></title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        #app {
+            width: 100%;
+            min-height: 100vh;
+            background: #000;
+            padding: 10px 5px;
+        }
+
+        #video-list {
+            position: relative;
+            width: 100%;
+            height: auto;
+        }
+
+        #video-list::-webkit-scrollbar {
+            width: 0 !important
+        }
+
+        #video-box {
+            position: sticky;
+            position: -webkit-sticky;
+            top: 0;
+            z-index: 1;
+            background: #000;
+        }
+
+        .video {
+            width: 100%;
+            max-width: 720px;
+            display: block;
+            margin: 0 auto;
+            height: 56vw;
+            max-height: 405px;
+            border: 1px solid #222;
+            border-radius: 20px;
+            object-fit: cover;
+        }
+        .audio {
+            height: 50px;
+        }
+
+        .panel-heading {
+            font-size: 18px;
+            color: #b3b3b3 ;
+            padding: 5px 10px;
+            border: 1px solid #ddd;
+            margin-top: 10px;
+        }
+
+        .info.active {
+            color: #b3b3b3 ;
+        }
+
+        .h {
+            position: sticky;
+            top: 0;
+            background: #000;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div id="app" v-cloak>
+        <!-- autoplay="autoplay" -->
+        <div id="video-box">
+            <video id="my-video" :class="{video: true,audio: !isVideo}" :src="videoSrc" controls preload="auto" x5-playsinline="true" playsinline=‘false’
+                webkit-playsinline=‘false’
+                poster="https://api2022.xukongji.com/upload_file/20220830111608-630d80f8e497c.jpg">
+                <!-- <source :src="videoSrc" type="video/mp4" /> -->
+            </video>
+            <div class="panel-heading h">
+                <div class="h-r">{{title}}</div>
+            </div>
+        </div>
+
+        <div :class="{'dark': isDark}" id="video-list">
+            <div class="panel panel-default">
+
+                <div class="panel-body">
+                    <div class="box">
+                        <!-- @click="toPage(item)" -->
+                        <div class="box-item" v-for="(item,idx) in list" :key="item.id" @click="switchVideo(item, idx)"
+                            :ref="'v'+item.id">
+                            <div class="info" :class="{active:item.id === currId}">
+                                <div>
+                                    <span class="order">{{idx+1}}.</span>
+                                    <span class="title">{{item.title}}</span>
+                                    <span v-if="item.video_time">{{item.video_time}}</span>
+                                </div>
+                                <div class="time" v-if="item.date">
+                                    <span>时间：{{item.date}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="js/vue.js"></script>
+<script>
+    var that;
+    new Vue({
+        el: '#app',
+        data: function () {
+            return {
+                title: '虚空济',
+                id: null,           // 课程的id
+                list: [],
+                isDark: false,
+                isVideo: true,
+                apiUrl: 'https://api2022.xukongji.com',
+                videoSrc: '',
+                currId: 0,
+                currTime: 0,
+                currIdx: 0,
+                elevideo: null,
+                xkj_video: {},
+                xkj_time: {},
+            }
+        },
+        methods: {
+            // 获取url参数
+            getParams: function (name) {
+                var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+                var r = window.location.search.substr(1).match(reg);
+                if (r != null) return decodeURI(r[2]);
+                return null;
+            },
+
+            // 将秒转换成分和秒
+            myTime: function (time) {
+                var hr = ~~(time / 3600);
+                var min = ~~((time % 3600) / 60);
+                var sec = time % 60;
+                var sec_min = "";
+                if (hr > 0) {
+                    sec_min += "" + hr + ":" + (min < 10 ? "0" : "");
+                }
+                sec_min += "" + min + ":" + (sec < 10 ? "0" : "");
+                sec_min += "" + sec;
+                return sec_min;
+            },
+            getJson: function (url, config) {
+                opt = {
+                    headers: {
+                        'Cache-Control': 'public,max-age=7200', //不缓存
+                        'Content-Type': 'application/json'
+                    }
+                }
+                if (config) Object.assign(opt, config)
+                return fetch(url, opt).then((res) => {
+                    if (res.ok) {
+                        // text() 获取字符串，json()获取json数据
+                        return res.json()
+                    } else {
+                        if (res.status === 404) {
+                            alert('当前网页维护中...，请点击确定关闭')
+                            window.close();
+                        }
+                        // 服务器异常
+                        throw Error('')
+                    }
+                }).catch((error) => {
+                    console.log('errorMessage', error)
+                })
+            },
+
+            // 保存本地视频位置
+            saveVideo: function () {
+                var xkj_video = localStorage.getItem('xkj_video');
+                if (xkj_video) this.xkj_video = JSON.parse(xkj_video);
+                this.xkj_video['v' + this.id] = this.currId;
+                localStorage.setItem('xkj_video', JSON.stringify(this.xkj_video))
+            },
+
+            // 切换视频播放
+            switchVideo: function (item, idx) {
+                if(this.currId === item.id) return false;
+                this.isVideo = item.video_url.indexOf('.mp4')>-1? true : false;
+                this.videoSrc = item.video_url;
+                this.title = item.title;
+                this.currId = item.id;
+                this.currIdx = idx;
+                document.title = item.title;
+                this.saveVideo();
+                this.$nextTick(()=>{
+                    this.elevideo.load()
+                    // this.elevideo.currentTime = 13;
+                })
+            },
+
+            // 开启自动播放下一集
+            switchAuto: function () {
+                this.$nextTick(() => {
+                    this.elevideo.addEventListener('ended', function () { //结束
+                        for (var idx = 0; idx < this.list.length; idx++) {
+                            if (idx === this.currIdx + 1) {
+                                var item = this.list[idx];
+                                this.switchVideo(item, idx);
+                                break;
+                            }
+                        }
+                    }.bind(this), false);
+                })
+
+            },
+
+            // 设置当前播放视频列表的位置
+            setDom: function (item) {
+                this.$nextTick(() => {
+                    document.title = item.title;
+                    var dom = this.$refs['v' + item.id];
+                    dom = dom[0]
+                    var toH = dom.offsetTop
+                    window.scrollTo(0, toH - 80)
+                });
+            },
+
+            // 获取设置视频播放位置
+            setPlayPos: function () {
+                this.$nextTick(() => {
+                    setInterval(() => {
+                        var time = this.elevideo.currentTime;
+                        this.xkj_time['v' + this.id] = time? time : 0;
+                        localStorage.setItem('xkj_time', JSON.stringify(this.xkj_time))
+                    }, 2000);
+                })
+
+            },
+
+            // 获取数据
+            getData: function () {
+                this.id = parseInt(this.getParams('id'));
+                var vid = parseInt(this.getParams('vid'));
+                var path = this.apiUrl + '/api/article/menu';
+                var body = JSON.stringify({ "a_id": this.id });
+                var opt = { method: "post", body: body };
+                this.getJson(path, opt).then((res) => {
+                    res = res['data'];
+                    this.list = res;
+                    if (!vid) {
+                        var xkj_video = localStorage.getItem('xkj_video');
+                        if (xkj_video) this.xkj_video = JSON.parse(xkj_video);
+                        vid = this.xkj_video['v' + this.id];
+                    }
+                    this.list.forEach((item, idx) => {
+                        item.video_time = this.myTime(item.video_time)
+                        if (vid && item.id === vid) {
+                            this.switchVideo(item, idx);
+                            this.setDom(item);
+                        }
+                    });
+                    if (!vid) {
+                        this.switchVideo(this.list[0], 0);
+                        this.setDom(this.list[0]);
+                    }
+                    // 初始化视频当前视频播放位置
+                    var xkj_time = localStorage.getItem('xkj_time');
+                    this.xkj_time = xkj_time ? JSON.parse(xkj_time) : {}
+                    this.currTime = this.xkj_time['v' + this.id]
+                    if (this.currTime) {
+                        this.elevideo.currentTime = this.currTime;
+                    } else {
+                        this.elevideo.currentTime = 0;
+                    }
+                    this.$nextTick(()=>{
+                        this.elevideo.load()
+                    })
+                    // 开启自动播放
+                    this.switchAuto();
+                    // 开启自动保存播放进度
+                    this.setPlayPos();
+                })
+            }
+        },
+        created: function () {
+            that = this;
+
+        },
+        mounted: function () {
+            this.elevideo = document.getElementById("my-video")
+            this.getData();
+        }
+    })
+</script>
+
+</html>

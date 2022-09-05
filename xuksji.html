@@ -192,7 +192,7 @@
                                 res.forEach(item => item.href = 'https://api2022.xukongji.com/api/article/menuInfoWeb?id=' + item.id)
                             } else {
                                 // item.href = item.video_url;
-                                item.href = './video.html?id=' + id + '&vid=' + item.id
+                                item.href = './xuksji_video.html?id=' + id + '&vid=' + item.id
                                 item.video_time = this.myTime(item.video_time)
                             }
                         })
@@ -202,7 +202,7 @@
                             if (this.tagId === 3) {
                                 item.href = './xuksji.html?id=' + item.id + '&tid=' + tagId;
                             } else {
-                                item.href = './video.html?id=' + item.id;
+                                item.href = './xuksji_video.html?id=' + item.id;
                             }
                             item.title = item.title
                             item.date = item.add_time.slice(0, 11)
