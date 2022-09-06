@@ -23,6 +23,10 @@
             width: 0;
             height: 0;
         }
+        .header {
+            font-size: 18px;
+            text-align: right;
+        }
     </style>
 </head>
 
@@ -393,11 +397,13 @@
             getArticle: function () {
                 var path = this.apiUrl + '/api/article/menuInfoWeb?id=' + this.currItem.id;
                 this.getHtml(path, { method: "get" }).then(res => {
-                    res = res.replace(/[\r\n\f\t]/gim, "");
-                    res = res.replace(/\s?style=\".*?\"|<p><br\/?><\/p>/img, "")
-
+                    var re3 = /[\r\n\f\t]|(<\/?br\/?>)+|\sstyle=".*?"|<strong>[\s\t\r\f\n]*<\/strong>|<span>[\s\t\r\f\n]*<\/span>|<p>[\s\t\r\f\n]*<\/p>|<div>[\s\t\r\f\n]*<\/div>/img
+                    while (res.match(re3)) {
+                        res = res.replace(re3, "");
+                    }
                     var re = /<article class=\"article\">.*<\/article>/mgi;
                     var re2 = /<div class=\"content\">.*<\/div>/img
+
                     html = res.match(re)
                     html = '<div class="B1_text">' + html[0] + '</div>'
                     this.wordTotle = this.total((html.match(re2))[0]);
@@ -426,7 +432,7 @@
                     var idxs = 0;
                     res.forEach((item, idx) => {
                         item.idx = idx;
-                        if(this.xkj_text['t'+id] == item.id) {
+                        if (this.xkj_text['t' + id] == item.id) {
                             idxs = idx;
                         }
                     })
@@ -440,6 +446,22 @@
 
         },
         mounted: function () {
+            // 字体
+            var font = localStorage.getItem('font')
+            if (font) {
+                this.currFontF = font;
+                this.setFontF();
+            }
+            this.isDark = Boolean(eval($echo.getStorage('isDark'))); // 转换布尔值
+            if (this.isDark) { // 是否开启跟随系统
+                if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    this.theme = 4;
+                } else {
+                    this.theme = 1;
+                }
+            } else {
+                this.theme = localStorage.getItem('theme') || 1;
+            }
             this.getArticleList();
         }
     })
