@@ -107,9 +107,8 @@
                         发布时间：{{articleD.date}}</div>
                 </div>
             </div>
-            <div class="panel-footer page-tap next" @click.stop="pageNext('+')">
-                下一章 --
-                <!-- {{menuList[currIdx+1]["title"]}} -->
+            <div class="panel-footer page-tap next" v-if="currIdx+1<len" @click.stop="pageNext('+')">
+                下一章 -- {{menuList[currIdx+1]["title"]}}
             </div>
         </div>
 
@@ -142,6 +141,7 @@
             apiUrl: 'https://api2022.xukongji.com',
             articleD: {}, // 所有数据列表
             menuList: [], // 菜单列表
+            len: 0,
             colors: ['success', 'info', 'warning', 'danger'],
             showMenu: false, // 切换显示菜单
             wordTotle: 0, // 字数
@@ -431,6 +431,7 @@
                         }
                     })
                     this.menuList = res;
+                    this.len = res.length;
                     this.toArticle(idxs)
                 })
             }
