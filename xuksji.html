@@ -200,7 +200,8 @@
                         if (this.sortStatus) res.reverse();
                         res.forEach(item => {
                             if (this.tagId === 3) {
-                                item.href = './xuksji.html?id=' + item.id + '&tid=' + tagId;
+                                // item.href = './xuksji.html?id=' + item.id + '&tid=' + tagId;
+                                item.href = './xuksji_text.html?id='+item.id;
                             } else {
                                 item.href = './xuksji_video.html?id=' + item.id;
                             }
