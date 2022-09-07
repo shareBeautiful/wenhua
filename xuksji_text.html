@@ -424,9 +424,14 @@
                 var elH = document.documentElement.scrollHeight || document.body.scrollHeight; // 当前章节高度
                 var scrollTop = document.documentElement.scrollTop; // 滚动高度
                 var p = (scrollTop)/(elH-this.height);
-                p = p.toFixed(5);
                 p = p>=1? 1 : p;
-                this.process = p*100 + '%';
+                p = (p*100).toFixed(3)
+                if(p == 0){
+                    p = 0;
+                }else if(p >= 100) {
+                    p = 100;
+                }
+                this.process = p + '%';
             },
 
 
