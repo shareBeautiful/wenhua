@@ -94,7 +94,7 @@
         <!-- 内容 -->
         <div id="bodyBox">
             <div class="panel-footer page-tap prev" @click.stop="pageNext('-')" v-if="currIdx-1>=0">
-                上一章 -- {{menuList[currIdx-1]['title']}}
+                上一章 -- {{subTit(menuList[currIdx-1]['title'])}}
                 <span @click.stop="pageNext('+')">下一章</span>
             </div>
             <div class="body-box" @dblclick.capture="clickShowMenu()">
@@ -122,7 +122,7 @@
                 <span class="h-l" @click="switchTheme">
                     <template v-if="theme == 4">🔆</template><template v-else>🌙</template>
                 </span>
-                当前：{{subTit(currItem.title)}}-({{subProcess}})
+                当前：{{subTit(currItem.title)}}-({{process}})
                 <span class="h-r" @click="clickShowMenu()">目录</span>
             </div>
             <div class="footer">
@@ -175,8 +175,8 @@
             }],
             theme: 1, // 1默认，1，bg1,bg2
             process: 0, // 当前阅读进度
-            subProcess: 0, // 当前章节阅读进度
             word: '', // 搜索目录关键字
+            height: 0,// 屏幕的高度
             isDark: false, // 默认系统主题
             isReverse: false, // 默认目录排序
             isPage: false, // 是否开启翻页
@@ -364,6 +364,7 @@
                 } else {
                     this.dbTime = setTimeout(() => {
                         this.showOpt = true;
+                        this.getProcess();
                     }, 250);
                 }
 
@@ -419,6 +420,16 @@
                 localStorage.setItem('xkj_text', JSON.stringify(this.xkj_text))
             },
 
+            // 计算阅读百分比
+            getProcess: function() {
+                var elH = document.documentElement.scrollHeight || document.body.scrollHeight; // 当前章节高度
+                var scrollTop = document.documentElement.scrollTop; // 滚动高度
+                var p = (scrollTop)/(elH-this.height);
+                p = p.toFixed(5);
+                p = p>=1? 1 : p;
+                this.process = p*100 + '%';
+            },
+
 
             // 获取当前列表
             getArticleList: function () {
@@ -446,6 +457,7 @@
 
         },
         mounted: function () {
+            this.height = window.screen.availHeight
             // 字体
             var font = localStorage.getItem('font')
             if (font) {
