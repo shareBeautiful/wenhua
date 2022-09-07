@@ -23,9 +23,12 @@
             width: 0;
             height: 0;
         }
-        .header {
+        .B1_text .header {
             font-size: 18px;
             text-align: right;
+        }
+        .readOpt .header,.readOpt .footer {
+            font-size: 16px;
         }
     </style>
 </head>
@@ -215,11 +218,7 @@
 
             // 裁剪标题
             subTit: function (title) {
-                if (title.length > 10) {
-                    return title.slice(0, 15)
-                } else {
-                    return title
-                }
+                return title.slice(0, 20)
             },
 
             // 计算总数
