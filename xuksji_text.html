@@ -120,7 +120,7 @@
         </div>
 
         <!-- 设置 -->
-        <div id="readOpt" @click.capture="hideReadOpt" :class="{active: showOpt}">
+        <div id="readOpt" @click.capture="hideReadOpt" @touchend="getProcess" :class="{active: showOpt}">
             <div class="header" v-if="currItem">
                 <span class="h-l" @click="switchTheme">
                     <template v-if="theme == 4">🔆</template><template v-else>🌙</template>
