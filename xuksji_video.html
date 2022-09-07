@@ -204,7 +204,7 @@
             switchVideo: function (item, idx) {
                 if(this.currId === item.id) return false;
                 this.isVideo = item.video_url.indexOf('.mp4')>-1? true : false;
-                this.videoSrc = item.video_url.replace('http:','https:');
+                this.videoSrc = item.video_url;
                 this.title = item.title;
                 this.currId = item.id;
                 this.currIdx = idx;
