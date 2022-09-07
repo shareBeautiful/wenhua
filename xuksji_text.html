@@ -122,12 +122,12 @@
                 <span class="h-l" @click="switchTheme">
                     <template v-if="theme == 4">🔆</template><template v-else>🌙</template>
                 </span>
-                当前：{{subTit(currItem.title)}}-({{process}})
+                {{subTit(currItem.title)}}
                 <span class="h-r" @click="clickShowMenu()">目录</span>
             </div>
             <div class="footer">
                 <div class="f-item">
-                    <span>{{wordTotle}}-({{process}})</span>
+                    <span>字数：{{wordTotle}}-进度：({{process}})</span>
                 </div>
                 <!-- <span class="f-page">{{pageCurr}}/{{pageAll}}</span> -->
             </div>
