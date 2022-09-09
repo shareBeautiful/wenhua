@@ -226,7 +226,7 @@
                 if (this.currId === item.id) return false;
                 this.isVideo = item.video_url.indexOf('.mp4') > -1 ? true : false;
                 this.videoSrc = item.video_url;
-                this.title = item.title;
+                this.title = idx+1+'. '+item.title;
                 this.currId = item.id;
                 this.currIdx = idx;
                 document.title = item.title;
