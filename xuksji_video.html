@@ -75,7 +75,7 @@
         }
 
         .audio {
-            height: 80px;
+            height: 60px;
         }
 
         .panel-heading {
@@ -358,14 +358,14 @@
         mounted: function () {
             this.elevideo = document.getElementById("my-video")
             this.options = {
-                autoplay: false,     // 自动播放
+                autoplay: true,     // 自动播放
                 controls: true,      // 显示控制条
                 loop: false,        // 是否循环
                 muted: false,       // 是否静音
                 preload: 'auto',    // 预加载auto-自动
                 language: 'en',     // 设置语音
-                playbackRates: [0.5, 0.8, 1, 1.25, 1.5, 2],  // 设置倍数
-                controlBar: true,   // 是否显示控制栏
+                // playbackRates: [0.5, 0.8, 1, 1.25, 1.5, 2],  // 设置倍数
+                // controlBar: true,   // 是否显示控制栏
                 // children: [
                 //     'bigPlayButton',
                 //     'controlBar'
