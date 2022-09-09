@@ -27,7 +27,6 @@
         #app {
             width: 100%;
             min-height: 100vh;
-            background: #000;
             padding: 10px 5px;
         }
 
@@ -100,7 +99,7 @@
 </head>
 
 <body>
-    <div id="app" v-cloak>
+    <div id="app" v-cloak  :class="{'dark': isDark}">
         <!-- autoplay="autoplay" -->
         <div id="video-box">
             <div class="video-wrapper">
@@ -117,7 +116,7 @@
             </div>
         </div>
 
-        <div :class="{'dark': isDark}" id="video-list">
+        <div id="video-list">
             <div class="panel panel-default">
 
                 <div class="panel-body">
@@ -383,7 +382,11 @@
             };
 
             this.getData();
-
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                this.isDark = true;
+            } else {
+                this.isDark = false;
+            }
         }
     })
 </script>
