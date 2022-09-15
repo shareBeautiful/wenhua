@@ -112,7 +112,7 @@
             </div>
 
             <div class="panel-heading h">
-                <div class="h-r">{{title}}</div>
+                <div class="h-r">{{title}}{{rtime}}</div>
             </div>
         </div>
 
@@ -156,6 +156,7 @@
                 isVideo: true,
                 apiUrl: 'https://api2022.xukongji.com',
                 videoSrc: '',
+                rtime: 0,
                 currId: 0,
                 currTime: 0,
                 currIdx: 0,
@@ -235,6 +236,8 @@
                     this.$nextTick(() => {
                         this.player.src(this.videoSrc);
                         this.player.load();
+                        // 获取播放剩余时间
+                        this.rtime = this.myTime(parseInt(this.player.remainingTime()));
                     })
                 }
 
@@ -277,6 +280,8 @@
                     var time = this.player.currentTime();
                     this.xkj_time['v' + this.id] = time ? time : 0;
                     localStorage.setItem('xkj_time', JSON.stringify(this.xkj_time))
+                    // 获取剩余时间
+                    this.rtime = this.myTime(parseInt(this.player.remainingTime()));
                 }, 2000);
 
             },
@@ -310,10 +315,10 @@
                     };
 
                     this.$nextTick(() => {
-                        this.player = videojs('my-video', this.options, function onPlayerReady() {
+                        this.player = videojs('my-video', this.options, function onPlayerReady() 
+                        {
                             // this.play();
                             this.on('ended', function () {
-
                                 for (var idx = 0; idx < that.list.length; idx++) {
                                     if (idx === that.currIdx + 1) {
                                         var item = that.list[idx];
@@ -376,7 +381,7 @@
                 // audioPosterMode: true,  // 设置是否海报音频显示
                 //metadata-元数据信息 ，比如视频长度，尺寸等
                 //none-不预加载任何数据，直到用户开始播放才开始下载
-                // poster: 'https://api2022.xukongji.com/upload_file/20220830111608-630d80f8e497c.jpg', // 播放前显示的视频画面
+                poster: 'https://api2022.xukongji.com/upload_file/20220830111608-630d80f8e497c.jpg', // 播放前显示的视频画面
                 // width: 300,height: 300, // 设置宽高
                 //plugins:自动初始化要加载的插件
             };
