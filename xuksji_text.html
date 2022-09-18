@@ -68,7 +68,7 @@
                 </div>
                 <div class="list-group-item fz book curr-pos">
                     <!-- {{subProcess}}- -->
-                    当前：{{currIdx+1}}-{{currItem.title}}({{wordTotle}})
+                    当前：{{currIdx+1}}-{{currItem.title}}({{wordTotal}})
                 </div>
                 <!-- 目录列表 -->
                 <div class="menu-item" v-for="(item, idx) in menuList" :key="item.id" v-show="!item.hide">
@@ -135,7 +135,7 @@
             </div>
             <div class="footer">
                 <div class="f-item">
-                    <span>字数：{{wordTotle}}-进度：({{process}})</span>
+                    <span>字数：{{wordTotal}}-进度：({{process}})</span>
                 </div>
                 <!-- <span class="f-page">{{pageCurr}}/{{pageAll}}</span> -->
             </div>
@@ -156,7 +156,7 @@
             len: 0,
             colors: ['success', 'info', 'warning', 'danger'],
             showMenu: false, // 切换显示菜单
-            wordTotle: 0, // 字数
+            wordTotal: 0, // 字数
             font: [20, 22, 24, 26, 28],
             fontF: [
                 { n: '默认', v: 'inherit' }, { n: '盛世', v: 'shengshi' },
@@ -406,19 +406,24 @@
                     while (res.match(re3)) {
                         res = res.replace(re3, "");
                     }
-                    var re = /<article class=\"article\">.*<\/article>/mgi;
-                    var re2 = /<div class=\"content\">.*<\/div>/img
+                    var re_all = /<article class=\"article\">.*<\/article>/mgi;  // 文章部分
+                    var re_article = /<div class=\"content\">.*<\/div>/img  // 正文部分
+                    var re_date = /\d+-\d+-\d+/img
 
-                    html = res.match(re)
-                    html = '<div class="B1_text">' + html[0] + '</div>'
-                    this.wordTotle = this.total((html.match(re2))[0]);
+                    html = res.match(re_all)[0]
+                    var date = html.match(re_date)[0]
+                    html = html.match(re_article)[0] // 正文
+                    html = '<div class="B1_text">' + html + '</div>'
+                    this.wordTotal = this.total(html);
+                    
                     // 设置字数到目录上
                     this.menuList.some(item => {
                         if(item.id === this.currItem.id) {
-                            item.totle = this.wordTotle;
+                            item.total = this.wordTotal;
+                            return true;
                         }
                     })
-                    this.articleD = { 'title': this.currItem.title, 'html': html }
+                    this.articleD = { 'title': this.currItem.title, 'html': html, 'date': date}
                 })
             },
 
