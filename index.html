@@ -44,7 +44,7 @@
                 <div class="panel-body" v-if="lookInfo.list.length" v-show="lookInfo.open">
                     <div class="list-group panel-success">
                         <template v-for="(item,idx) in lookInfo.list" :key="idx">
-                            <a :href="item.href" target="_blank" class="list-group-item">
+                            <a :href="item.href" @click="saveLook2(item,idx)" target="_blank" class="list-group-item">
                                 <span class="l">{{idx+1}}. {{sliceStr(item.tit)}}
                                     <span v-if="item.pwd" class="pwd-icon">*</span>
                                 </span>
@@ -298,6 +298,12 @@
                         }
                     }
                     this.randomBg()
+                },
+
+                saveLook2: function(item,idx) {
+                    this.lookInfo.list.splice(idx, 1);
+                    this.lookInfo.list.unshift(item);
+                    $echo.setStorage('lookInfo', this.lookInfo.list);
                 },
 
                 // 保存查看过的
