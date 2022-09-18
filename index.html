@@ -44,7 +44,7 @@
                 <div class="panel-body" v-if="lookInfo.list.length" v-show="lookInfo.open">
                     <div class="list-group panel-success">
                         <template v-for="(item,idx) in lookInfo.list" :key="idx">
-                            <a :href="item.href" @click="saveLook2(item,idx)" target="_blank" class="list-group-item">
+                            <a href="javascript:" @click="saveLook2(item,idx)" target="_blank" class="list-group-item">
                                 <span class="l">{{idx+1}}. {{sliceStr(item.tit)}}
                                     <span v-if="item.pwd" class="pwd-icon">*</span>
                                 </span>
@@ -304,6 +304,7 @@
                     this.lookInfo.list.splice(idx, 1);
                     this.lookInfo.list.unshift(item);
                     $echo.setStorage('lookInfo', this.lookInfo.list);
+                    $echo.open(item.href,{},true);
                 },
 
                 // 保存查看过的
