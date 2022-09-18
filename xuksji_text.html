@@ -417,12 +417,7 @@
                     this.wordTotal = this.total(html);
                     
                     // 设置字数到目录上
-                    this.menuList.some(item => {
-                        if(item.id === this.currItem.id) {
-                            item.total = this.wordTotal;
-                            return true;
-                        }
-                    })
+                    this.menuList[this.currIdx]['total'] = this.wordTotal;
                     this.articleD = { 'title': this.currItem.title, 'html': html, 'date': date}
                 })
             },
