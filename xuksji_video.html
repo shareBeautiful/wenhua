@@ -234,7 +234,6 @@
 
                 if (this.player) {
                     this.$nextTick(() => {
-                        localStorage.setItem('xkj_time', 0); // 重置为0
                         this.player.src(this.videoSrc);
                         this.player.load();
                         // 获取播放剩余时间
