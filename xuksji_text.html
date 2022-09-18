@@ -23,11 +23,14 @@
             width: 0;
             height: 0;
         }
+
         .B1_text .header {
             font-size: 18px;
             text-align: right;
         }
-        .readOpt .header,.readOpt .footer {
+
+        .readOpt .header,
+        .readOpt .footer {
             font-size: 18px;
         }
     </style>
@@ -61,6 +64,7 @@
                             class="switch" type="checkbox" v-model='isPage'>翻页</span>
                     <span @click.capture="switchOrder" class="list-group-item fz book"><i class="zhe"></i><input
                             class="switch" type="checkbox" v-model='isReverse'>倒序</span>
+                    <span class="list-group-item fz book" v-if="len>5">共：{{len}}章</span>
                 </div>
                 <div class="list-group-item fz book curr-pos">
                     <!-- {{subProcess}}- -->
@@ -71,6 +75,7 @@
                     <a class="list-group-item " href="javascript:" @click="toArticle(item.idx, item);"
                         :class="['list-group-item-'+colors[idx%4],{active: item.idx===currIdx}]">
                         {{item.idx+1}}--{{item.title}}
+                        <span v-if="item.total">({{item.total}})</span>
                     </a>
                 </div>
                 <!-- 字体大小设置 -->
@@ -382,10 +387,10 @@
                 this.currIdx = item.idx;
                 this.saveText();
                 this.getArticle();
+                window.scrollTo(0, 0); // 跳转到文章顶部
             },
             // 下一章 // 上一章
             pageNext: function (type) {
-                window.scrollTo(0, 0)
                 if (type === '+') {
                     this.toArticle(this.currIdx + 1)
                 } else if (type === '-') {
@@ -407,6 +412,12 @@
                     html = res.match(re)
                     html = '<div class="B1_text">' + html[0] + '</div>'
                     this.wordTotle = this.total((html.match(re2))[0]);
+                    // 设置字数到目录上
+                    this.menuList.some(item => {
+                        if(item.id === this.currItem.id) {
+                            item.totle = this.wordTotle;
+                        }
+                    })
                     this.articleD = { 'title': this.currItem.title, 'html': html }
                 })
             },
@@ -420,15 +431,15 @@
             },
 
             // 计算阅读百分比
-            getProcess: function() {
+            getProcess: function () {
                 var elH = document.documentElement.scrollHeight || document.body.scrollHeight; // 当前章节高度
                 var scrollTop = document.documentElement.scrollTop; // 滚动高度
-                var p = (scrollTop)/(elH-this.height);
-                p = p>=1? 1 : p;
-                p = (p*100).toFixed(3)
-                if(p == 0){
+                var p = (scrollTop) / (elH - this.height);
+                p = p >= 1 ? 1 : p;
+                p = (p * 100).toFixed(3)
+                if (p == 0) {
                     p = 0;
-                }else if(p >= 100) {
+                } else if (p >= 100) {
                     p = 100;
                 }
                 this.process = p + '%';
