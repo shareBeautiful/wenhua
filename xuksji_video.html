@@ -81,7 +81,7 @@
         .panel-heading {
             font-size: 18px;
             color: #b3b3b3;
-            padding: 5px 10px;
+            padding: 5px;
             border: 1px solid #ddd;
             margin-top: 10px;
         }
@@ -94,6 +94,16 @@
             position: sticky;
             top: 0;
             background: #000;
+        }
+        #video-box .select {
+            height: 24px;
+            color:#ac3a39 !important;
+            padding: 0 3px;
+            font-size: 15px;
+        }
+        #video-box .select option {
+            color:#ac3a39 !important;
+            padding: 3px 0 !important;
         }
     </style>
 </head>
@@ -113,8 +123,8 @@
 
             <div class="panel-heading h">
                 <div class="h-r">
-                    {{title.slice(0,14)}}
-                    <select name="" id="" @change="selectTimes">
+                    {{title.slice(0,15)}}
+                    <select class="form-control select" @change="selectTimes">
                         <option value="0">播完当前</option>
                         <option :value="n" v-for="n in times" :key="n">播完{{n}}集</option>
                     </select>
