@@ -99,7 +99,7 @@
 </head>
 
 <body>
-    <div id="app" v-cloak  :class="{'dark': isDark}">
+    <div id="app" v-cloak :class="{'dark': isDark}">
         <!-- autoplay="autoplay" -->
         <div id="video-box">
             <div class="video-wrapper">
@@ -112,7 +112,14 @@
             </div>
 
             <div class="panel-heading h">
-                <div class="h-r">{{title}}{{rtime}}</div>
+                <div class="h-r">
+                    {{title.slice(0,14)}}
+                    <select name="" id="" @change="selectTimes">
+                        <option value="0">播完当前</option>
+                        <option :value="n" v-for="n in times" :key="n">播完{{n}}集</option>
+                    </select>
+                    {{rtime}}
+                </div>
             </div>
         </div>
 
@@ -165,6 +172,7 @@
                 options: {},        // 视频设置
                 xkj_video: {},
                 xkj_time: {},
+                times: 5,          // 可以选择定时播放的集数
             }
         },
         methods: {
@@ -227,7 +235,7 @@
                 if (this.currId === item.id) return false;
                 this.isVideo = item.video_url.indexOf('.mp4') > -1 ? true : false;
                 this.videoSrc = item.video_url;
-                this.title = idx+1+'. '+item.title;
+                this.title = idx + 1 + '. ' + item.title;
                 this.currId = item.id;
                 this.currIdx = idx;
                 document.title = item.title;
@@ -244,7 +252,41 @@
                 // this.$nextTick(() => {
                 //     this.elevideo.load()
                 // })
+                this.setTimes(); // 设置当前可定时的集数
                 this.saveVideo(); // 保存当前播放的集
+            },
+
+            // 选择定时播放集数
+            selectTimes: function (e) {
+                var times = Number(e.target.value);
+                this.player.off('ended')
+                if (times === 0) {
+                    // 取消定时
+                } else {
+                    // 开启定时
+                    this.player.on('ended', () => {
+                        times--;
+                        if (times === 0) {
+                            this.player.off('ended')
+                        } else {
+                            var nextIdx = this.currIdx + 1;
+                            var item = this.list[nextIdx];
+                            this.switchVideo(item, nextIdx);
+                        }
+                    })
+                }
+            },
+
+            // 获取可设置的集数
+            setTimes: function () {
+                var len = this.list.length; // 获取全部集数
+                var currIdx = this.currIdx; // 当前集数位置
+                var times = 6; // 设置最多集数
+                if (currIdx + times > len) {
+                    this.times = len - currIdx;
+                } else {
+                    this.times = times;
+                }
             },
 
             // 开启自动播放下一集
@@ -315,18 +357,14 @@
                     };
 
                     this.$nextTick(() => {
-                        this.player = videojs('my-video', this.options, function onPlayerReady() 
-                        {
-                            // this.play();
-                            this.on('ended', function () {
-                                for (var idx = 0; idx < that.list.length; idx++) {
-                                    if (idx === that.currIdx + 1) {
-                                        var item = that.list[idx];
-                                        that.switchVideo(item, idx);
-                                        break;
-                                    }
-                                }
-                            });
+                        this.player = videojs('my-video', this.options, function onPlayerReady() {
+                            // this.play(); 
+                            // 自动播放下一集
+                            // this.on('ended', function () {
+                            //     var nextIdx = that.currIdx + 1;
+                            //     var item = that.list[nextIdx];
+                            //     that.switchVideo(item, nextIdx);
+                            // });
                         });
 
                         // 初始化视频当前视频播放位置
