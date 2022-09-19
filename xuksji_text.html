@@ -100,13 +100,13 @@
         </div>
 
         <!-- 内容 -->
-        <div id="bodyBox">
+        <div id="bodyBox" v-show="articleD.html">
             <div class="panel-footer page-tap prev" @click.stop="pageNext('-')" v-if="currIdx-1>=0">
                 上一章 -- {{subTit(menuList[currIdx-1]['title'])}}
                 <span @click.stop="pageNext('+')">下一章</span>
             </div>
             <div class="body-box" @dblclick.capture="clickShowMenu()">
-                <div class="panel panel-info" @click.stop="showReadOpt()">
+                <div :class="['panel','panel-'+colors[currIdx%4]]" @click.stop="showReadOpt()">
                     <div class="panel-heading">
                         <h3 class="panel-title text-center">
                             {{articleD.title}}
