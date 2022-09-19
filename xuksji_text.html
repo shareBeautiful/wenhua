@@ -72,7 +72,7 @@
                 </div>
                 <!-- 目录列表 -->
                 <div class="menu-item" v-for="(item, idx) in menuList" :key="item.id" v-show="!item.hide">
-                    <a class="list-group-item " href="javascript:" @click="toArticle(item.idx, item);"
+                    <a class="list-group-item " href="javascript:" @click="toArticle(item.idx);"
                         :class="['list-group-item-'+colors[idx%4],{active: item.idx===currIdx}]">
                         {{item.idx+1}}--{{item.title}}
                         <span v-if="item.total">({{item.total}})</span>
@@ -382,12 +382,12 @@
 
             // 跳转文章
             toArticle: function (idx) {
+                if(this.currIdx === idx) return false;
                 var item = this.menuList[idx]
                 this.currItem = item;
-                this.currIdx = item.idx;
+                this.currIdx = idx;
                 this.saveText();
                 this.getArticle();
-                window.scrollTo(0, 0); // 跳转到文章顶部
             },
             // 下一章 // 上一章
             pageNext: function (type) {
@@ -419,6 +419,9 @@
                     // 设置字数到目录上
                     this.menuList[this.currIdx]['total'] = this.wordTotal;
                     this.articleD = { 'title': this.currItem.title, 'html': html, 'date': date}
+                    this.$nextTick(()=>{
+                        window.scrollTo(0, 0); // 跳转到文章顶部
+                    })
                 })
             },
 
