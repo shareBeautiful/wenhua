@@ -102,7 +102,7 @@
         <!-- 内容 -->
         <div id="bodyBox" v-show="articleD.html">
             <div class="panel-footer page-tap prev" @click.stop="pageNext('-')" v-if="currIdx-1>=0">
-                上一章 -- {{subTit(menuList[currIdx-1]['title'])}}
+                上一章 - {{subTit(menuList[currIdx-1]['title'])}}
                 <span @click.stop="pageNext('+')">下一章</span>
             </div>
             <div class="body-box" @dblclick.capture="clickShowMenu()">
@@ -120,7 +120,7 @@
                 </div>
             </div>
             <div class="panel-footer page-tap next" v-if="currIdx+1<len" @click.stop="pageNext('+')">
-                下一章 -- {{menuList[currIdx+1]["title"]}}
+                下一章 - {{menuList[currIdx+1]["title"]}}
             </div>
         </div>
 
@@ -459,7 +459,9 @@
                     var xkj_text = localStorage.getItem('xkj_text');
                     if (xkj_text) this.xkj_text = JSON.parse(xkj_text);
                     var idxs = 0;
+                    var re = /《.*?》|（.*?）/img
                     res.forEach((item, idx) => {
+                        item.title = item.title.replace(re,'');
                         item.idx = idx;
                         if (this.xkj_text['t' + id] == item.id) {
                             idxs = idx;
