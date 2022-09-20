@@ -229,7 +229,7 @@ button.btn {
     overflow-x: hidden;
     text-align: justify;
     letter-spacing: 1px;
-    line-height: 1.7 !important;
+    line-height: 1.8 !important;
 }
 .B1_text img {
     width: auto !important;
@@ -245,9 +245,9 @@ button.btn {
     text-align: justify;
     padding: 0;
     margin: 0;
-    padding: 6px 0;
+    padding: 8px 0;
     text-indent: 2.2em;
-    line-height: 1.7;
+    line-height: 1.8;
 }
 
 .B1_text h1,
