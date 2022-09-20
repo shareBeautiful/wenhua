@@ -408,7 +408,7 @@
                     }
                     var re_all = /<article class=\"article\">.*<\/article>/mgi;  // 文章部分
                     var re_article = /<div class=\"content\">.*<\/div>/img  // 正文部分
-                    var re_date = /\d+-\d+-\d+/img
+                    var re_date = /\d+-\d+-\d+(\s+\d+:\d+)?/img
 
                     html = res.match(re_all)[0]
                     var date = html.match(re_date)[0]
