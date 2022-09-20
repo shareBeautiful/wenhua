@@ -128,7 +128,7 @@
                     {{title.slice(0,15)}}
                     <select class="form-control select" @change="selectTimes">
                         <option value="1">播完当前</option>
-                        <option value="0">全部循环</option>
+                        <option value="0" v-if="times>6">全部循环</option>
                         <option :value="n" v-if="n>1" v-for="n in times" :key="n">
                             播完{{n}}集
                         </option>

@@ -418,7 +418,7 @@
                     
                     // 设置字数到目录上
                     this.menuList[this.currIdx]['total'] = this.wordTotal;
-                    var title = this.currItem.title.replace(/《.*?》/g,'');
+                    var title = this.currItem.title;
                     this.articleD = { 'title': title, 'html': html, 'date': date}
                     this.$nextTick(()=>{
                         document.title = title;
@@ -461,7 +461,7 @@
                     var xkj_text = localStorage.getItem('xkj_text');
                     if (xkj_text) this.xkj_text = JSON.parse(xkj_text);
                     var idxs = 0;
-                    var re = /（.*?）/img
+                    var re = /《.*?》|（.*?）/img
                     res.forEach((item, idx) => {
                         item.title = item.title.replace(re,'');
                         item.idx = idx;
