@@ -48,7 +48,7 @@
         <div id="menu" @dblclick.capture="clickHideMenu" v-swipeleft="clickHideMenu" class="list-group"
             :class="{'show-a': showMenu}">
             <div>
-                <div class="search-box">
+                <div class="search-box" v-if="len>15">
                     <input type="search" class="form-control search" @input="search" @keyup.enter="enterSearch"
                         v-model="word" placeholder="搜索...">
                 </div>
@@ -64,7 +64,7 @@
                             class="switch" type="checkbox" v-model='isPage'>翻页</span>
                     <span @click.capture="switchOrder" class="list-group-item fz book"><i class="zhe"></i><input
                             class="switch" type="checkbox" v-model='isReverse'>倒序</span>
-                    <span class="list-group-item fz book" v-if="len>5">共：{{len}}章</span>
+                    <span class="list-group-item fz book" v-if="len>5">共:{{len}}章</span>
                 </div>
                 <div class="list-group-item fz book curr-pos">
                     <!-- {{subProcess}}- -->
@@ -135,7 +135,7 @@
             </div>
             <div class="footer">
                 <div class="f-item">
-                    <span>字数：{{wordTotal}}-进度：({{process}})</span>
+                    <span>字：{{wordTotal}} -- 进：({{process}})</span>
                 </div>
                 <!-- <span class="f-page">{{pageCurr}}/{{pageAll}}</span> -->
             </div>
@@ -409,7 +409,7 @@
                     var re_all = /<article class=\"article\">.*<\/article>/mgi;  // 文章部分
                     var re_article = /<div class=\"content\">.*<\/div>/img  // 正文部分
                     var re_date = /\d+-\d+-\d+(\s+\d+:\d+)?/img
-
+                    window.scrollTo(0, 0); // 跳转到文章顶部
                     html = res.match(re_all)[0]
                     var date = html.match(re_date)[0]
                     html = html.match(re_article)[0] // 正文
@@ -422,7 +422,6 @@
                     this.articleD = { 'title': title, 'html': html, 'date': date}
                     this.$nextTick(()=>{
                         document.title = title;
-                        window.scrollTo(0, 0); // 跳转到文章顶部
                     })
                 })
             },
