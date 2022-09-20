@@ -418,8 +418,10 @@
                     
                     // 设置字数到目录上
                     this.menuList[this.currIdx]['total'] = this.wordTotal;
-                    this.articleD = { 'title': this.currItem.title, 'html': html, 'date': date}
+                    var title = this.currItem.title.replace(/《.*?》/g,'');
+                    this.articleD = { 'title': title, 'html': html, 'date': date}
                     this.$nextTick(()=>{
+                        document.title = title;
                         window.scrollTo(0, 0); // 跳转到文章顶部
                     })
                 })
@@ -459,7 +461,7 @@
                     var xkj_text = localStorage.getItem('xkj_text');
                     if (xkj_text) this.xkj_text = JSON.parse(xkj_text);
                     var idxs = 0;
-                    var re = /《.*?》|（.*?）/img
+                    var re = /（.*?）/img
                     res.forEach((item, idx) => {
                         item.title = item.title.replace(re,'');
                         item.idx = idx;
