@@ -95,14 +95,16 @@
             top: 0;
             background: #000;
         }
+
         #video-box .select {
             height: 24px;
-            color:#ac3a39 !important;
+            color: #ac3a39 !important;
             padding: 0 3px;
             font-size: 15px;
         }
+
         #video-box .select option {
-            color:#ac3a39 !important;
+            color: #ac3a39 !important;
             padding: 3px 0 !important;
         }
     </style>
@@ -125,8 +127,11 @@
                 <div class="h-r">
                     {{title.slice(0,15)}}
                     <select class="form-control select" @change="selectTimes">
-                        <option value="0">播完当前</option>
-                        <option :value="n" v-for="n in times" :key="n">播完{{n}}集</option>
+                        <option value="1">播完当前</option>
+                        <option value="0">全部循环</option>
+                        <option :value="n" v-if="n>1" v-for="n in times" :key="n">
+                            播完{{n}}集
+                        </option>
                     </select>
                     {{rtime}}
                 </div>
@@ -271,7 +276,14 @@
                 var times = Number(e.target.value);
                 this.player.off('ended')
                 if (times === 0) {
-                    // 取消定时
+                    // 全部循环
+                    this.player.on('ended', () => {
+                        var nextIdx = this.currIdx + 1;
+                        var item = this.list[nextIdx];
+                        this.switchVideo(item, nextIdx);
+                    })
+                }else if(times === 1){ // 播完当前
+                    this.player.off('ended');
                 } else {
                     // 开启定时
                     this.player.on('ended', () => {
@@ -299,7 +311,7 @@
                 }
             },
 
-            // 开启自动播放下一集
+            // 开启自动播放下一集 废弃
             switchAuto: function () {
                 this.$nextTick(() => {
                     this.elevideo.addEventListener('ended', function () { //结束
