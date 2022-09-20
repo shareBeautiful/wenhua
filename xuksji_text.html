@@ -402,7 +402,7 @@
             getArticle: function () {
                 var path = this.apiUrl + '/api/article/menuInfoWeb?id=' + this.currItem.id;
                 this.getHtml(path, { method: "get" }).then(res => {
-                    var re3 = /[\r\n\f\t]|(<\/?br\/?>)+|\sstyle=".*?"|<strong>[\s\t\r\f\n]*<\/strong>|<span>[\s\t\r\f\n]*<\/span>|<p>[\s\t\r\f\n]*<\/p>|<div>[\s\t\r\f\n]*<\/div>/img
+                    var re3 = /[\r\n\f\t]|(<\/?br\/?>)+|\sstyle=".*?"|(&nbsp;)|<strong>[\s\t\r\f\n]*<\/strong>|<span>[\s\t\r\f\n]*<\/span>|<p>[\s\t\r\f\n]*<\/p>|<div>[\s\t\r\f\n]*<\/div>/img
                     while (res.match(re3)) {
                         res = res.replace(re3, "");
                     }
