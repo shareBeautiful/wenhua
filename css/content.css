@@ -228,7 +228,7 @@ button.btn {
     margin: 0 auto;
     overflow-x: hidden;
     text-align: justify;
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;
     line-height: 1.68 !important;
 }
 .B1_text img {
