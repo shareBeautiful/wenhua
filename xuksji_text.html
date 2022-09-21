@@ -61,7 +61,7 @@
                             class="switch" type="checkbox" v-model='isReverse'>倒序</span>
                     <span class="list-group-item fz book" v-if="len>5">共:{{len}}章</span>
                 </div>
-                <div class="list-group-item fz book curr-pos">
+                <div class="list-group-item fz book curr-pos" @click="toTop">
                     <!-- {{subProcess}}- -->
                     当前：{{currIdx+1}}-{{currItem.title}}({{wordTotal}})
                 </div>
@@ -214,6 +214,11 @@
                 }).catch((error) => {
                     console.log('errorMessage', error)
                 })
+            },
+
+            // 跳转到顶部
+            toTop: function() {
+                window.scrollTo(0,0);
             },
 
             // 裁剪标题
