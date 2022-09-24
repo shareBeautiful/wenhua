@@ -153,9 +153,10 @@ function getContent() {
                     showMenu: false, // 切换显示菜单
                     allTotal: 0, // 总字数
                     noSleep: null, // 屏幕常亮对象
-                    font: [20, 22, 24, 26, 28],
+                    font: [20, 22, 24, 26, 28, 30],
                     fontF: [
                         {n:'默认',v:'inherit'},{n:'盛世', v:'shengshi'},
+                        { n: '楷体', v: 'kaiti' },
                         {n:'今楷', v:'jinkai'},{n:'云黑', v:'yunhei'},
                         {n:'玄三', v:'xuansan'},{n:'行黑',v:'xinghei'},{n:'卡通',v:'katong'}
                     ],

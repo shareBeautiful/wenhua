@@ -33,6 +33,10 @@ body {
     src: url('font/方正盛世.woff2')
 }
 
+@font-face {
+    font-family: 'kaiti';
+    src: url('font/楷体.woff2')
+}
 
 
 /* 获取屏幕的高度 */
