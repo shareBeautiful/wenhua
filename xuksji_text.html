@@ -63,7 +63,7 @@
                 </div>
                 <div class="list-group-item fz book curr-pos" @click="toTop">
                     <!-- {{subProcess}}- -->
-                    当前：{{currIdx+1}}-{{currItem.title}}({{wordTotal}})
+                    位置：{{currIdx+1}}-{{currItem.title}}({{wordTotal}})
                 </div>
                 <!-- 目录列表 -->
                 <div class="menu-item" v-for="(item, idx) in menuList" :key="item.id" v-show="!item.hide">
@@ -78,7 +78,7 @@
                     <span class="list-group-item fz" :key="item" :class="{'active': item == currFont}"
                         v-for="item in font" @click="setFont(item)">{{item}}
                     </span>
-                    <span class="list-group-item fz">当前字体：{{ currFont }}</span>
+                    <span class="list-group-item fz">当前字号：{{ currFont }}</span>
                 </div>
                 <!-- 字体设置 -->
                 <div>

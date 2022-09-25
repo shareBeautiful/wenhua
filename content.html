@@ -72,7 +72,7 @@
                     </div>
                     <div class="list-group-item fz book curr-pos" @click="toPos(currIdx, currItem);">
                         <!-- {{subProcess}}- -->
-                        当前：{{currIdx+1}}-{{currItem.title}}({{currItem.total}})</div>
+                        位置：{{currIdx+1}}-{{currItem.title}}({{currItem.total}})</div>
                     <div>
                         <span class="list-group-item fz book" style="margin-top: 10px" v-for="(item, index) in book"
                             @click="toBook(item)" :key="item">书签{{index+1}} <span class="del"
@@ -91,7 +91,7 @@
                         <span class="list-group-item fz" :key="item" :class="{'active': item == currFont}"
                             v-for="item in font" @click="setFont(item)">{{item}}
                         </span>
-                        <span class="list-group-item fz">当前字体：{{ currFont }}</span>
+                        <span class="list-group-item fz">当前字号：{{ currFont }}</span>
                     </div>
                     <!-- 字体设置 -->
                     <div>
@@ -164,7 +164,7 @@
                     <span class="h-l" @click="switchTheme">
                         <template v-if="theme == 4">🔆</template><template v-else>🌙</template>
                     </span>
-                    当前：{{subTit(currItem.title)}}
+                    {{subTit(currItem.title)}}
                     <span class="h-r" @click="clickShowMenu(memoryId)">目录</span>
                 </div>
                 <div class="footer">
