@@ -236,8 +236,9 @@ function getContent() {
 
                 // 裁剪标题
                 subTit: function (title) {
-                    if (title.length > 15) {
-                        return title.slice(0, 15)
+                    var n = 20;
+                    if (title.length > n) {
+                        return title.slice(0, n)
                     } else {
                         return title
                     }
