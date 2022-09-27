@@ -160,7 +160,7 @@ function getContent() {
                         {n:'今楷', v:'jinkai'},{n:'云黑', v:'yunhei'},
                         {n:'玄三', v:'xuansan'},{n:'行黑',v:'xinghei'},{n:'卡通',v:'katong'}
                     ],
-                    currFont: 24,                                   
+                    currFontS: 24,                                   
                     currFontF: 'inherit',
                     // footMenu: [{n:'目录'},{n:'进度'},{n:'设置'},{n:'夜间'}],
                     footMenu: [{
@@ -362,6 +362,7 @@ function getContent() {
                     this.theme = item.id
                     $echo.setStorage('theme', this.theme);
                 },
+
                 // 设置字体
                 setFontF: function(item) {
                     if(item) {
@@ -373,11 +374,11 @@ function getContent() {
                     }, 16)
                 },
 
-                // 设置字体大小
-                setFont: function (size, is) {
+                // 设置字号大小
+                setFontS: function (size, is) {
                     var s = this.getInfo('size');
                     if (isNaN(s) || s == false) {
-                        s = this.currFont;
+                        s = this.currFontS;
                     }
                     if (size == '+') {
                         s = (s + 1)
@@ -396,7 +397,7 @@ function getContent() {
                             // 由于字体改变需要重新获取每一个id的高度
                             if(memory) this.memoryTo(); // 重新计算
                         })
-                        this.currFont = s;
+                        this.currFontS = s;
                     }, 30)
 
                 },
@@ -1029,8 +1030,8 @@ function getContent() {
                 this.localInfo = this.getInfo(); // 获取当前页本地信息
                 // 字体大小
                 var size = this.localInfo['size'];
-                if(size) this.setFont(size, true)
-                // size?  this.setFont(size, true): this.setFont(this.currFont);
+                if(size) this.setFontS(size, true)
+                // size?  this.setFontS(size, true): this.setFontS(this.currFontS);
                 // 字体
                 var font = localStorage.getItem('font')
                 if(font) {

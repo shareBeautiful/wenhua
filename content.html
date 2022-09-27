@@ -88,10 +88,10 @@
                     </div>
                     <!-- 字体大小设置 -->
                     <div>
-                        <span class="list-group-item fz" :key="item" :class="{'active': item == currFont}"
-                            v-for="item in font" @click="setFont(item)">{{item}}
+                        <span class="list-group-item fz" :key="item" :class="{'active': item == currFontS}"
+                            v-for="item in font" @click="setFontS(item)">{{item}}
                         </span>
-                        <span class="list-group-item fz">当前字号：{{ currFont }}</span>
+                        <span class="list-group-item fz">当前字号：{{ currFontS }}</span>
                     </div>
                     <!-- 字体设置 -->
                     <div>
@@ -101,8 +101,8 @@
                     </div>
                     <!--  -->
                     <div>
-                        <span class="list-group-item  fz" @click="setFont('+')">+</span>
-                        <span class="list-group-item fz" @click="setFont('-')">-</span>
+                        <span class="list-group-item  fz" @click="setFontS('+')">+</span>
+                        <span class="list-group-item fz" @click="setFontS('-')">-</span>
                     </div>
                 </div>
             </div>
