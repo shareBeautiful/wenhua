@@ -80,7 +80,12 @@
                     <span class="list-group-item fz" :key="item" :class="{'active': item == currFontS}"
                         v-for="item in font" @click="setFontS(item)">{{item}}
                     </span>
+                    
+                </div>
+                <div>
                     <span class="list-group-item fz">当前字号：{{ currFontS }}</span>
+                    <span class="list-group-item  fz" @click="setFontS('+')">+</span>
+                    <span class="list-group-item fz" @click="setFontS('-')">-</span>
                 </div>
                 <!-- 字体设置 -->
                 <div>
@@ -88,11 +93,7 @@
                         v-for="(item) in fontF" @click="setFontF(item)">{{item.n}}
                     </span>
                 </div>
-                <!--  -->
-                <div>
-                    <span class="list-group-item  fz" @click="setFontS('+')">+</span>
-                    <span class="list-group-item fz" @click="setFontS('-')">-</span>
-                </div>
+                
             </div>
         </div>
 
@@ -156,12 +157,12 @@
             wordTotal: 0, // 字数
             font: [20, 22, 24, 26, 28, 30],
             fontF: [
-                { n: '默认', v: 'inherit' }, { n: '盛世', v: 'shengshi' },
-                { n: '楷体', v: 'kaiti' },
+                { n: '默认', v: 'inherit' }, 
+                { n: '楷体1', v: 'kaiti' },
                 { n: '楷体2', v: 'kaiti2' },
+                { n: '盛世', v: 'shengshi' },
                 { n: '今楷', v: 'jinkai' }, 
-                { n: '云黑', v: 'yunhei' },
-                { n: '玄三', v: 'xuansan' }, 
+                { n: '云黑', v: 'yunhei' }, 
                 { n: '行黑', v: 'xinghei' }, 
                 { n: '卡通', v: 'katong' }
             ],
