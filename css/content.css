@@ -38,6 +38,11 @@ body {
     src: url('font/楷体.woff2')
 }
 
+@font-face {
+    font-family: 'kaiti2';
+    src: url('font/楷体_GB2312.woff2')
+}
+
 
 
 /* 获取屏幕的高度 */
