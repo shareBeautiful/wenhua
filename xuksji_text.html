@@ -22,6 +22,7 @@
             font-size: 18px;
             text-align: right;
         }
+
         #bodyBox {
             font-size: 26px;
         }
@@ -80,7 +81,7 @@
                     <span class="list-group-item fz" :key="item" :class="{'active': item == currFontS}"
                         v-for="item in font" @click="setFontS(item)">{{item}}
                     </span>
-                    
+
                 </div>
                 <div>
                     <span class="list-group-item fz">当前字号：{{ currFontS }}</span>
@@ -93,7 +94,7 @@
                         v-for="(item) in fontF" @click="setFontF(item)">{{item.n}}
                     </span>
                 </div>
-                
+
             </div>
         </div>
 
@@ -157,13 +158,13 @@
             wordTotal: 0, // 字数
             font: [20, 22, 24, 26, 28, 30],
             fontF: [
-                { n: '默认', v: 'inherit' }, 
+                { n: '默认', v: 'inherit' },
                 { n: '楷体1', v: 'kt1' },
                 { n: '楷体2', v: 'kt2' },
                 { n: '盛世', v: 'ss' },
-                { n: '今楷', v: 'jk' }, 
-                { n: '云黑', v: 'yh' }, 
-                { n: '行黑', v: 'xh' }, 
+                { n: '今楷', v: 'jk' },
+                { n: '云黑', v: 'yh' },
+                { n: '行黑', v: 'xh' },
                 { n: '卡通', v: 'kt' }
             ],
             currFontS: 26,
@@ -226,8 +227,8 @@
             },
 
             // 跳转到顶部
-            toTop: function() {
-                window.scrollTo(0,0);
+            toTop: function () {
+                window.scrollTo(0, 0);
             },
 
             // 裁剪标题
@@ -277,7 +278,7 @@
                 }
                 var dom = document.querySelector('#bodyBox');
                 dom.style.fontSize = s + 'px';
-                
+
                 // 由于字体改变后页面高度变化，需要延迟重新计算回到当前位置
                 this.currFontS = s;
                 $echo.setStorage('fontSize', this.currFontS);
@@ -393,7 +394,7 @@
 
             // 跳转文章
             toArticle: function (idx) {
-                if(this.currIdx === idx) return false;
+                if (this.currIdx === idx) return false;
                 var item = this.menuList[idx]
                 this.currItem = item;
                 this.currIdx = idx;
@@ -426,12 +427,12 @@
                     html = html.match(re_article)[0] // 正文
                     html = '<div class="B1_text">' + html + '</div>'
                     this.wordTotal = this.total(html);
-                    
+
                     // 设置字数到目录上
                     this.menuList[this.currIdx]['total'] = this.wordTotal;
                     var title = this.currItem.title;
-                    this.articleD = { 'title': title, 'html': html, 'date': date}
-                    this.$nextTick(()=>{
+                    this.articleD = { 'title': title, 'html': html, 'date': date }
+                    this.$nextTick(() => {
                         document.title = title;
                     })
                 })
@@ -460,7 +461,7 @@
                 this.process = p + '%';
             },
 
-            getP: function() {
+            getP: function () {
                 clearInterval(this.processTime);
                 this.processTime = setTimeout(() => {
                     this.getProcess();
@@ -480,7 +481,7 @@
                     var idxs = 0;
                     var re = /《.*?》|（.*?）/img
                     res.forEach((item, idx) => {
-                        item.title = item.title.replace(re,'');
+                        item.title = item.title.replace(re, '');
                         item.idx = idx;
                         if (this.xkj_text['t' + id] == item.id) {
                             idxs = idx;
@@ -500,14 +501,17 @@
             // 字体
             var font = localStorage.getItem('font')
             var fontSize = localStorage.getItem('fontSize');
-            if (font) { 
-                this.currFontF = font;
-                this.setFontF();
-            }
-            // 字号
-            if(fontSize) {
-                this.setFontS(fontSize)
-            }
+            this.$nextTick(() => {
+                if (font) {
+                    this.currFontF = font;
+                    this.setFontF();
+                }
+                // 字号
+                if (fontSize) {
+                    this.setFontS(fontSize)
+                }
+            })
+
             this.isDark = Boolean(eval($echo.getStorage('isDark'))); // 转换布尔值
             if (this.isDark) { // 是否开启跟随系统
                 if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
