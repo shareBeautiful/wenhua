@@ -154,17 +154,40 @@ function getContent() {
                     allTotal: 0, // 总字数
                     noSleep: null, // 屏幕常亮对象
                     font: [20, 22, 24, 26, 28, 30],
-                    fontF: [
-                        { n: '默认', v: 'inherit' }, 
-                        { n: '楷体1', v: 'kt1' },
-                        { n: '楷体2', v: 'kt2' },
-                        { n: '盛世', v: 'ss' },
-                        { n: '今楷', v: 'jk' }, 
-                        { n: '云黑', v: 'yh' }, 
-                        { n: '行黑', v: 'xh' }, 
-                        { n: '卡通', v: 'kt' }
+                    fontF: [{
+                            n: '默认',
+                            v: 'inherit'
+                        },
+                        {
+                            n: '楷体1',
+                            v: 'kt1'
+                        },
+                        {
+                            n: '楷体2',
+                            v: 'kt2'
+                        },
+                        {
+                            n: '盛世',
+                            v: 'ss'
+                        },
+                        {
+                            n: '今楷',
+                            v: 'jk'
+                        },
+                        {
+                            n: '云黑',
+                            v: 'yh'
+                        },
+                        {
+                            n: '行黑',
+                            v: 'xh'
+                        },
+                        {
+                            n: '卡通',
+                            v: 'kt'
+                        }
                     ],
-                    currFontS: 24,                                   
+                    currFontS: 24,
                     currFontF: 'inherit',
                     // footMenu: [{n:'目录'},{n:'进度'},{n:'设置'},{n:'夜间'}],
                     footMenu: [{
@@ -279,7 +302,7 @@ function getContent() {
                         s = num / 1000 + 'k'
                     } else if (num >= 10000) {
                         s = num / 10000 + 'w'
-                    }else {
+                    } else {
                         s = num
                     }
                     return {
@@ -368,12 +391,12 @@ function getContent() {
                 },
 
                 // 设置字体
-                setFontF: function(item) {
-                    if(item) {
+                setFontF: function (item) {
+                    if (item) {
                         this.currFontF = item.v;
                         $echo.setStorage('font', this.currFontF);
                     }
-                    setTimeout(()=>{
+                    setTimeout(() => {
                         document.body.style.fontFamily = this.currFontF
                     }, 16)
                 },
@@ -399,7 +422,7 @@ function getContent() {
                         this.$nextTick(() => {
                             if (!is) this.getAllHeight(true); // 太卡，不搞了，由于字体改变需要重新更新高度 
                             // 由于字体改变需要重新获取每一个id的高度
-                            if(memory) this.memoryTo(); // 重新计算
+                            if (memory) this.memoryTo(); // 重新计算
                         })
                         this.currFontS = s;
                     }, 30)
@@ -462,6 +485,9 @@ function getContent() {
                             }, time + 10)
                         }
                     }
+                    var mid = document.getElementById('m' + this.currItem.id);
+                    var menu = document.getElementById('menu');
+                    menu.scrollTop = mid.offsetTop - 240
                 },
 
                 // 设置当前url
@@ -639,7 +665,7 @@ function getContent() {
                 },
 
                 // 切换屏幕常亮
-                switchSleep: function(is) {
+                switchSleep: function (is) {
                     this.isNoSleep = is;
                     /*if(this.isNoSleep) {
                         this.noSleep.enable(); // 启用常亮
@@ -651,7 +677,7 @@ function getContent() {
                 // 开启自动翻页
                 switchAuto: function (time) {
                     // this.isPage = !this.isAuto;
-                    
+
                     if (!this.isAuto) {
                         this.isAuto = true;
                         this.setAutoTime()
@@ -667,7 +693,7 @@ function getContent() {
                     this.switchSleep(this.isAuto); // 自动设置屏幕常亮
                 },
 
-                
+
 
                 // 停止滚动不关闭自动开关
                 stopScroll: function () {
@@ -957,10 +983,10 @@ function getContent() {
                             this.audioSrc = src;
                         } else {
                             var src = 'https://zxin669666.cn/audio/' + file + '/' + tit + '.' + audioType;
-                            this.$nextTick(()=>{
+                            this.$nextTick(() => {
                                 var audio = playAudio(src);
                             })
-                            
+
                         }
 
                         // audio.loop = true  // 设置循环播放
@@ -987,7 +1013,7 @@ function getContent() {
                         this.allTotal += t.num
                     })
                     if (keyword || dirType === 'ximalaya') { // 不存入
-                        
+
                     } else {
                         INDEXDB.putItem(type, {
                             list: dataList,
@@ -1034,11 +1060,11 @@ function getContent() {
                 this.localInfo = this.getInfo(); // 获取当前页本地信息
                 // 字体大小
                 var size = this.localInfo['size'];
-                if(size) this.setFontS(size, true)
+                if (size) this.setFontS(size, true)
                 // size?  this.setFontS(size, true): this.setFontS(this.currFontS);
                 // 字体
                 var font = localStorage.getItem('font')
-                if(font) {
+                if (font) {
                     this.currFontF = font;
                     this.setFontF();
                 }
@@ -1046,7 +1072,7 @@ function getContent() {
                 var book = this.localInfo['book'];
                 this.book = book ? book : [];
                 this.isDark = Boolean(eval($echo.getStorage('isDark'))); // 转换布尔值
-                this.currTime = $echo.getStorage('currTime') || this.currTime;  // 自动阅读时间
+                this.currTime = $echo.getStorage('currTime') || this.currTime; // 自动阅读时间
                 if (this.isDark) { // 是否开启跟随系统
                     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
                         this.theme = 4;
@@ -1056,10 +1082,10 @@ function getContent() {
                 } else {
                     this.theme = localStorage.getItem('theme') || 1;
                 }
-                this.$nextTick(()=>{
+                this.$nextTick(() => {
                     this.init(); // 初始设置
                 })
-                
+
             },
         })
     })

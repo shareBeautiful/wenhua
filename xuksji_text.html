@@ -31,6 +31,14 @@
         #readOpt .footer {
             font-size: 18px;
         }
+        #menu .curr-pos {
+            font-weight: inherit;
+            color: inherit;
+        }
+        .curr {
+            font-weight: bolder;
+            color: #993300;
+        }
     </style>
 </head>
 
@@ -44,8 +52,8 @@
 
         <!-- 目录 -->
         <div id="menu" v-swipeleft="clickHideMenu" class="list-group"
-            :class="{'show-a': showMenu}">
-            <div @dblclick.capture="clickHideMenu">
+            :class="{'show-a': showMenu}" @dblclick.stop="clickHideMenu">
+            <div>
                 <div class="search-box" v-if="len>15">
                     <input type="search" class="form-control search" @input="search" @keyup.enter="enterSearch"
                         v-model="word" placeholder="搜索...">
@@ -65,7 +73,7 @@
                                 class="switch" type="checkbox" v-model='isReverse'>倒序</span>
                         <span class="list-group-item fz book" v-if="len>5">共:{{len}}章</span>
                     </div>
-                    <div class="list-group-item fz book" @click="toTop">
+                    <div class="list-group-item fz book curr" @click="toTop">
                         <!-- {{subProcess}}- -->
                         位置：{{currIdx+1}}-{{currItem.title}}({{wordTotal}})
                     </div>
@@ -232,6 +240,9 @@
             // 跳转到顶部
             toTop: function () {
                 window.scrollTo(0, 0);
+                var mid = document.getElementById('m'+this.currItem.id);
+                var menu = document.getElementById('menu');
+                menu.scrollTop = mid.offsetTop-240
             },
 
             // 裁剪标题
@@ -291,9 +302,6 @@
             clickShowMenu: function () {
                 this.showMenu = true;
                 setTimeout(this.hideReadOpt, 200)
-                var mid = document.getElementById('m'+this.currItem.id);
-                var menu = document.getElementById('menu');
-                menu.scrollTop = mid.offsetTop-240
             },
 
             // 向左滑动隐藏菜单

@@ -31,9 +31,9 @@
         <!-- v-swipeleft="clickHideMenu" -->
         <div @touchstart="switchScroll('s')" @touchend="switchScroll('e')">
             <!-- 目录 -->
-            <div id="menu" v-swipeleft="clickHideMenu" class="list-group"
+            <div id="menu" v-swipeleft="clickHideMenu" @dblclick.stop="clickHideMenu" class="list-group"
                 :class="{'show-a': showMenu}">
-                <div @dblclick.stop="clickHideMenu">
+                <div>
                     <div class="box-book">
                         <span @click="addBook" class="add-book btn btn-xs bg-danger">添加书签</span>
                         <span class="add-book btn btn-xs bg-success">
@@ -44,7 +44,7 @@
                         <input type="search" class="form-control search" @input="search" @keyup.enter="enterSearch"
                             v-model="word" placeholder="搜索...">
                     </div>
-                    <div class="fx">
+                    <div>
                         <span class="list-group-item fz book" v-if="showRest" @click="reset('s')">重置设置</span>
 
                         <span class="list-group-item fz book" :class="{active: item.id==theme}"
@@ -53,7 +53,7 @@
                             <i class="zhe"></i>
                             <input class="switch" type="checkbox" v-model='isDark'>跟随系统</span>
                     </div>
-                    <div class="fx">
+                    <div>
                         <span @click.stop="switchPage" class="list-group-item fz book"><i class="zhe"></i><input
                                 class="switch" type="checkbox" v-model='isPage'>翻页</span>
                         <span @click.stop="switchLoad" class="list-group-item fz book"><i class="zhe"></i><input
@@ -80,7 +80,7 @@
                         </span>
                     </div>
                     <!-- 目录列表 -->
-                    <div class="menu-item" v-for="(item, idx) in menuList" :key="item.id" v-show="!item.hide">
+                    <div :id="'m'+item.id"  class="menu-item" v-for="(item, idx) in menuList" :key="item.id" v-show="!item.hide">
                         <a class="list-group-item " href="javascript:" @click="toPos(item.id, item);"
                             :class="['list-group-item-'+colors[idx%4],{active: item.id===currIdx}]">
                             {{item.id+1}}--{{item.title}}({{item.total}})
