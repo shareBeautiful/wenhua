@@ -33,7 +33,7 @@
             <!-- 目录 -->
             <div id="menu" v-swipeleft="clickHideMenu" class="list-group"
                 :class="{'show-a': showMenu}">
-                <div @dblclick.self="clickHideMenu">
+                <div @dblclick.stop="clickHideMenu">
                     <div class="box-book">
                         <span @click="addBook" class="add-book btn btn-xs bg-danger">添加书签</span>
                         <span class="add-book btn btn-xs bg-success">
@@ -49,21 +49,21 @@
 
                         <span class="list-group-item fz book" :class="{active: item.id==theme}"
                             v-for="(item, index) in themeL" @click="changeTheme(item)" :key="item.id">{{item.n}}</span>
-                        <span class="list-group-item fz book" @click.capture="switchDark">
+                        <span class="list-group-item fz book" @click.stop="switchDark">
                             <i class="zhe"></i>
                             <input class="switch" type="checkbox" v-model='isDark'>跟随系统</span>
                     </div>
                     <div class="fx">
-                        <span @click.capture="switchPage" class="list-group-item fz book"><i class="zhe"></i><input
+                        <span @click.stop="switchPage" class="list-group-item fz book"><i class="zhe"></i><input
                                 class="switch" type="checkbox" v-model='isPage'>翻页</span>
-                        <span @click.capture="switchLoad" class="list-group-item fz book"><i class="zhe"></i><input
+                        <span @click.stop="switchLoad" class="list-group-item fz book"><i class="zhe"></i><input
                                 class="switch" type="checkbox" v-model='isOnPage'>分页</span>
-                        <span @click.capture="switchAuto" class="list-group-item fz book"><i class="zhe"></i><input
+                        <span @click.stop="switchAuto" class="list-group-item fz book"><i class="zhe"></i><input
                                 class="switch" type="checkbox" v-model='isAuto'>自动 {{currTime>=100? currTime :
                             '0'+currTime}}s</span>
-                        <!-- <span @click.capture="switchSleep(!isNoSleep)" class="list-group-item fz book"><i
+                        <!-- <span @click.stop="switchSleep(!isNoSleep)" class="list-group-item fz book"><i
                                 class="zhe"></i><input class="switch" type="checkbox" v-model='isNoSleep'>常亮 </span> -->
-                        <span @click.capture="switchOrder" v-if="len>10" class="list-group-item fz book"><i
+                        <span @click.stop="switchOrder" v-if="len>10" class="list-group-item fz book"><i
                                 class="zhe"></i><input class="switch" type="checkbox" v-model='isReverse'>倒序</span>
                         <span class="list-group-item fz book" v-if="showRest" @click="reset('c')">清空缓存</span>
                         <span class="list-group-item fz book" v-if="len>5">共：{{len}}章</span>
