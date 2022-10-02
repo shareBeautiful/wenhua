@@ -69,13 +69,13 @@
                     位置：{{currIdx+1}}-{{currItem.title}}({{wordTotal}})
                 </div>
                 <!-- 目录列表 -->
-                <!-- <div class="menu-item" v-for="(item, idx) in menuList" :key="item.id" v-show="!item.hide">
+                <div class="menu-item" v-for="(item, idx) in menuList" :key="item.id" v-show="!item.hide">
                     <a class="list-group-item " href="javascript:" @click="toArticle(item.idx);"
                         :class="['list-group-item-'+colors[idx%4],{active: item.idx===currIdx}]">
                         {{item.idx+1}}--{{item.title}}
                         <span v-if="item.total">({{item.total}})</span>
                     </a>
-                </div> -->
+                </div>
                 <!-- 字体大小设置 -->
                 <div>
                     <span class="list-group-item fz" :key="item" :class="{'active': item == currFontS}"
