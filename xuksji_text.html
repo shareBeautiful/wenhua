@@ -44,9 +44,9 @@
         </template> -->
 
         <!-- 目录 -->
-        <div id="menu" @dblclick.capture="clickHideMenu" v-swipeleft="clickHideMenu" class="list-group"
+        <div id="menu" v-swipeleft="clickHideMenu" class="list-group"
             :class="{'show-a': showMenu}">
-            <div>
+            <div @dblclick.self="clickHideMenu">
                 <div class="search-box" v-if="len>15">
                     <input type="search" class="form-control search" @input="search" @keyup.enter="enterSearch"
                         v-model="word" placeholder="搜索...">

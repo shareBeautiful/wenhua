@@ -207,7 +207,9 @@ body {
     transition: left .5s;
 }
 
-#menu .menu-item {}
+#menu .menu-item {
+    display: inline-block
+}
 
 #menu .menu-item a {
     display: inline-block;
