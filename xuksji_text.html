@@ -31,6 +31,7 @@
         #readOpt .footer {
             font-size: 18px;
         }
+        .fx {display: flex;}
     </style>
 </head>
 
@@ -50,26 +51,29 @@
                     <input type="search" class="form-control search" @input="search" @keyup.enter="enterSearch"
                         v-model="word" placeholder="搜索...">
                 </div>
-                <div>
-                    <span class="list-group-item fz book" :class="{active: item.id==theme}"
-                        v-for="(item, index) in themeL" @click="changeTheme(item)" :key="item.id">{{item.n}}</span>
-                    <span class="list-group-item fz book" @click.capture="switchDark">
-                        <i class="zhe"></i>
-                        <input class="switch" type="checkbox" v-model='isDark'>跟随系统</span>
+                <div class="curr-pos">
+                    <div class="fx">
+                        <span class="list-group-item fz book" :class="{active: item.id==theme}"
+                            v-for="(item, index) in themeL" @click="changeTheme(item)" :key="item.id">{{item.n}}</span>
+                        <span class="list-group-item fz book" @click.capture="switchDark">
+                            <i class="zhe"></i>
+                            <input class="switch" type="checkbox" v-model='isDark'>系统</span>
+                    </div>
+                    <div class="fx">
+                        <span @click.capture="switchPage" class="list-group-item fz book"><i class="zhe"></i><input
+                                class="switch" type="checkbox" v-model='isPage'>翻页</span>
+                        <span @click.capture="switchOrder" class="list-group-item fz book"><i class="zhe"></i><input
+                                class="switch" type="checkbox" v-model='isReverse'>倒序</span>
+                        <span class="list-group-item fz book" v-if="len>5">共:{{len}}章</span>
+                    </div>
+                    <div class="list-group-item fz book" @click="toTop">
+                        <!-- {{subProcess}}- -->
+                        位置：{{currIdx+1}}-{{currItem.title}}({{wordTotal}})
+                    </div>
                 </div>
-                <div>
-                    <span @click.capture="switchPage" class="list-group-item fz book"><i class="zhe"></i><input
-                            class="switch" type="checkbox" v-model='isPage'>翻页</span>
-                    <span @click.capture="switchOrder" class="list-group-item fz book"><i class="zhe"></i><input
-                            class="switch" type="checkbox" v-model='isReverse'>倒序</span>
-                    <span class="list-group-item fz book" v-if="len>5">共:{{len}}章</span>
-                </div>
-                <div class="list-group-item fz book curr-pos" @click="toTop">
-                    <!-- {{subProcess}}- -->
-                    位置：{{currIdx+1}}-{{currItem.title}}({{wordTotal}})
-                </div>
+
                 <!-- 目录列表 -->
-                <div class="menu-item" v-for="(item, idx) in menuList" :key="item.id" v-show="!item.hide">
+                <div class="menu-item" v-for="(item, idx) in menuList" :key="item.id" v-show="!item.hide" :id="'m'+item.id">
                     <a class="list-group-item " href="javascript:" @click="toArticle(item.idx);"
                         :class="['list-group-item-'+colors[idx%4],{active: item.idx===currIdx}]">
                         {{item.idx+1}}--{{item.title}}
@@ -288,6 +292,9 @@
             clickShowMenu: function () {
                 this.showMenu = true;
                 setTimeout(this.hideReadOpt, 200)
+                var mid = document.getElementById('m'+this.currItem.id);
+                var menu = document.getElementById('menu');
+                menu.scrollTop = mid.offsetTop-240
             },
 
             // 向左滑动隐藏菜单
