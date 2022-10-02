@@ -44,7 +44,7 @@
                         <input type="search" class="form-control search" @input="search" @keyup.enter="enterSearch"
                             v-model="word" placeholder="搜索...">
                     </div>
-                    <div>
+                    <div class="fx">
                         <span class="list-group-item fz book" v-if="showRest" @click="reset('s')">重置设置</span>
 
                         <span class="list-group-item fz book" :class="{active: item.id==theme}"
@@ -53,7 +53,7 @@
                             <i class="zhe"></i>
                             <input class="switch" type="checkbox" v-model='isDark'>跟随系统</span>
                     </div>
-                    <div>
+                    <div class="fx">
                         <span @click.capture="switchPage" class="list-group-item fz book"><i class="zhe"></i><input
                                 class="switch" type="checkbox" v-model='isPage'>翻页</span>
                         <span @click.capture="switchLoad" class="list-group-item fz book"><i class="zhe"></i><input

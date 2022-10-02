@@ -640,3 +640,6 @@ img {
     font-size: 14px;
     letter-spacing: 1px;
 }
+.fx {
+    display: flex;
+}
