@@ -7,40 +7,34 @@ body {
 
 
 @font-face {
-    font-family: 'jinkai';
+    font-family: 'jk';
     src: url('font/仓耳今楷.woff2')
 }
 @font-face {
-    font-family: 'yunhei';
+    font-family: 'yh';
     src: url('font/仓耳云黑.woff2')
-}
-@font-face {
-    font-family: 'xuansan';
-    src: url('font/仓耳玄三.woff2')
 }
 
 @font-face {
-    font-family: 'xinghei';
+    font-family: 'xh';
     src: url('font/方正行黑.woff2')
 }
 
 @font-face {
-    font-family: 'katong';
+    font-family: 'kt';
     src: url('font/方正卡通.woff2')
 }
 @font-face {
-    font-family: 'shengshi';
+    font-family: 'ss';
     src: url('font/方正盛世.woff2')
 }
-
 @font-face {
-    font-family: 'kaiti';
-    src: url('font/楷体.woff2')
-}
-
-@font-face {
-    font-family: 'kaiti2';
+    font-family: 'kt1';
     src: url('font/楷体_GB2312.woff2')
+}
+@font-face {
+    font-family: 'kt2';
+    src: url('font/楷体.woff2')
 }
 
 

@@ -156,13 +156,13 @@ function getContent() {
                     font: [20, 22, 24, 26, 28, 30],
                     fontF: [
                         { n: '默认', v: 'inherit' }, 
-                        { n: '楷体1', v: 'kaiti' },
-                        { n: '楷体2', v: 'kaiti2' },
-                        { n: '盛世', v: 'shengshi' },
-                        { n: '今楷', v: 'jinkai' }, 
-                        { n: '云黑', v: 'yunhei' }, 
-                        { n: '行黑', v: 'xinghei' }, 
-                        { n: '卡通', v: 'katong' }
+                        { n: '楷体1', v: 'kt1' },
+                        { n: '楷体2', v: 'kt2' },
+                        { n: '盛世', v: 'ss' },
+                        { n: '今楷', v: 'jk' }, 
+                        { n: '云黑', v: 'yh' }, 
+                        { n: '行黑', v: 'xh' }, 
+                        { n: '卡通', v: 'kt' }
                     ],
                     currFontS: 24,                                   
                     currFontF: 'inherit',
