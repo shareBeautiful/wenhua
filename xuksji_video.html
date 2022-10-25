@@ -58,12 +58,12 @@
             transform: translate(-50%, -50%);
         }
 
-        .video {
+        .audio {
             width: 100%;
             max-width: 720px;
             display: block;
             margin: 0 auto;
-            height: 56vw;
+            height: 60px;
             max-height: 405px;
             border: 1px solid #222;
             border-radius: 20px;
@@ -74,8 +74,8 @@
             border-radius: 20px;
         }
 
-        .audio {
-            height: 60px;
+        .video {
+            height: 56vw;
         }
 
         .panel-heading {
@@ -117,7 +117,7 @@
             <div class="video-wrapper">
                 <!-- <video id="my-video" :class="{video: true,audio: !isVideo}" :src="videoSrc" controls preload="auto" x5-playsinline="false" playsinline=‘false’ webkit-playsinline=‘false’ poster="https://api2022.xukongji.com/upload_file/20220830111608-630d80f8e497c.jpg">
             </video> -->
-                <video id="my-video" class="video-js" :class="{video: true,audio: !isVideo}" controls preload="auto"
+                <video id="my-video" class="video-js audio" :class="{video: isVideo}" controls preload="auto"
                     x5-playsinline="false" playsinline=‘false’ webkit-playsinline=‘false’>
                     <source :src="videoSrc" type="video/mp4" />
                 </video>
