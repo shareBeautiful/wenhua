@@ -120,7 +120,7 @@
 
                 <div class="body-box" v-for="(item, idx) in list" :key="item.id">
                     <div class="panel" v-show="(isOnPage===false || memoryId == item.id)"
-                        @dblclick.capture="clickShowMenu(item.id,item)" :class="'panel-'+colors[idx%4]"
+                        @dblclick.stop="clickShowMenu(item.id,item)" :class="'panel-'+colors[idx%4]"
                         @click.stop="showReadOpt(item.id,item)" :id="'id'+item.id" :key="item.id">
                         <div class="panel-heading">
                             <h3 class="panel-title text-center">
