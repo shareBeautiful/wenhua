@@ -10,6 +10,7 @@ body {
     font-family: 'jk';
     src: url('font/仓耳今楷.woff2')
 }
+
 @font-face {
     font-family: 'yh';
     src: url('font/仓耳云黑.woff2')
@@ -24,14 +25,17 @@ body {
     font-family: 'kt';
     src: url('font/方正卡通.woff2')
 }
+
 @font-face {
     font-family: 'ss';
     src: url('font/方正盛世.woff2')
 }
+
 @font-face {
     font-family: 'kt1';
     src: url('font/楷体_GB2312.woff2')
 }
+
 @font-face {
     font-family: 'kt2';
     src: url('font/楷体.woff2')
@@ -42,7 +46,10 @@ body {
 /* 获取屏幕的高度 */
 #loading {
     position: fixed;
-    left: 0;top:0;bottom:0;right: 0;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
     z-index: 99;
     width: 100vw;
     height: 100vh;
@@ -51,12 +58,14 @@ body {
     visibility: hidden;
     text-align: center;
 }
+
 #loading .msg {
     font-weight: bolder;
     font-size: 28px;
     padding-top: 20vh;
     color: #993300;
 }
+
 #loading .tip {
     font-size: 22px;
     padding-top: 30px;
@@ -115,7 +124,7 @@ body {
     background-color: #222222 !important;
     background-color: #1f2022 !important;
     /* background-color: #1a1a1a !important; */
-    
+
 }
 
 .panel .panel-heading {
@@ -207,9 +216,7 @@ body {
     transition: left .5s;
 }
 
-#menu .menu-item {
-    
-}
+#menu .menu-item {}
 
 #menu .menu-item a {
     display: inline-block;
@@ -237,6 +244,7 @@ button.btn {
     letter-spacing: 0.5px;
     line-height: 1.68 !important;
 }
+
 .B1_text img {
     width: auto !important;
     height: auto !important;
@@ -254,6 +262,9 @@ button.btn {
     padding: 10px 0;
     text-indent: 2.2em;
     line-height: 1.68;
+    word-wrap: break-word;
+    word-break: break-word;
+    white-space: normal;
 }
 
 .B1_text h1,
@@ -318,6 +329,7 @@ img {
 .box-book {
     display: flex;
 }
+
 .add-book {
     width: 65%;
     display: inline-block;
@@ -387,7 +399,7 @@ img {
     top: 0;
     z-index: 10;
     font-weight: bolder;
-    color:#993300;
+    color: #993300;
 }
 
 #menu .curr-pos {
@@ -463,6 +475,7 @@ img {
     align-items: center;
     flex: 1;
 }
+
 #readOpt .footer .f-page {
     position: absolute;
     right: 10px;
@@ -495,6 +508,7 @@ img {
     height: auto;
     margin: 0 auto;
 }
+
 /*nft-player*/
 .nft-player {
     position: sticky;
@@ -640,6 +654,7 @@ img {
     font-size: 14px;
     letter-spacing: 1px;
 }
+
 .fx {
     display: flex;
 }
