@@ -407,6 +407,7 @@ function getContent() {
                     if (isNaN(s) || s == false) {
                         s = this.currFontS;
                     }
+                    s = Number(s);
                     if (size == '+') {
                         s = (s + 1)
                     } else if (size == '-') {
