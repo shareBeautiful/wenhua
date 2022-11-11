@@ -195,7 +195,7 @@ function getContent() {
                     }],
 
                     book: [], // 书签
-                    webUrl: 'https://www.liaotuo.com',
+                    webUrl: 'https://www.hrfjw.com',
                     dirType: dirType,
                     themeL: [{ // 主题
                         n: '阅读',
@@ -967,11 +967,21 @@ function getContent() {
 
                     this.$nextTick(() => {
                         // 防止点击a标签触发父级的点击事件
-                        $("#bodyBox a").click(function () {
-                            event.stopPropagation();
+                        $("#bodyBox a").click(function (e) {
+                            e.stopPropagation();
                         })
                         // 实例化屏幕常亮对象
                         // this.noSleep = new NoSleep()
+                        $('.B1_text img').each(function(idx,item){
+                            var src = item.src;
+                            if(src.indexOf('liaotuo') != -1) {
+                                $(item).prop('src', src.replace('liaotuo', 'hrfjw'))
+                            }
+                        })
+                        $('.B1_text img').on('click', function(e){
+                            e.stopPropagation()
+                            window.open($(this).attr('src'))
+                        })
                     })
 
                     // 喜马拉雅音频
