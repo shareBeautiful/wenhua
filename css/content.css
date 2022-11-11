@@ -247,7 +247,7 @@ button.btn {
 }
 
 .B1_text img {
-    width: auto !important;
+    width: 100% !important;
     height: auto !important;
 }
 
