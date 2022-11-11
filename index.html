@@ -309,6 +309,7 @@
 
                 // 保存查看过的
                 saveLook: function (itemA, itemB) {
+                    console.log(itemA, itemB)
                     // 已存在就删除它
                     this.lookInfo.list.some((item, idx, $this) => {
                         if (item.href === itemB.href) {
@@ -316,7 +317,7 @@
                         }
                     })
                     itemB = this.copyList(itemB)
-                    itemB.parent = itemA.tit.slice(0, 3);
+                    itemB.parent = itemB.parent? itemB.parent : itemA.tit.slice(0, 3);
                     itemB.type = itemA.type;
                     this.lookInfo.list.unshift(itemB);
                     this.lookInfo.list.splice(6);
