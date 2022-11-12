@@ -205,7 +205,7 @@ body {
     overflow-x:hidden;
     color: #323232;
     background-color: rgba(0, 0, 0, .5);
-    font-family: initial;
+    font-family: none;
 }
 
 #menu::-webkit-scrollbar {

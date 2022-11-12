@@ -460,6 +460,7 @@ function getContent() {
                         this.loadUpdate(item.id, '=')
                     }
                     this.currIdx = item.id;
+                    this.currItem = this.menuList[item.id];
                     this.$nextTick(() => {
                         this.memoryTo(item.id, item.p)
                     })
