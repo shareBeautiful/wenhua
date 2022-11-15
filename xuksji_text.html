@@ -414,6 +414,7 @@
 
             // 跳转文章
             toArticle: function (idx) {
+                window.scrollTo(0, 0); // 跳转到文章顶部
                 if (this.currIdx === idx) return false;
                 var item = this.menuList[idx]
                 this.currItem = item;
@@ -461,7 +462,6 @@
                         })
                     }
                 }).then((html, date) => {
-                    window.scrollTo(0, 0); // 跳转到文章顶部
                     html = '<div class="B1_text">' + html + '</div>'
                     this.wordTotal = this.total(html);
                     // 设置字数到目录上
@@ -484,11 +484,29 @@
                 localStorage.setItem('xkj_text', JSON.stringify(this.xkj_text))
             },
 
-            // 计算阅读百分比
-            getProcess: function () {
+            // 计算当前位置的百分比数字
+            getProNum: function () {
                 var elH = document.documentElement.scrollHeight || document.body.scrollHeight; // 当前章节高度
                 var scrollTop = document.documentElement.scrollTop; // 滚动高度
                 var p = (scrollTop) / (elH - this.height);
+                p = p.toFixed(6);
+                p = parseFloat(p);
+                return p;
+            },
+
+            // 跳转
+            toPos: function (p) {
+                p = parseFloat(p);
+                this.$nextTick(() => {
+                    var elH = document.documentElement.scrollHeight || document.body.scrollHeight; // 当前章节高度
+                    var scrollTop = p * (elH - this.height);
+                    window.scrollTo(0, scrollTop);
+                })
+            },
+
+            // 计算阅读百分比
+            getProcess: function () {
+                p = this.getProNum();
                 p = p >= 1 ? 1 : p;
                 p = (p * 100).toFixed(2)
                 if (p == 0) {
@@ -497,6 +515,13 @@
                     p = 100;
                 }
                 this.process = p + '%';
+                this.savePos(); // 保存一次位置
+
+            },
+
+            savePos: function () {
+                this.xkj_text['tn' + id] = this.getProNum();
+                localStorage.setItem('xkj_text', JSON.stringify(this.xkj_text))
             },
 
             getP: function () {
@@ -505,6 +530,8 @@
                     this.getProcess();
                 }, 600)
             },
+
+
 
 
             // 获取当前列表
@@ -565,10 +592,6 @@
                     this.len = menu.length;
                     this.toArticle(idxs)
                 })
-
-
-
-
             }
         },
         created: function () {
@@ -588,6 +611,20 @@
                 if (fontSize) {
                     this.setFontS(fontSize)
                 }
+                var xkj_text = localStorage.getItem('xkj_text');
+                if (xkj_text) this.xkj_text = JSON.parse(xkj_text);
+                var t = setInterval(() => {
+                    if (this.articleD.html) {
+                        clearInterval(t); // 清除计时器
+                        // 跳转已阅读位置
+                        this.toPos(this.xkj_text['tn' + id])
+                        // 启动自动保存
+                        setInterval(() => {
+                            this.savePos();
+                        }, 6000);
+                    }
+                }, 50);
+
             })
 
             this.isDark = Boolean(eval($echo.getStorage('isDark'))); // 转换布尔值
