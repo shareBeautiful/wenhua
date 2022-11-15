@@ -60,7 +60,7 @@
                     <input type="search" class="form-control search" @input="search" @keyup.enter="enterSearch"
                         v-model="word" placeholder="搜索...">
                 </div>
-                <div class="curr-pos">
+                <div :class="{'curr-pos': len>15}">
                     <div class="fx">
                         <span class="list-group-item fz book" :class="{active: item.id==theme}"
                             v-for="(item, index) in themeL" @click.stop="changeTheme(item)"
