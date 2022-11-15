@@ -91,6 +91,7 @@
             methods: {
                 // 获取url地址
                 getUrl: function (itemA, itemB) {
+                    if(key === 'brws') return './xuksji_text.html?key='+key+'&id='+itemB.href;
                     var params = { type: itemA.tit, key: itemB.tit, keyword: key };
                     return $echo.open('content', params, 'get')
                 },

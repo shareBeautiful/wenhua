@@ -93,6 +93,7 @@
 <script>
     var that;
     var id = $echo.getParams('id');
+    var key = $echo.getParams('key');
     new Vue({
         el: '#app',
         data: function () {
@@ -201,7 +202,7 @@
                         res.forEach(item => {
                             if (this.tagId === 3) {
                                 // item.href = './xuksji.html?id=' + item.id + '&tid=' + tagId;
-                                item.href = './xuksji_text.html?id='+item.id;
+                                item.href = './xuksji_text.html?key='+key+'&id='+item.id;
                             } else {
                                 item.href = './xuksji_video.html?id=' + item.id;
                             }
