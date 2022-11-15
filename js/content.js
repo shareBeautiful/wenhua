@@ -42,9 +42,10 @@ if (keyword) {
                     }
                 })
             })
-        } else if (keyword === 'dzj' || keyword === 'qldzj') { // 大藏经
+        } else if (keyword === 'dzj' || keyword === 'qldzj' || keyword === 'brws') { // 大藏经
             if (keyword === 'dzj') dirType = '大藏经/' + dirType;
             if (keyword === 'qldzj') dirType = '乾隆大藏经/' + dirType;
+            if (keyword === 'brws') dirType = '般若唯识/'+dirType;
             file = key
             r();
         }

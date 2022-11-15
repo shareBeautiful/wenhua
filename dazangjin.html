@@ -64,7 +64,13 @@
     var that;
     var key = $echo.getParams('key');
     var path;
-    title = key === 'dzj' ? '大藏经' : '乾隆大藏经'
+    if(key === 'dzj') {
+        title = '大藏经'
+    }else if(key === 'qldzj') {
+        title = '乾隆大藏经'
+    }else if(key === 'brws') {
+        title = '般若唯识'
+    }
     path = './data/ahome/' + title + '.json'
     document.title = title
 
