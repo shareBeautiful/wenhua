@@ -488,6 +488,9 @@ function getContent() {
                             }, time + 10)
                         }
                     }
+                    
+                },
+                toMenuPos: function() {
                     var mid = document.getElementById('m' + this.currItem.id);
                     var menu = document.getElementById('menu');
                     menu.scrollTop = mid.offsetTop - 240

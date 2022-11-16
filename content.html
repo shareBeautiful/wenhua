@@ -70,7 +70,7 @@
                         <input v-if="isAuto" class="range" @change="setAutoTime" :step="step" v-model="currTime"
                             type="range" name="points" min="6" max="250">
                     </div>
-                    <div class="list-group-item fz book curr-pos" @click="toPos(currIdx, currItem);">
+                    <div class="list-group-item fz book curr-pos" @click="toMenuPos()">
                         <!-- {{subProcess}}- -->
                         位置：{{currIdx+1}}-{{currItem.title}}({{currItem.total}})</div>
                     <div>
