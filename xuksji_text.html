@@ -245,7 +245,7 @@
 
             // 跳转到顶部
             toTop: function () {
-                window.scrollTo(0, 0);
+                // window.scrollTo(0, 0);
                 var mid = document.getElementById('m' + this.currItem.id);
                 var menu = document.getElementById('menu');
                 menu.scrollTop = mid.offsetTop - 240
@@ -281,10 +281,6 @@
                     s = num
                 }
                 return s;
-                // return {
-                //     str: s,
-                //     num: num
-                // }
             },
 
             // 设置字体大小
@@ -420,7 +416,12 @@
                 this.currItem = item;
                 this.currIdx = idx;
                 this.saveText();
-                this.getArticle();
+                console.log(this.currItem.articleD)
+                if(this.currItem.articleD) {
+                    this.articleD = this.currItem.articleD
+                }else {
+                    this.getArticle();
+                }
             },
             // 下一章 // 上一章
             pageNext: function (type) {
@@ -469,6 +470,7 @@
                     var title = this.currItem.title;
                     this.articleD = { 'title': title, 'html': html, 'date': date }
                     this.$nextTick(() => {
+                        this.currItem.articleD = this.articleD;
                         document.title = title;
                     })
                 })
