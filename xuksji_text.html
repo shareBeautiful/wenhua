@@ -75,7 +75,7 @@
                         <span @click.stop="switchOrder" class="list-group-item fz book"><i class="zhe"></i><input
                                 class="switch" type="checkbox" v-model='isReverse'>倒序</span>
                         <span class="list-group-item fz book" v-if="len>5">共:{{len}}章</span>
-                        <span class="list-group-item fz book">总: {{total('',allTotal)}}</span>
+                        <span class="list-group-item fz book" @click="getAllTotal">总: {{total('',allTotal)}}</span>
                     </div>
                     <div class="list-group-item fz book curr" @click="toTop">
                         <!-- {{subProcess}}- -->
@@ -281,7 +281,17 @@
                 } else {
                     s = num
                 }
-                return {s:s,n:num};
+                return { s: s, n: num };
+            },
+
+            getAllTotal: function () {
+                this.menuList.forEach((item, idx) => {
+                    if(!item.articleD) {
+                        setTimeout(() => {
+                            this.getArticle(item, true);
+                        }, idx*50)
+                    }
+                })
             },
 
             // 设置字体大小
@@ -414,14 +424,14 @@
                 window.scrollTo(0, 0); // 跳转到文章顶部
                 if (this.currIdx === idx) return false;
                 var item = this.menuList[idx]
-                this.currItem = item;
                 this.currIdx = idx;
-                this.saveText();
+                this.currItem = item;
+                this.saveText();  // 保存本地
                 if (this.currItem.articleD) {
                     this.articleD = this.currItem.articleD;
                     document.title = this.articleD.title;
                 } else {
-                    this.getArticle();
+                    this.getArticle(this.currItem);
                 }
             },
             // 下一章 // 上一章
@@ -434,11 +444,11 @@
             },
 
             // 获取html
-            getArticle: function () {
+            getArticle: function (currItem, isAll) {
                 new Promise((r, s) => {
                     var re3 = /[\r\n\f\t]|(<\/?br\/?>)+|\sstyle=".*?"|(&nbsp;)|<strong>[\s\t\r\f\n]*<\/strong>|<span>[\s\t\r\f\n]*<\/span>|<p>[\s\t\r\f\n]*<\/p>|<div>[\s\t\r\f\n]*<\/div>/img
                     if (key === 'brws') {
-                        var path = 'https://www.shishengru.com' + this.currItem.id;
+                        var path = 'https://www.shishengru.com' + currItem.id;
                         this.getHtml(path, { method: "get" }).then(res => {
                             var reimg = /<img.*?>/img
                             res = res.replace(reimg, '')
@@ -448,10 +458,10 @@
                             while (html.match(re3)) {
                                 html = html.replace(re3, "");
                             }
-                            r({html:html,date:date})
+                            r({ html: html, date: date })
                         })
                     } else if (key === 'xkj') {
-                        var path = this.apiUrl + '/api/article/menuInfoWeb?id=' + this.currItem.id;
+                        var path = this.apiUrl + '/api/article/menuInfoWeb?id=' + currItem.id;
                         this.getHtml(path, { method: "get" }).then(res => {
                             while (res.match(re3)) {
                                 res = res.replace(re3, "");
@@ -462,7 +472,7 @@
                             var html = res.match(re_all)[0]
                             var date = html.match(re_date)[0]
                             html = html.match(re_article)[0] // 正文
-                            r({html:html,date:date})
+                            r({ html: html, date: date })
                         })
                     }
                 }).then((res) => {
@@ -470,17 +480,16 @@
                     date = res.date;
                     html = '<div class="B1_text">' + html + '</div>'
                     var total = this.total(html);
-                    this.allTotal+=total.n; // 计算总字数
+                    this.allTotal += total.n; // 计算总字数
                     // 设置字数到目录上
-                    var title = this.currItem.title;
-                    this.articleD = { 'title': title, 'html': html, 'date': date, 'total': total.s }
-                    this.$nextTick(() => {
-                        this.$set(this.currItem, 'articleD', this.articleD); // 把页面数据赋给菜单上
+                    var articleD = { 'title': title, 'html': html, 'date': date, 'total': total.s }
+                    if (!isAll) {
+                        var title = this.currItem.title;
+                        this.articleD = articleD;
                         document.title = title;
-                    })
+                    }
+                    this.$set(currItem, 'articleD', articleD); // 把页面数据赋给菜单上
                 })
-
-
             },
 
             // 保存本地视频位置
