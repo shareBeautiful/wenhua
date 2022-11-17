@@ -221,30 +221,6 @@
         },
         methods: {
             // 获取html
-            // getHtml: function (url, config) {
-            //     opt = {
-            //         headers: {
-            //             'Cache-Control': 'public,max-age=7200', //不缓存
-            //             'Content-Type': 'text/html; charset=UTF-8'
-            //         }
-            //     }
-            //     if (config) Object.assign(opt, config)
-            //     return fetch(url, opt).then((res) => {
-            //         if (res.ok) {
-            //             return res.text()
-            //         } else {
-            //             if (res.status === 404) {
-            //                 alert('当前网页维护中...，请点击确定关闭')
-            //                 window.close();
-            //             }
-            //             // 服务器异常
-            //             throw Error('')
-            //         }
-            //     }).catch((error) => {
-            //         console.log('errorMessage', error)
-            //     })
-            // },
-
             getHtml: function (url) {
                 return new Promise((r, s) => {
                     $.ajax({
