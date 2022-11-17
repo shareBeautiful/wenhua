@@ -75,6 +75,7 @@
                         <span @click.stop="switchOrder" class="list-group-item fz book"><i class="zhe"></i><input
                                 class="switch" type="checkbox" v-model='isReverse'>倒序</span>
                         <span class="list-group-item fz book" v-if="len>5">共:{{len}}章</span>
+                        <span class="list-group-item fz book">总: {{total('',allTotal)}}</span>
                     </div>
                     <div class="list-group-item fz book curr" @click="toTop">
                         <!-- {{subProcess}}- -->
@@ -203,6 +204,7 @@
             }],
             theme: 1, // 1默认，1，bg1,bg2
             process: 0, // 当前阅读进度
+            allTotal: 0,// 总字数
             word: '', // 搜索目录关键字
             height: 0,// 屏幕的高度
             isDark: false, // 默认系统主题
@@ -279,7 +281,7 @@
                 } else {
                     s = num
                 }
-                return s;
+                return {s:s,n:num};
             },
 
             // 设置字体大小
@@ -468,9 +470,10 @@
                     date = res.date;
                     html = '<div class="B1_text">' + html + '</div>'
                     var total = this.total(html);
+                    this.allTotal+=total.n; // 计算总字数
                     // 设置字数到目录上
                     var title = this.currItem.title;
-                    this.articleD = { 'title': title, 'html': html, 'date': date, 'total': total }
+                    this.articleD = { 'title': title, 'html': html, 'date': date, 'total': total.s }
                     this.$nextTick(() => {
                         this.$set(this.currItem, 'articleD', this.articleD); // 把页面数据赋给菜单上
                         document.title = title;
