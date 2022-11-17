@@ -78,7 +78,7 @@
                     </div>
                     <div class="list-group-item fz book curr" @click="toTop">
                         <!-- {{subProcess}}- -->
-                        位置：{{currIdx+1}}-{{currItem.title}}({{wordTotal}})
+                        位置：{{currIdx+1}}-{{articleD.title}}({{articleD.total}})
                     </div>
                 </div>
 
@@ -88,7 +88,7 @@
                     <a class="list-group-item " href="javascript:" @click="toArticle(item.idx);"
                         :class="['list-group-item-'+colors[idx%4],{active: item.idx===currIdx}]">
                         {{item.idx+1}}--{{item.title}}
-                        <span v-if="item.total">({{item.total}})</span>
+                        <span v-if="item.articleD">({{item.articleD.total}})</span>
                     </a>
                 </div>
                 <!-- 字体大小设置 -->
@@ -134,7 +134,7 @@
                 </div>
             </div>
             <div class="panel-footer page-tap next" v-if="currIdx+1<len" @click.stop="pageNext('+')">
-                下一章 - {{menuList[currIdx+1]["title"]}}
+                下一章 - {{subTit(menuList[currIdx+1]["title"])}}
             </div>
         </div>
 
@@ -149,7 +149,7 @@
             </div>
             <div class="footer">
                 <div class="f-item">
-                    <span>字：{{wordTotal}} -- 进：{{process}}</span>
+                    <span>字：{{articleD.total}} -- 进：{{process}}</span>
                 </div>
                 <!-- <span class="f-page">{{pageCurr}}/{{pageAll}}</span> -->
             </div>
@@ -172,7 +172,6 @@
             len: 0,
             colors: ['success', 'info', 'warning', 'danger'],
             showMenu: false, // 切换显示菜单
-            wordTotal: 0, // 字数
             font: [20, 22, 24, 26, 28, 30],
             fontF: [
                 { n: '默认', v: 'inherit' },
@@ -416,10 +415,10 @@
                 this.currItem = item;
                 this.currIdx = idx;
                 this.saveText();
-                console.log(this.currItem.articleD)
-                if(this.currItem.articleD) {
-                    this.articleD = this.currItem.articleD
-                }else {
+                if (this.currItem.articleD) {
+                    this.articleD = this.currItem.articleD;
+                    document.title = this.articleD.title;
+                } else {
                     this.getArticle();
                 }
             },
@@ -441,11 +440,13 @@
                         this.getHtml(path, { method: "get" }).then(res => {
                             var reimg = /<img.*?>/img
                             res = res.replace(reimg, '')
-                            var html = $(res).find('.article-content').html();
+                            $doc = $(res);
+                            var html = $doc.find('.article-content').html();
+                            var date = $doc.find('.f-reveal-time strong').eq(2).text();
                             while (html.match(re3)) {
                                 html = html.replace(re3, "");
                             }
-                            r(html, '')
+                            r({html:html,date:date})
                         })
                     } else if (key === 'xkj') {
                         var path = this.apiUrl + '/api/article/menuInfoWeb?id=' + this.currItem.id;
@@ -459,18 +460,19 @@
                             var html = res.match(re_all)[0]
                             var date = html.match(re_date)[0]
                             html = html.match(re_article)[0] // 正文
-                            r(html, date)
+                            r({html:html,date:date})
                         })
                     }
-                }).then((html, date) => {
+                }).then((res) => {
+                    html = res.html;
+                    date = res.date;
                     html = '<div class="B1_text">' + html + '</div>'
-                    this.wordTotal = this.total(html);
+                    var total = this.total(html);
                     // 设置字数到目录上
-                    this.menuList[this.currIdx]['total'] = this.wordTotal;
                     var title = this.currItem.title;
-                    this.articleD = { 'title': title, 'html': html, 'date': date }
+                    this.articleD = { 'title': title, 'html': html, 'date': date, 'total': total }
                     this.$nextTick(() => {
-                        this.currItem.articleD = this.articleD;
+                        this.$set(this.currItem, 'articleD', this.articleD); // 把页面数据赋给菜单上
                         document.title = title;
                     })
                 })
@@ -532,8 +534,6 @@
                     this.getProcess();
                 }, 600)
             },
-
-
 
 
             // 获取当前列表
