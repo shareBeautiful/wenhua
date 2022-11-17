@@ -161,6 +161,7 @@
 <script src="js/touch.js"></script>
 <script src="js/jq.js"></script>
 <script>
+    var that;
     var id = $echo.getParams('id');
     var key = $echo.getParams('key');
     new Vue({
@@ -220,28 +221,55 @@
         },
         methods: {
             // 获取html
-            getHtml: function (url, config) {
-                opt = {
-                    headers: {
-                        'Cache-Control': 'public,max-age=7200', //不缓存
-                        'Content-Type': 'text/html; charset=UTF-8'
-                    }
-                }
-                if (config) Object.assign(opt, config)
-                return fetch(url, opt).then((res) => {
-                    if (res.ok) {
-                        return res.text()
-                    } else {
-                        if (res.status === 404) {
-                            alert('当前网页维护中...，请点击确定关闭')
-                            window.close();
+            // getHtml: function (url, config) {
+            //     opt = {
+            //         headers: {
+            //             'Cache-Control': 'public,max-age=7200', //不缓存
+            //             'Content-Type': 'text/html; charset=UTF-8'
+            //         }
+            //     }
+            //     if (config) Object.assign(opt, config)
+            //     return fetch(url, opt).then((res) => {
+            //         if (res.ok) {
+            //             return res.text()
+            //         } else {
+            //             if (res.status === 404) {
+            //                 alert('当前网页维护中...，请点击确定关闭')
+            //                 window.close();
+            //             }
+            //             // 服务器异常
+            //             throw Error('')
+            //         }
+            //     }).catch((error) => {
+            //         console.log('errorMessage', error)
+            //     })
+            // },
+
+            getHtml: function (url) {
+                return new Promise((r, s) => {
+                    $.ajax({
+                        type: "GET",
+                        url: url,
+                        async: false,
+                        cache: false,
+                        contentType: "application/x-www-form-urlencoded",
+                        dataType: "html",
+                        success: function (res) {
+                            r(res)
+                        },
+                        error: function(res) {
+                            if (res.status === 404) {
+                                alert('当前网页维护中...，请点击确定关闭')
+                                window.close();
+                            }else {
+                                alert('当前网页出错！！！')
+                                window.close();
+                            }
+                            
                         }
-                        // 服务器异常
-                        throw Error('')
-                    }
-                }).catch((error) => {
-                    console.log('errorMessage', error)
+                    });
                 })
+
             },
 
             // 跳转到顶部
@@ -286,12 +314,13 @@
 
             getAllTotal: function () {
                 this.menuList.forEach((item, idx) => {
-                    if(!item.articleD) {
+                    if (!item.articleD) {
                         setTimeout(() => {
                             this.getArticle(item, true);
-                        }, idx*60)
+                        }, idx * 30)
                     }
                 })
+
             },
 
             // 设置字体大小
@@ -449,7 +478,7 @@
                     var re3 = /[\r\n\f\t]|(<\/?br\/?>)+|\sstyle=".*?"|(&nbsp;)|<strong>[\s\t\r\f\n]*<\/strong>|<span>[\s\t\r\f\n]*<\/span>|<p>[\s\t\r\f\n]*<\/p>|<div>[\s\t\r\f\n]*<\/div>/img
                     if (key === 'brws') {
                         var path = 'https://www.shishengru.com' + currItem.id;
-                        this.getHtml(path, { method: "get" }).then(res => {
+                        this.getHtml(path).then(res => {
                             var reimg = /<img.*?>/img
                             res = res.replace(reimg, '')
                             $doc = $(res);
@@ -462,7 +491,7 @@
                         })
                     } else if (key === 'xkj') {
                         var path = this.apiUrl + '/api/article/menuInfoWeb?id=' + currItem.id;
-                        this.getHtml(path, { method: "get" }).then(res => {
+                        this.getHtml(path).then(res => {
                             while (res.match(re3)) {
                                 res = res.replace(re3, "");
                             }
@@ -482,9 +511,9 @@
                     var total = this.total(html);
                     this.allTotal += total.n; // 计算总字数
                     // 设置字数到目录上
+                    var title = currItem.title;
                     var articleD = { 'title': title, 'html': html, 'date': date, 'total': total.s }
                     if (!isAll) {
-                        var title = this.currItem.title;
                         this.articleD = articleD;
                         document.title = title;
                     }
@@ -556,7 +585,7 @@
                 new Promise((r, s) => {
                     if (key === 'brws') {
                         var path = 'https://www.shishengru.com' + id;
-                        this.getHtml(path, { method: "get" }).then(res => {
+                        this.getHtml(path).then(res => {
                             var xkj_text = localStorage.getItem('xkj_text');
                             if (xkj_text) this.xkj_text = JSON.parse(xkj_text);
                             var reimg = /<img.*?>/img
@@ -609,7 +638,7 @@
             }
         },
         created: function () {
-
+            that = this;
         },
         mounted: function () {
             this.height = window.screen.availHeight
