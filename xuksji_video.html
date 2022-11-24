@@ -67,7 +67,7 @@
             border: 1px solid #222;
             border-radius: 20px;
             object-fit: cover;
-            
+
         }
 
         #my-video.audio {
@@ -124,7 +124,7 @@
             </video> -->
                 <video id="my-video" class="video-js" :class="{video: isVideo}" controls preload="auto"
                     x5-playsinline="false" playsinline=‘false’ webkit-playsinline=‘false’>
-                    <source :src="videoSrc" type="video/mp4" />
+                    <!-- <source :src="videoSrc" type="video/mp4" /> -->
                 </video>
             </div>
 
@@ -287,7 +287,7 @@
                         var item = this.list[nextIdx];
                         this.switchVideo(item, nextIdx);
                     })
-                }else if(times === 1){ // 播完当前
+                } else if (times === 1) { // 播完当前
                     this.player.off('ended');
                 } else {
                     // 开启定时
