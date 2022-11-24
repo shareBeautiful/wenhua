@@ -131,7 +131,7 @@
             <div class="panel-heading h">
                 <div class="h-r">
                     {{title.slice(0,15)}}
-                    <select class="form-control select" @change="selectTimes">
+                    <select v-if="times > 3" class="form-control select" @change="selectTimes">
                         <option value="1">播完当前</option>
                         <option value="0" v-if="times>6">全部循环</option>
                         <option :value="n" v-if="n>1" v-for="n in times" :key="n">
@@ -343,16 +343,26 @@
             },
 
             // 获取设置视频播放位置
-            setPlayPos: function () {
-                setInterval(() => {
-                    // var time = this.elevideo.currentTime;
-                    var time = this.player.currentTime();
-                    this.xkj_time['v' + this.id] = time ? time : 0;
-                    localStorage.setItem('xkj_time', JSON.stringify(this.xkj_time))
-                    // 获取剩余时间
-                    this.rtime = this.myTime(parseInt(this.player.remainingTime()));
-                }, 3000);
+            savePlayPos: function () {
+                this.$nextTick(() => {
+                    setTimeout(()=>{
+                        this.setPlayPos();
+                    }, 100)
+                    setInterval(() => {
+                        this.setPlayPos();
+                    }, 3000);
+                })
 
+            },
+
+            // 获取播放位置
+            setPlayPos: function () {
+                // var time = this.elevideo.currentTime;
+                var time = this.player.currentTime();
+                this.xkj_time['v' + this.id] = time ? time : 0;
+                localStorage.setItem('xkj_time', JSON.stringify(this.xkj_time))
+                // 获取剩余时间
+                this.rtime = this.myTime(parseInt(this.player.remainingTime()));
             },
 
             // 获取数据
@@ -403,7 +413,7 @@
                         this.player.currentTime(this.currTime);
                         this.player.load();//加载视频文件后才可以设置时间
                         // 开启自动保存播放进度
-                        this.setPlayPos();
+                        this.savePlayPos();
                     })
 
                     // if (this.currTime) {
@@ -417,7 +427,7 @@
                     // 开启自动播放
                     // this.switchAuto();
                     // 开启自动保存播放进度
-                    // this.setPlayPos();
+                    // this.savePlayPos();
                 })
             }
         },
