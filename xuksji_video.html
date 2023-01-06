@@ -345,9 +345,6 @@
             // 获取设置视频播放位置
             savePlayPos: function () {
                 this.$nextTick(() => {
-                    setTimeout(()=>{
-                        this.setPlayPos();
-                    }, 100)
                     setInterval(() => {
                         this.setPlayPos();
                     }, 3000);
