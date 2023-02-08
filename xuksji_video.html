@@ -131,7 +131,7 @@
             <div class="panel-heading h">
                 <div class="h-r">
                     {{title.slice(0,15)}}
-                    <select v-if="times > 3" class="form-control select" @change="selectTimes">
+                    <select v-if="times > 1" class="form-control select" @change="selectTimes">
                         <option value="1">播完当前</option>
                         <option value="0" v-if="times>6">全部循环</option>
                         <option :value="n" v-if="n>1" v-for="n in times" :key="n">
