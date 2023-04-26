@@ -138,7 +138,7 @@
                             播完{{n}}集
                         </option>
                     </select>
-                    {{rtime}}
+                    <!-- {{rtime}} -->
                 </div>
             </div>
         </div>
@@ -193,6 +193,7 @@
                 xkj_video: {},
                 xkj_time: {},
                 times: 5,          // 可以选择定时播放的集数
+                currTimes: 0,      // 当前剩余的集数
             }
         },
         methods: {
@@ -252,7 +253,10 @@
 
             // 切换视频播放
             switchVideo: function (item, idx) {
-                if (this.currId === item.id) return false;
+                if (this.currId === item.id) { // 是否是暂停状态
+                    this.player.paused()? this.player.play():this.player.pause();
+                    return false
+                };
                 this.isVideo = item.video_url.indexOf('.mp4') > -1 ? true : false;
                 this.videoSrc = item.video_url;
                 this.title = idx + 1 + '. ' + item.title;
@@ -359,7 +363,7 @@
                 this.xkj_time['v' + this.id] = time ? time : 0;
                 localStorage.setItem('xkj_time', JSON.stringify(this.xkj_time))
                 // 获取剩余时间
-                this.rtime = this.myTime(parseInt(this.player.remainingTime()));
+                // this.rtime = this.myTime(parseInt(this.player.remainingTime()));
             },
 
             // 获取数据
