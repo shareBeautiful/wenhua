@@ -61,7 +61,6 @@
         #my-video {
             width: 100%;
             max-width: 720px;
-            height: 60px;
             display: block;
             margin: 0 auto;
             border: 1px solid #222;
@@ -71,7 +70,7 @@
         }
 
         #my-video.audio {
-            height: 60px;
+            height: 50px;
         }
 
         .video-js .vjs-tech {
@@ -112,6 +111,11 @@
             color: #ac3a39 !important;
             padding: 3px 0 !important;
         }
+        .video-js .vjs-control-bar {
+            bottom: -46px;
+            z-index: 2;
+            background-color: rgba(43, 51, 63, 0.8);
+        }
     </style>
 </head>
 
@@ -122,7 +126,7 @@
             <div class="video-wrapper">
                 <!-- <video id="my-video" :class="{video: true,audio: !isVideo}" :src="videoSrc" controls preload="auto" x5-playsinline="false" playsinline=‘false’ webkit-playsinline=‘false’ poster="https://api2022.xukongji.com/upload_file/20220830111608-630d80f8e497c.jpg">
             </video> -->
-                <video id="my-video" class="video-js" :class="{video: isVideo}" controls preload="auto"
+                <video id="my-video" class="video-js" :class="isVideo? 'video':'audio'" controls preload="auto"
                     x5-playsinline="false" playsinline=‘false’ webkit-playsinline=‘false’>
                     <!-- <source :src="videoSrc" type="video/mp4" /> -->
                 </video>
@@ -153,7 +157,7 @@
                             :ref="'v'+item.id">
                             <div class="info" :class="{active:item.id === currId}">
                                 <div>
-                                    <span class="order">{{idx+1}}.</span>
+                                    <span class="order">{{item.order}}.</span>
                                     <span class="title">{{item.title}}</span>
                                     <span v-if="item.video_time">{{item.video_time}}</span>
                                 </div>
@@ -259,7 +263,7 @@
                 };
                 this.isVideo = item.video_url.indexOf('.mp4') > -1 ? true : false;
                 this.videoSrc = item.video_url;
-                this.title = idx + 1 + '. ' + item.title;
+                this.title = this.padding(idx + 1) + '. ' + item.title;
                 this.currId = item.id;
                 this.currIdx = idx;
                 document.title = item.title;
@@ -366,6 +370,10 @@
                 // this.rtime = this.myTime(parseInt(this.player.remainingTime()));
             },
 
+            padding: function(num) {
+                return num<10 ? '0'+num : num;
+            },
+
             // 获取数据
             getData: function () {
                 this.id = parseInt(this.getParams('id'));
@@ -383,7 +391,9 @@
                         vid = this.xkj_video['v' + this.id];
                     }
                     this.list.forEach((item, idx) => {
-                        item.video_time = this.myTime(item.video_time)
+                        item.video_time = this.myTime(item.video_time);
+                        item.title = item.title.replace('直播音频回放', '');
+                        item.order = this.padding(idx+1);
                         if (vid && item.id === vid) {
                             this.switchVideo(item, idx);
                             this.setDom(item);
@@ -453,7 +463,7 @@
                 // ],
 
                 // fluid: true,     // 设置缩放以适合其容器
-                // audioOnlyMode: false,   // 设置是否仅仅音频模式
+                audioOnlyMode: false,   // 设置是否仅仅音频模式
                 // audioPosterMode: true,  // 设置是否海报音频显示
                 //metadata-元数据信息 ，比如视频长度，尺寸等
                 //none-不预加载任何数据，直到用户开始播放才开始下载
