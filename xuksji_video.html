@@ -372,7 +372,7 @@
             setPlayPos: function () {
                 // var time = this.elevideo.currentTime;
                 var time = this.player.currentTime();
-                this.xkj_time['v' + this.id] = time ? time : 0;
+                this.xkj_time['v' + this.id] = time>3 ? time : 0;
                 localStorage.setItem('xkj_time', JSON.stringify(this.xkj_time))
                 // 获取剩余时间
                 // this.rtime = this.myTime(parseInt(this.player.remainingTime()));
@@ -400,7 +400,7 @@
                     }
                     this.list.forEach((item, idx) => {
                         item.video_time = this.myTime(item.video_time);
-                        item.title = item.title.replace('直播音频回放', '');
+                        item.title = item.title.replace(/直播音频回放|（免费）/img, '');
                         item.order = this.padding(idx + 1);
                         if (vid && item.id === vid) {
                             this.switchVideo(item, idx);
