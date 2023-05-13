@@ -61,6 +61,7 @@
         #my-video {
             width: 100%;
             max-width: 720px;
+            min-height: 50px;
             display: block;
             margin: 0 auto;
             border: 1px solid #222;
@@ -111,10 +112,16 @@
             color: #ac3a39 !important;
             padding: 3px 0 !important;
         }
+
         .video-js .vjs-control-bar {
-            bottom: -22px;
-            z-index: 2;
             background-color: rgba(43, 51, 63, 0.8);
+        }
+
+        @media screen and (max-width: 640px) {
+            .video-js .vjs-control-bar {
+                bottom: -22px;
+                z-index: 2;
+            }
         }
     </style>
 </head>
@@ -257,8 +264,9 @@
 
             // 切换视频播放
             switchVideo: function (item, idx) {
+                if (!item.video_url) return false;
                 if (this.currId === item.id) { // 是否是暂停状态
-                    this.player.paused()? this.player.play():this.player.pause();
+                    this.player.paused() ? this.player.play() : this.player.pause();
                     return false
                 };
                 this.isVideo = item.video_url.indexOf('.mp4') > -1 ? true : false;
@@ -370,8 +378,8 @@
                 // this.rtime = this.myTime(parseInt(this.player.remainingTime()));
             },
 
-            padding: function(num) {
-                return num<10 ? '0'+num : num;
+            padding: function (num) {
+                return num < 10 ? '0' + num : num;
             },
 
             // 获取数据
@@ -393,7 +401,7 @@
                     this.list.forEach((item, idx) => {
                         item.video_time = this.myTime(item.video_time);
                         item.title = item.title.replace('直播音频回放', '');
-                        item.order = this.padding(idx+1);
+                        item.order = this.padding(idx + 1);
                         if (vid && item.id === vid) {
                             this.switchVideo(item, idx);
                             this.setDom(item);
@@ -456,7 +464,7 @@
                 preload: 'auto',    // 预加载auto-自动
                 language: 'en',     // 设置语音
                 // playbackRates: [0.5, 0.8, 1, 1.25, 1.5, 2],  // 设置倍数
-                // controlBar: true,   // 是否显示控制栏
+                controlBar: true,   // 是否显示控制栏
                 // children: [
                 //     'bigPlayButton',
                 //     'controlBar'

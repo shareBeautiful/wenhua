@@ -13,7 +13,7 @@
     <meta name="theme-color" content="#1a1a1a">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name=viewport
-    content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+        content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
     <link rel="stylesheet" href="css/maokan.css">
     <title></title>
     <style>
@@ -106,8 +106,8 @@
                 title: '',
                 apiUrl: 'https://api2022.xukongji.com',
                 tags: [
-                    // { id: 1, tit: '视频' },
-                    // { id: 2, tit: '音频' },
+                    { id: 1, tit: '视频' },
+                    { id: 2, tit: '音频' },
                     { id: 13, tit: '直播' },
                     { id: 3, tit: '文字' }
                 ],
@@ -161,7 +161,7 @@
             // 切换标签
             switchTag: function (tagId) {
                 var path, body;
-                
+
                 if (id) {
                     tagId = $echo.getParams('tid');
                     path = this.apiUrl + '/api/article/menu';
@@ -202,7 +202,7 @@
                         res.forEach(item => {
                             if (this.tagId === 3) {
                                 // item.href = './xuksji.html?id=' + item.id + '&tid=' + tagId;
-                                item.href = './xuksji_text.html?key='+key+'&id='+item.id;
+                                item.href = './xuksji_text.html?key=' + key + '&id=' + item.id;
                             } else {
                                 item.href = './xuksji_video.html?id=' + item.id;
                             }
@@ -211,9 +211,16 @@
                         })
                     }
                     document.title = this.title;
-                    this.list = res;
+                    if (this.tagId == 1 || this.tagId == 2) {
+                        this.list = res.filter(item => {
+                            return (item.title.indexOf('论语') != -1);
+                        });
+                    }else {
+                        this.list = res;
+                    }
+
                     this.search();
-                    this.$set(this.allList, tagId + '', res)
+                    this.$set(this.allList, tagId + '', this.list)
                 })
             }
         },
