@@ -94,6 +94,7 @@
     var that;
     var id = $echo.getParams('id');
     var key = $echo.getParams('key');
+    key = key? key : 'xkj';
     new Vue({
         el: '#app',
         data: function () {
@@ -103,7 +104,7 @@
                 keyword: '',
                 sortStatus: false,
                 isDark: false,
-                title: '',
+                title: '虚空济',
                 apiUrl: 'https://api2022.xukongji.com',
                 tags: [
                     { id: 1, tit: '视频' },
@@ -206,7 +207,6 @@
                             } else {
                                 item.href = './xuksji_video.html?id=' + item.id;
                             }
-                            item.title = item.title
                             item.date = item.add_time.slice(0, 11)
                         })
                     }
