@@ -51,7 +51,7 @@
         </div>
         <div class="panel panel-default">
             <div class="panel-heading h">
-                <!-- <div class="h-r">{{title}}</div> -->
+                <div class="h-r"></div>
                 <div><span class="tag" :class="{active: item.id === tagId}" v-for="item in tags" :key="item.id"
                         @click="switchTag(item.id)">
                         {{item.tit}}
