@@ -21,12 +21,13 @@
             padding: 10px 0;
         }
 
-        .box-item .pic {
+        .box-item .head {
+            position: relative;
             width: 100px;
         }
 
-        .box-item .head {
-            position: relative;
+        .box-item .pic {
+            width: 100%;
         }
 
         .box-item .info {
@@ -66,7 +67,7 @@
                     <!-- @click="toPage(item)" -->
                     <a :href="item.href" class="box-item" v-for="(item,idx) in v" :key="item.id" v-show="!item.hide"
                         target="_blank">
-                        <div class="head" v-if="item.img_url">
+                        <div class="head">
                             <img class="pic" :src="item.img_url" alt="" />
                         </div>
                         <div class="info">
@@ -94,7 +95,7 @@
     var that;
     var id = $echo.getParams('id');
     var key = $echo.getParams('key');
-    key = key? key : 'xkj';
+    key = key ? key : 'xkj';
     new Vue({
         el: '#app',
         data: function () {
@@ -209,14 +210,30 @@
                             }
                             item.date = item.add_time.slice(0, 11)
                         })
+
                     }
                     document.title = this.title;
                     if (this.tagId == 1 || this.tagId == 2) {
                         this.list = res.filter(item => {
                             return (item.title.indexOf('论语') != -1);
                         });
-                    }else {
+                    } else {
                         this.list = res;
+                    }
+
+                    if ([2, 3].includes(this.tagId)) {
+                        this.list.push({
+                            "id": 194,
+                            "column_id": 1,
+                            "title": this.tagId === 2? "《心经》1-40讲浅解" : "《心经》文字浅解",
+                            "img_url": "",
+                            "zhaiyao": "",
+                            "date": "2023-05-20",
+                            "type": 3,
+                            "plays_num": 0,
+                            "menu_num": 40,
+                            "href": '/wenhua/content.html?type=xukongji&key=xjw'
+                        })
                     }
 
                     this.search();
