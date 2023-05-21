@@ -16,6 +16,7 @@
         content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
     <link rel="stylesheet" href="css/maokan.css">
     <link rel="stylesheet" href="css/video.css">
+    <!-- <link rel="stylesheet" href="./js/jqselectortime/mobileSelect.css" />  -->
     <title></title>
     <style>
         * {
@@ -149,6 +150,7 @@
                             播完{{n}}集
                         </option>
                     </select>
+                    <!-- <input type="text" id="selectTs" readonly   />  -->
                     <!-- {{rtime}} -->
                 </div>
             </div>
@@ -179,8 +181,11 @@
         </div>
     </div>
 </body>
-<script src="js/vue.js"></script>
-<script src="js/video.js"></script>
+<script type="text/javascript" src="js/vue.js"></script>
+<!-- <script type="text/javascript" src="js/jq.js"></script>
+<script type="text/javascript" src="js/jqselectortime/mobileSelect.js"></script> 
+<script type="text/javascript" src="js/jqselectortime/selectDate.js"></script>  -->
+<script type="text/javascript" src="js/video.js"></script>
 <script>
     var that;
     new Vue({
@@ -479,8 +484,8 @@
                 // width: 300,height: 300, // 设置宽高
                 //plugins:自动初始化要加载的插件
             };
-
             this.getData();
+            // $.select_HH_MM_SS("#selectTs");
             if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
                 this.isDark = true;
             } else {

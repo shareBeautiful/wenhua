@@ -1,0 +1,106 @@
+<!--
+    名称：手势拖动选择日期-移动端
+    作者：1689422585@qq.com
+    插件：mobileSelect
+--><!DOCTYPE html>
+<html lang="en">
+ <head> 
+  <meta charset="UTF-8" /> 
+  <title>手势拖动选择日期-移动端</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" /> 
+  <link rel="stylesheet" href="./mobileSelect.css" /> 
+  <script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+  <script type="text/javascript" src="./mobileSelect.js"></script> 
+  <script type="text/javascript" src="./selectDate.js"></script> 
+  <style type="text/css">
+        html,body{
+            margin: 0;
+            padding: 0;
+            background-color: #ffffff;
+            font-size: 16px;
+            font-family: Helvetica,"Helvetica Neue",Arial,sans-serif;
+            height: 100%;
+        }
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .list{
+            margin: 50px 25px 0 25px;
+            text-align: center;
+        }
+        .list>li{
+            list-style: none;
+            border: #CCCCCC solid 1px;
+            height: 32px;
+            line-height: 32px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+    </style> 
+ </head> 
+ <body> 
+  <h2 style="text-align: center;margin: 25px 0;">选择日期插件</h2> 
+  <ul class="list">
+     选择 YYYY-MM-DD格式： 
+   <input type="text" id="select_0" readonly   /> 
+   <br />
+   <br />
+   <br />
+    选择 YYYY-MM格式： 
+   <input type="text" id="select_1" readonly   /> 
+   <br />
+   <br />
+   <br /> 选择 YYYY-MM格式（有至今选项）： 
+   <input type="text" id="select_2" readonly data-type="end"   /> 
+   <br />
+   <br />
+   <br /> 选择 YYYY格式： 
+   <input type="text" id="select_3" readonly   /> 
+   <br />
+   <br />
+   <br /> 
+    选择 HH-MM格式： 
+   <input type="text" id="select_4" readonly   /> 
+   <br />
+   <br />
+   <br /> 
+    选择 HH-MM-SS格式： 
+   <input type="text" id="select_5" readonly   /> 
+   <br />
+   <br />
+   <br />
+   <input type="text" id="select_6" readonly data-value="" value="" /> 
+   <input type="button" value="查看值" onclick="showValue()" /> 
+  </ul> 
+  <script type="text/javascript">
+     //选择 YYYY-MM-dd 格式的调用：
+     $.selectYY_MM_DD("#select_0");
+     
+     //选择 YYYY-MM 格式的调用：
+	 $.selectDate_YM("#select_1");
+		     
+	//选择 YYYY-MM格式（有至今选项）的调用：
+     $.selectDate_YM_END("#select_2"); 
+     
+    //选择 年份格式的调用： 
+    $.selectDate_Y("#select_3");  
+    
+    //选择时分格式
+    $.select_HH_MM("#select_4");  
+    
+    $.select_HH_MM_SS("#select_5");
+   //查看值
+    function showValue(){
+	   alert(
+	   "select_0  :  " + $("#select_0").val() 
+	   + "\n select_1  :  " + $("#select_1").val() 
+	   + "\n select_2  :  " + $("#select_2").val() 
+	   + "\n select_3  :  " + $("#select_3").val() 
+	   + "\n select_4  :  " + $("#select_4").val() 
+	   )
+    }  
+ 
+</script>  
+ </body>
+</html>

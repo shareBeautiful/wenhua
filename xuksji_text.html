@@ -150,7 +150,7 @@
             </div>
             <div class="footer">
                 <div class="f-item">
-                    <span>字：{{articleD.total}} -- 进：{{process}}</span>
+                    <span>字：{{articleD.total}} -- 进：{{process}} -- {{read_time}}</span>
                 </div>
                 <!-- <span class="f-page">{{pageCurr}}/{{pageAll}}</span> -->
             </div>
@@ -217,10 +217,11 @@
             dbTime: null, // 双击单机时间计时器
             processTime: null, // 获取百分比计时器
             xkj_text: {}, // 本地id
+            read_time: '0'
 
         },
         methods: {
-            // 获取html
+            // 获取html请求函数
             getHtml: function (url) {
                 return new Promise((r, s) => {
                     $.ajax({
@@ -233,15 +234,15 @@
                         success: function (res) {
                             r(res)
                         },
-                        error: function(res) {
+                        error: function (res) {
                             if (res.status === 404) {
                                 alert('当前网页维护中...，请点击确定关闭')
                                 window.close();
-                            }else {
+                            } else {
                                 alert('当前网页出错！！！')
                                 window.close();
                             }
-                            
+
                         }
                     });
                 })
@@ -494,7 +495,31 @@
                         document.title = title;
                     }
                     this.$set(currItem, 'articleD', articleD); // 把页面数据赋给菜单上
+                    this.setReadTime(); // 开启阅读时间
                 })
+            },
+
+            // 获取阅读时间
+            setReadTime: function () {
+                var n = 0;
+                setInterval(() => {
+                    ++n;
+                    this.read_time = this.getTimes(n)
+                }, 1000)
+            },
+
+            getTimes: function (t) {
+                var h = parseInt(t / 60 / 60 % 24)
+                var m = parseInt(t / 60 % 60)
+                var s = parseInt(t % 60)
+                //三元表达式 补零 如果小于10 则在前边进行补零 如果大于10 则不需要补零
+                // h = h < 10 ? '0' + h : h
+                // m = m < 10 ? '0' + m : m
+                // s = s < 10 ? '0' + s : s
+                h = h? h+'时:' : '';
+                m = m? m+'分:' : '';
+                s = s+'秒';
+                return h+m+s
             },
 
             // 保存本地视频位置
