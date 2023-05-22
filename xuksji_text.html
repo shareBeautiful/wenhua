@@ -217,7 +217,8 @@
             dbTime: null, // 双击单机时间计时器
             processTime: null, // 获取百分比计时器
             xkj_text: {}, // 本地id
-            read_time: '0'
+            read_time: '0', // 阅读时间
+            readtimer: null,        // 阅读时间定时器
 
         },
         methods: {
@@ -501,8 +502,9 @@
 
             // 获取阅读时间
             setReadTime: function () {
+                clearInterval(this.readtimer);
                 var n = 0;
-                setInterval(() => {
+                this.readtimer = setInterval(() => {
                     ++n;
                     this.read_time = this.getTimes(n)
                 }, 1000)
