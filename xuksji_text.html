@@ -412,10 +412,11 @@
                 if (this.showOpt) {
                     this.showOpt = false;
                 } else {
-                    this.dbTime = setTimeout(() => {
-                        this.showOpt = true;
+                    this.showOpt = true;
+                    this.getProcess();
+                    this.dbTime = setInterval(() => {
                         this.getProcess();
-                    }, 250);
+                    }, 5000)
                 }
 
             },
@@ -518,10 +519,10 @@
                 // h = h < 10 ? '0' + h : h
                 // m = m < 10 ? '0' + m : m
                 // s = s < 10 ? '0' + s : s
-                h = h? h+'时:' : '';
-                m = m? m+'分:' : '';
-                s = s+'秒';
-                return h+m+s
+                h = h ? h + '时:' : '';
+                m = m ? m + '分:' : '';
+                s = s + '秒';
+                return h + m + s
             },
 
             // 保存本地视频位置
