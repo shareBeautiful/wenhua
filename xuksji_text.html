@@ -415,8 +415,10 @@
                 } else {
                     this.dbTime = setTimeout(() => {
                         this.showOpt = true;
-                        this.getProcess();
-                        clearTimeout(this.dbTime);
+                        this.getProcess(); // 计算进度条
+                        this.savePos(); // 保存一次位置
+                        clearTimeout(this.dbTime); 
+                        // 定时计算进度条
                         this.dbTime = setInterval(()=> {
                             this.getProcess();
                         }, 5000)
@@ -568,7 +570,6 @@
                     p = 100;
                 }
                 this.process = p + '%';
-                this.savePos(); // 保存一次位置
 
             },
 
