@@ -321,7 +321,8 @@
             // 显示菜单切换
             clickShowMenu: function () {
                 this.showMenu = true;
-                setTimeout(this.hideReadOpt, 200)
+                this.hideReadOpt()
+                // setTimeout(, 200)
             },
 
             // 向左滑动隐藏菜单
@@ -408,15 +409,18 @@
             // 显示阅读设置
             showReadOpt: function (id, item) {
                 clearTimeout(this.dbTime);
-                // 双击菜单和单机菜单定时器
+                // 双击菜单和单机菜单定时器冲突
                 if (this.showOpt) {
                     this.showOpt = false;
                 } else {
-                    this.showOpt = true;
-                    this.getProcess();
-                    this.dbTime = setInterval(() => {
+                    this.dbTime = setTimeout(() => {
+                        this.showOpt = true;
                         this.getProcess();
-                    }, 5000)
+                        clearTimeout(this.dbTime);
+                        this.dbTime = setInterval(()=> {
+                            this.getProcess();
+                        }, 5000)
+                    }, 220)
                 }
 
             },
