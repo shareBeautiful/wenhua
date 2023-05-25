@@ -59,10 +59,15 @@
             transform: translate(-50%, -50%);
         }
 
+        .video-js .vjs-tech {
+            border-radius: 20px;
+        }
+
         #my-video {
             width: 100%;
             max-width: 720px;
             min-height: 50px;
+            height: auto;
             display: block;
             margin: 0 auto;
             border: 1px solid #222;
@@ -71,15 +76,11 @@
 
         }
 
-        #my-video.audio {
+        #my-video .audio {
             height: 50px;
         }
 
-        .video-js .vjs-tech {
-            border-radius: 20px;
-        }
-
-        #my-video.video {
+        #my-video .video {
             height: 56vw;
             max-height: 405px;
         }
@@ -131,10 +132,8 @@
     <div id="app" v-cloak :class="{'dark': isDark}">
         <!-- autoplay="autoplay" -->
         <div id="video-box">
-            <div class="video-wrapper">
-                <!-- <video id="my-video" :class="{video: true,audio: !isVideo}" :src="videoSrc" controls preload="auto" x5-playsinline="false" playsinline=‘false’ webkit-playsinline=‘false’ poster="https://api2022.xukongji.com/upload_file/20220830111608-630d80f8e497c.jpg">
-            </video> -->
-                <video id="my-video" class="video-js" :class="isVideo? 'video':'audio'" controls preload="auto"
+            <div class="video-wrapper" v-show="isVideo">
+                <video id="my-video" class="video-js" :class="{video: isVideo==1,audio: isVideo==2}" controls preload="auto"
                     x5-playsinline="false" playsinline=‘false’ webkit-playsinline=‘false’>
                     <!-- <source :src="videoSrc" type="video/mp4" /> -->
                 </video>
@@ -188,7 +187,7 @@
 <script type="text/javascript" src="js/video.js"></script>
 <script>
     var that;
-    new Vue({
+    var app = new Vue({
         el: '#app',
         data: function () {
             return {
@@ -196,7 +195,7 @@
                 id: null,           // 课程的id
                 list: [],
                 isDark: false,
-                isVideo: true,
+                isVideo: 0, // 0 无状态，1 视频，2 音频
                 apiUrl: 'https://api2022.xukongji.com',
                 videoSrc: '',
                 rtime: 0,
@@ -268,24 +267,31 @@
             },
 
             // 切换视频播放
-            switchVideo: function (item, idx) {
+            switchVideo: function (item, idx, first) {
                 if (!item.video_url) return false;
                 if (this.currId === item.id) { // 是否是暂停状态
                     this.player.paused() ? this.player.play() : this.player.pause();
                     return false
                 };
-                this.isVideo = item.video_url.indexOf('.mp4') > -1 ? true : false;
+                // 判断是视频还是音频
+                this.isVideo = item.video_url.indexOf('.mp4') > -1 ? 1 : 2;
                 this.videoSrc = item.video_url;
                 this.title = this.padding(idx + 1) + '. ' + item.title;
                 this.currId = item.id;
                 this.currIdx = idx;
                 document.title = item.title;
-                if (this.player) {
-                    this.$nextTick(() => {
-                        this.player.src(this.videoSrc);
-                        this.player.load();
-                    })
-                }
+                this.player.src(this.videoSrc);
+                this.player.load();
+                this.$nextTick(() => {
+                    // 第一次进入页面时候调用
+                    if(first){ 
+                        // 设置当前默认播放时间 
+                        this.player.currentTime(this.currTime); 
+                        this.rtime = this.myTime(parseInt(this.currTime));
+                    }else {
+                        this.player.play();
+                    }
+                })
 
                 // this.$nextTick(() => {
                 //     this.elevideo.load()
@@ -374,7 +380,7 @@
             setPlayPos: function () {
                 // var time = this.elevideo.currentTime;
                 var time = this.player.currentTime();
-                this.xkj_time['v' + this.id] = time>3 ? time : 0;
+                this.xkj_time['v' + this.id] = time > 3 ? time : 0;
                 localStorage.setItem('xkj_time', JSON.stringify(this.xkj_time))
                 // 获取剩余时间
                 // this.rtime = this.myTime(parseInt(this.player.remainingTime()));
@@ -387,34 +393,35 @@
 
             // 获取数据
             getData: function () {
+
                 this.id = parseInt(this.getParams('id'));
                 var vid = parseInt(this.getParams('vid'));
                 var path = this.apiUrl + '/api/article/menu';
                 var body = JSON.stringify({ "a_id": this.id });
                 var opt = { method: "post", body: body };
                 this.getJson(path, opt).then((res) => {
+                    
                     res = res['data'];
                     this.list = res;
-
-                    if (!vid) {// 默认本地哪一集
+                    var currItem, idx;
+                    if (!vid) {// 默认本地哪一集参数优先
                         var xkj_video = localStorage.getItem('xkj_video');
                         if (xkj_video) this.xkj_video = JSON.parse(xkj_video);
                         vid = this.xkj_video['v' + this.id];
+                        // 如果第一次访问且本地没有存在，则默认第一个视频id
+                        if (!vid) vid = this.list[0]['id'];
                     }
-                    this.list.forEach((item, idx) => {
+                    
+                    // 定位选中的视频信息
+                    this.list.forEach((item, i) => {
                         item.video_time = this.myTime(item.video_time);
                         item.title = item.title.replace(/直播音频回放|（免费）/img, '');
-                        item.order = this.padding(idx + 1);
+                        item.order = this.padding(i + 1);
                         if (vid && item.id === vid) {
-                            this.switchVideo(item, idx);
-                            this.setDom(item);
+                            currItem = item;
+                            idx = i;
                         }
                     });
-                    if (!vid) {
-                        this.switchVideo(this.list[0], 0);
-                        this.setDom(this.list[0]);
-                    };
-
                     this.$nextTick(() => {
                         this.player = videojs('my-video', this.options, function onPlayerReady() {
                             // this.play(); 
@@ -424,18 +431,19 @@
                             //     var item = that.list[nextIdx];
                             //     that.switchVideo(item, nextIdx);
                             // });
+                            // 初始化视频当前视频播放位置
+                            var xkj_time = localStorage.getItem('xkj_time');
+                            that.xkj_time = xkj_time ? JSON.parse(xkj_time) : {}
+                            that.currTime = that.xkj_time['v' + that.id];
+                            that.currTime = that.currTime ? that.currTime : 0;
+                         
+                            that.switchVideo(currItem, idx, true);
+                            that.setDom(currItem);
+                            
+                            // 开启自动保存播放进度
+                            that.savePlayPos();
                         });
 
-                        // 初始化视频当前视频播放位置
-                        var xkj_time = localStorage.getItem('xkj_time');
-                        this.xkj_time = xkj_time ? JSON.parse(xkj_time) : {}
-                        this.currTime = this.xkj_time['v' + this.id];
-                        this.currTime = this.currTime ? this.currTime : 0;
-                        this.player.src(this.videoSrc);
-                        this.player.currentTime(this.currTime);
-                        this.player.load();//加载视频文件后才可以设置时间
-                        // 开启自动保存播放进度
-                        this.savePlayPos();
                     })
 
                     // if (this.currTime) {
