@@ -133,8 +133,8 @@
 <body>
     <div id="app" v-cloak :class="{'dark': isDark}">
         <!-- autoplay="autoplay" -->
-        <div id="video-box">
-            <div class="video-wrapper" v-show="isVideo">
+        <div id="video-box" v-show="videoSrc">
+            <div class="video-wrapper">
                 <video id="my-video" class="video-js" :class="{video: isVideo==1,audio: isVideo==2}" controls
                     preload="auto" x5-playsinline="false" playsinline=‘false’ webkit-playsinline=‘false’>
                     <!-- <source :src="videoSrc" type="video/mp4" /> -->
