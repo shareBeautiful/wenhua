@@ -289,7 +289,7 @@
                 this.currIdx = idx;
                 document.title = item.title;
                 this.player.src(this.videoSrc);
-
+                this.player.load();
                 this.$nextTick(() => {
                     // 第一次进入页面时候调用
                     if (first) {
@@ -300,10 +300,9 @@
                         // 开启自动保存播放进度
                         that.savePlayPos();
                     } else {
-                        this.rtime = this.myTime(0)
                         this.player.play();
+                        this.setPlayPos(); // 设置当前位置
                     }
-                    this.player.load();
 
                 })
 
@@ -393,13 +392,11 @@
             setPlayPos: function () {
                 // var time = this.elevideo.currentTime;
                 var time = this.player.currentTime();
-                if (time > 3) {
-                    this.xkj_time['v' + this.id] = time > 3 ? time : 0;
-                    localStorage.setItem('xkj_time', JSON.stringify(this.xkj_time))
-                    // 获取剩余时间
-                    // this.rtime = this.myTime(parseInt(this.player.remainingTime()));
-                    this.rtime = this.myTime(parseInt(time));
-                }
+                this.xkj_time['v' + this.id] = time > 3 ? time : 0;
+                localStorage.setItem('xkj_time', JSON.stringify(this.xkj_time))
+                // 获取剩余时间
+                // this.rtime = this.myTime(parseInt(this.player.remainingTime()));
+                this.rtime = this.myTime(parseInt(time));
             },
 
             padding: function (num) {
@@ -456,7 +453,7 @@
                             // 初次加载播放视频
                             that.switchVideo(currItem, idx, true);
                             that.setDom(currItem);
-                            
+
                         });
 
                     })
