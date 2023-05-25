@@ -817,6 +817,7 @@ function getContent() {
 
                 // 显示阅读设置
                 showReadOpt: function (id, item) {
+                    if (window.getSelection().toString() !== '') return false;
                     clearTimeout(this.dbTime);
                     // 双击菜单和单机菜单定时器
                     if (this.showOpt) {
