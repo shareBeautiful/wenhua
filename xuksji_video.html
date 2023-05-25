@@ -76,12 +76,14 @@
 
         }
 
-        #my-video .audio {
+        #video-box .audio {
+            position: static;
             width: 100%;
-            height: 50px;
+            height: 50px !important;
         }
 
-        #my-video .video {
+        #video-box .video {
+            position: static;
             width: 100%;
             height: 56vw;
             max-height: 405px;
@@ -135,7 +137,7 @@
         <!-- autoplay="autoplay" -->
         <div id="video-box" v-show="videoSrc">
             <div class="video-wrapper">
-                <video id="my-video" class="video-js" :class="{video: isVideo==1,audio: isVideo==2}" controls
+                <video id="my-video" class="video-js" controls
                     preload="auto" x5-playsinline="false" playsinline=‘false’ webkit-playsinline=‘false’>
                     <!-- <source :src="videoSrc" type="video/mp4" /> -->
                 </video>
@@ -189,7 +191,7 @@
 <script type="text/javascript" src="js/video.js"></script>
 <script>
     var that;
-    var app = new Vue({
+    new Vue({
         el: '#app',
         data: function () {
             return {
@@ -275,8 +277,12 @@
                     this.player.paused() ? this.player.play() : this.player.pause();
                     return false
                 };
-                // 判断是视频还是音频
+                // 判断是视频还是音频更新样式
                 this.isVideo = item.video_url.indexOf('.mp4') > -1 ? 1 : 2;
+                var $video = document.getElementById('my-video_html5_api');
+                this.isVideo === 1? $video.classList.add('video') : $video.classList.add('audio')
+
+                // 更新视频连接
                 this.videoSrc = item.video_url;
                 this.title = this.padding(idx + 1) + '. ' + item.title;
                 this.currId = item.id;
@@ -442,6 +448,7 @@
                             //     that.switchVideo(item, nextIdx);
                             // });
                             // 初始化视频当前视频播放位置
+                            
                             var xkj_time = localStorage.getItem('xkj_time');
                             that.xkj_time = xkj_time ? JSON.parse(xkj_time) : {}
                             that.currTime = that.xkj_time['v' + that.id];
