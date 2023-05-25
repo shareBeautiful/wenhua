@@ -133,8 +133,8 @@
         <!-- autoplay="autoplay" -->
         <div id="video-box">
             <div class="video-wrapper" v-show="isVideo">
-                <video id="my-video" class="video-js" :class="{video: isVideo==1,audio: isVideo==2}" controls preload="auto"
-                    x5-playsinline="false" playsinline=‘false’ webkit-playsinline=‘false’>
+                <video id="my-video" class="video-js" :class="{video: isVideo==1,audio: isVideo==2}" controls
+                    preload="auto" x5-playsinline="false" playsinline=‘false’ webkit-playsinline=‘false’>
                     <!-- <source :src="videoSrc" type="video/mp4" /> -->
                 </video>
             </div>
@@ -283,16 +283,21 @@
                 this.player.src(this.videoSrc);
                 this.player.load();
                 this.$nextTick(() => {
+
+
                     // 第一次进入页面时候调用
-                    if(first){ 
+                    if (first) {
                         // 设置当前默认播放时间 
-                        this.player.currentTime(this.currTime); 
+                        this.player.currentTime(this.currTime);
                         this.rtime = this.myTime(parseInt(this.currTime));
-                    }else {
-                        this.player.play();
+                        this.player.pause()
+                    } else {
                         this.rtime = this.myTime(0)
+                        this.player.play();
                     }
+
                 })
+
 
                 // this.$nextTick(() => {
                 //     this.elevideo.load()
@@ -401,7 +406,7 @@
                 var body = JSON.stringify({ "a_id": this.id });
                 var opt = { method: "post", body: body };
                 this.getJson(path, opt).then((res) => {
-                    
+
                     res = res['data'];
                     this.list = res;
                     var currItem, idx;
@@ -412,7 +417,7 @@
                         // 如果第一次访问且本地没有存在，则默认第一个视频id
                         if (!vid) vid = this.list[0]['id'];
                     }
-                    
+
                     // 定位选中的视频信息
                     this.list.forEach((item, i) => {
                         item.video_time = this.myTime(item.video_time);
@@ -437,10 +442,11 @@
                             that.xkj_time = xkj_time ? JSON.parse(xkj_time) : {}
                             that.currTime = that.xkj_time['v' + that.id];
                             that.currTime = that.currTime ? that.currTime : 0;
-                         
+
+                            // 初次加载播放视频
                             that.switchVideo(currItem, idx, true);
                             that.setDom(currItem);
-                            
+
                             // 开启自动保存播放进度
                             that.savePlayPos();
                         });
@@ -469,7 +475,7 @@
         mounted: function () {
             this.elevideo = document.getElementById("my-video")
             this.options = {
-                autoplay: false,     // 自动播放
+                autoplay: true,     // 自动播放
                 controls: true,      // 显示控制条
                 loop: false,        // 是否循环
                 muted: false,       // 是否静音
