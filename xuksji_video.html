@@ -386,11 +386,13 @@
             setPlayPos: function () {
                 // var time = this.elevideo.currentTime;
                 var time = this.player.currentTime();
-                this.xkj_time['v' + this.id] = time > 3 ? time : 0;
-                localStorage.setItem('xkj_time', JSON.stringify(this.xkj_time))
-                // 获取剩余时间
-                // this.rtime = this.myTime(parseInt(this.player.remainingTime()));
-                this.rtime = this.myTime(parseInt(this.player.currentTime()));
+                if (time) {
+                    this.xkj_time['v' + this.id] = time > 3 ? time : 0;
+                    localStorage.setItem('xkj_time', JSON.stringify(this.xkj_time))
+                    // 获取剩余时间
+                    // this.rtime = this.myTime(parseInt(this.player.remainingTime()));
+                    this.rtime = this.myTime(parseInt(time));
+                }
             },
 
             padding: function (num) {
