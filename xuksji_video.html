@@ -151,7 +151,7 @@
                         </option>
                     </select>
                     <!-- <input type="text" id="selectTs" readonly   />  -->
-                    <!-- {{rtime}} -->
+                    {{rtime}}
                 </div>
             </div>
         </div>
@@ -280,13 +280,10 @@
                 this.currId = item.id;
                 this.currIdx = idx;
                 document.title = item.title;
-
                 if (this.player) {
                     this.$nextTick(() => {
                         this.player.src(this.videoSrc);
                         this.player.load();
-                        // 获取播放剩余时间
-                        // this.rtime = this.myTime(parseInt(this.player.remainingTime()));
                     })
                 }
 
@@ -381,6 +378,7 @@
                 localStorage.setItem('xkj_time', JSON.stringify(this.xkj_time))
                 // 获取剩余时间
                 // this.rtime = this.myTime(parseInt(this.player.remainingTime()));
+                this.rtime = this.myTime(parseInt(this.player.currentTime()));
             },
 
             padding: function (num) {
