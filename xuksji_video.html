@@ -137,8 +137,8 @@
         <!-- autoplay="autoplay" -->
         <div id="video-box" v-show="videoSrc">
             <div class="video-wrapper">
-                <video id="my-video" class="video-js" controls
-                    preload="auto" x5-playsinline="false" playsinline=‘false’ webkit-playsinline=‘false’>
+                <video id="my-video" class="video-js" controls preload="auto" x5-playsinline="false" playsinline="false"
+                    webkit-playsinline="false">
                     <!-- <source :src="videoSrc" type="video/mp4" /> -->
                 </video>
             </div>
@@ -280,7 +280,7 @@
                 // 判断是视频还是音频更新样式
                 this.isVideo = item.video_url.indexOf('.mp4') > -1 ? 1 : 2;
                 var $video = document.getElementById('my-video_html5_api');
-                this.isVideo === 1? $video.classList.add('video') : $video.classList.add('audio')
+                this.isVideo === 1 ? $video.classList.add('video') : $video.classList.add('audio')
 
                 // 更新视频连接
                 this.videoSrc = item.video_url;
@@ -289,20 +289,21 @@
                 this.currIdx = idx;
                 document.title = item.title;
                 this.player.src(this.videoSrc);
-                this.player.load();
+
                 this.$nextTick(() => {
-
-
                     // 第一次进入页面时候调用
                     if (first) {
                         // 设置当前默认播放时间 
                         this.player.currentTime(this.currTime);
                         this.rtime = this.myTime(parseInt(this.currTime));
-                        this.player.pause()
+                        this.player.pause();
+                        // 开启自动保存播放进度
+                        that.savePlayPos();
                     } else {
                         this.rtime = this.myTime(0)
                         this.player.play();
                     }
+                    this.player.load();
 
                 })
 
@@ -382,11 +383,9 @@
 
             // 获取设置视频播放位置
             savePlayPos: function () {
-                this.$nextTick(() => {
-                    setInterval(() => {
-                        this.setPlayPos();
-                    }, 3000);
-                })
+                setInterval(() => {
+                    this.setPlayPos();
+                }, 3000);
 
             },
 
@@ -394,7 +393,7 @@
             setPlayPos: function () {
                 // var time = this.elevideo.currentTime;
                 var time = this.player.currentTime();
-                if (time) {
+                if (time > 3) {
                     this.xkj_time['v' + this.id] = time > 3 ? time : 0;
                     localStorage.setItem('xkj_time', JSON.stringify(this.xkj_time))
                     // 获取剩余时间
@@ -448,7 +447,7 @@
                             //     that.switchVideo(item, nextIdx);
                             // });
                             // 初始化视频当前视频播放位置
-                            
+
                             var xkj_time = localStorage.getItem('xkj_time');
                             that.xkj_time = xkj_time ? JSON.parse(xkj_time) : {}
                             that.currTime = that.xkj_time['v' + that.id];
@@ -457,9 +456,7 @@
                             // 初次加载播放视频
                             that.switchVideo(currItem, idx, true);
                             that.setDom(currItem);
-
-                            // 开启自动保存播放进度
-                            that.savePlayPos();
+                            
                         });
 
                     })
