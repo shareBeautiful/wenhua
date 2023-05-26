@@ -52,6 +52,14 @@
         .video-wrapper {
             position: relative;
         }
+        .video-wrapper .tip-time {
+            position: absolute;
+            left: 5px;
+            top: 5px;
+            font-size: 14px;
+            color: #ac3a39;
+            /* text-shadow: 1px 1px 1px red; */
+        }
 
         .video-js .vjs-big-play-button {
             top: 50%;
@@ -90,11 +98,15 @@
         }
 
         .panel-heading {
-            font-size: 18px;
+            font-size: 16px;
             color: #b3b3b3;
             padding: 5px;
             border: 1px solid #ddd;
             margin-top: 10px;
+            margin-bottom: 15px;
+        }
+        .panel-heading .rtime {
+            font-size: 14px;
         }
 
         .info.active {
@@ -111,7 +123,7 @@
             height: 24px;
             color: #ac3a39 !important;
             padding: 0 3px;
-            font-size: 15px;
+            font-size: 14px;
         }
 
         #video-box .select option {
@@ -141,20 +153,22 @@
                     webkit-playsinline="false">
                     <!-- <source :src="videoSrc" type="video/mp4" /> -->
                 </video>
+                <div class="tip-time" v-if="countDown">{{countDown}}</div>
             </div>
 
             <div class="panel-heading h">
                 <div class="h-r">
                     {{title.slice(0,15)}}
-                    <select v-if="times > 1" class="form-control select" @change="selectTimes">
+                    <select v-if="selectJi > 1" class="form-control select" @change="selectTimes">
                         <option value="1">播完当前</option>
-                        <option value="0" v-if="times>6">全部循环</option>
-                        <option :value="n" v-if="n>1" v-for="n in times" :key="n">
+                        <option value="0" v-if="selectJi>6">全部循环</option>
+                        <option :value="n" v-for="n in selectTime">{{n}}分钟</option>
+                        <option :value="n" v-if="n>1" v-for="n in selectJi" :key="n">
                             播完{{n}}集
                         </option>
                     </select>
                     <!-- <input type="text" id="selectTs" readonly   />  -->
-                    {{rtime}}
+                    <span class="rtime">{{rtime}}</span>
                 </div>
             </div>
         </div>
@@ -211,8 +225,12 @@
                 options: {},        // 视频设置
                 xkj_video: {},
                 xkj_time: {},
-                times: 5,          // 可以选择定时播放的集数
+                saveTimer: null,   // 定时保存进度定时器
+                selectTimer: null, // 选择定时暂停的定时器
+                selectTime:[15,30,45,60,90],      // 选择定时的时间分钟
+                selectJi: 5,          // 可以选择定时播放的集数
                 currTimes: 0,      // 当前剩余的集数
+                countDown: 0,       // 选择倒计时显示
             }
         },
         methods: {
@@ -297,13 +315,13 @@
                         this.player.currentTime(this.currTime);
                         this.rtime = this.myTime(parseInt(this.currTime));
                         this.player.pause();
-                        // 开启自动保存播放进度
-                        that.savePlayPos();
+                        
                     } else {
                         this.player.play();
-                        this.setPlayPos(); // 设置当前位置
+                        this.setPlayPos(); // 清零
                     }
-
+                    // 开启自动保存播放进度
+                    that.savePlayPos();
                 })
 
 
@@ -317,7 +335,9 @@
             // 选择定时播放集数
             selectTimes: function (e) {
                 var times = Number(e.target.value);
-                this.player.off('ended')
+                this.player.off('ended'); // 取消结束播放事件
+                clearInterval(this.selectTimer); // 清楚定时分钟定时器
+                this.countDown = 0;
                 if (times === 0) {
                     // 全部循环
                     this.player.on('ended', () => {
@@ -326,8 +346,8 @@
                         this.switchVideo(item, nextIdx);
                     })
                 } else if (times === 1) { // 播完当前
-                    this.player.off('ended');
-                } else {
+                    this.player.off('ended'); // 取消结束播放事件
+                } else if (times < 10) {
                     // 开启定时
                     this.player.on('ended', () => {
                         times--;
@@ -339,6 +359,17 @@
                             this.switchVideo(item, nextIdx);
                         }
                     })
+                }else {
+                    times = times*60;
+                    this.countDown = this.myTime(times);
+                    this.selectTimer = setInterval(()=>{
+                        this.countDown = this.myTime(times);
+                        if(times === 0) {
+                            clearInterval(this.selectTimer);
+                            this.player.pause();
+                        }
+                        --times;
+                    }, 1000)
                 }
             },
 
@@ -348,9 +379,9 @@
                 var currIdx = this.currIdx; // 当前集数位置
                 var times = 6; // 设置最多集数
                 if (currIdx + times > len) {
-                    this.times = len - currIdx;
+                    this.selectJi = len - currIdx;
                 } else {
-                    this.times = times;
+                    this.selectJi = times;
                 }
             },
 
@@ -382,10 +413,10 @@
 
             // 获取设置视频播放位置
             savePlayPos: function () {
-                setInterval(() => {
+                clearInterval(this.saveTimer);
+                this.saveTimer = setInterval(() => {
                     this.setPlayPos();
                 }, 3000);
-
             },
 
             // 获取播放位置
@@ -466,10 +497,7 @@
                     // this.$nextTick(() => {
                     //     this.elevideo.load()
                     // })
-                    // 开启自动播放
-                    // this.switchAuto();
-                    // 开启自动保存播放进度
-                    // this.savePlayPos();
+                    
                 })
             }
         },
