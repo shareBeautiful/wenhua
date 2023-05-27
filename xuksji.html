@@ -223,7 +223,7 @@
 
                     if ([2, 3].includes(this.tagId)) {
                         this.list.push({
-                            "id": 194,
+                            "id": 1,
                             "column_id": 1,
                             "title": this.tagId === 2? "《心经》1-40讲浅解" : "《心经》文字浅解",
                             "img_url": "",
@@ -232,7 +232,7 @@
                             "type": 3,
                             "plays_num": 0,
                             "menu_num": 40,
-                            "href": './content.html?type=xukongji&key=xjw'
+                            "href": this.tagId === 2? './xuksji_video.html?id=xj' : './content.html?type=xukongji&key=xjw'
                         })
                     }
 

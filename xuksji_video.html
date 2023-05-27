@@ -52,6 +52,7 @@
         .video-wrapper {
             position: relative;
         }
+
         .video-wrapper .tip-time {
             position: absolute;
             left: 5px;
@@ -100,11 +101,12 @@
         .panel-heading {
             font-size: 16px;
             color: #b3b3b3;
-            padding: 5px;
+            padding: 10px 5px;
             border: 1px solid #ddd;
             margin-top: 10px;
             margin-bottom: 15px;
         }
+
         .panel-heading .rtime {
             font-size: 14px;
         }
@@ -227,7 +229,7 @@
                 xkj_time: {},
                 saveTimer: null,   // 定时保存进度定时器
                 selectTimer: null, // 选择定时暂停的定时器
-                selectTime:[15,30,45,60,90],      // 选择定时的时间分钟
+                selectTime: [15, 30, 45, 60, 90],      // 选择定时的时间分钟
                 selectJi: 5,          // 可以选择定时播放的集数
                 currTimes: 0,      // 当前剩余的集数
                 countDown: 0,       // 选择倒计时显示
@@ -314,8 +316,11 @@
                         // 设置当前默认播放时间 
                         this.player.currentTime(this.currTime);
                         this.rtime = this.myTime(parseInt(this.currTime));
-                        this.player.pause();
-                        
+                        setTimeout(() => {
+                            this.player.pause();
+                        }, 100)
+
+
                     } else {
                         this.player.play();
                         this.setPlayPos(); // 清零
@@ -359,12 +364,12 @@
                             this.switchVideo(item, nextIdx);
                         }
                     })
-                }else {
-                    times = times*60;
+                } else {
+                    times = times * 60;
                     this.countDown = this.myTime(times);
-                    this.selectTimer = setInterval(()=>{
+                    this.selectTimer = setInterval(() => {
                         this.countDown = this.myTime(times);
-                        if(times === 0) {
+                        if (times === 0) {
                             clearInterval(this.selectTimer);
                             this.player.pause();
                         }
@@ -434,60 +439,60 @@
                 return num < 10 ? '0' + num : num;
             },
 
+            // 过滤数据
+            filterData: function (res) {
+                var vid = parseInt(this.getParams('vid')); // 视频id
+                this.list = res;
+                var currItem, idx;
+                if (!vid) {// 默认本地哪一集参数优先
+                    var xkj_video = localStorage.getItem('xkj_video');
+                    if (xkj_video) this.xkj_video = JSON.parse(xkj_video);
+                    vid = this.xkj_video['v' + this.id];
+                    // 如果第一次访问且本地没有存在，则默认第一个视频id
+                    if (!vid) vid = this.list[0]['id'];
+                }
+
+                // 定位选中的视频信息
+                this.list.forEach((item, i) => {
+                    item.video_time = item.video_time? this.myTime(item.video_time) : '';
+                    item.title = item.title.replace(/直播音频回放|（免费）/img, '');
+                    item.order = this.padding(i + 1);
+                    if (vid && item.id === vid) {
+                        currItem = item;
+                        idx = i;
+                    }
+                });
+                this.$nextTick(() => {
+                    this.player = videojs('my-video', this.options, function onPlayerReady() {
+                        // this.play(); 
+                        // 自动播放下一集
+                        // this.on('ended', function () {
+                        //     var nextIdx = that.currIdx + 1;
+                        //     var item = that.list[nextIdx];
+                        //     that.switchVideo(item, nextIdx);
+                        // });
+                        // 初始化视频当前视频播放位置
+                        var xkj_time = localStorage.getItem('xkj_time');
+                        that.xkj_time = xkj_time ? JSON.parse(xkj_time) : {}
+                        that.currTime = that.xkj_time['v' + that.id];
+                        that.currTime = that.currTime ? that.currTime : 0;
+
+                        // 初次加载播放视频
+                        that.switchVideo(currItem, idx, true);
+                        that.setDom(currItem);
+                    });
+
+                })
+            },
+
             // 获取数据
             getData: function () {
-
-                this.id = parseInt(this.getParams('id'));
-                var vid = parseInt(this.getParams('vid'));
                 var path = this.apiUrl + '/api/article/menu';
                 var body = JSON.stringify({ "a_id": this.id });
                 var opt = { method: "post", body: body };
                 this.getJson(path, opt).then((res) => {
-
                     res = res['data'];
-                    this.list = res;
-                    var currItem, idx;
-                    if (!vid) {// 默认本地哪一集参数优先
-                        var xkj_video = localStorage.getItem('xkj_video');
-                        if (xkj_video) this.xkj_video = JSON.parse(xkj_video);
-                        vid = this.xkj_video['v' + this.id];
-                        // 如果第一次访问且本地没有存在，则默认第一个视频id
-                        if (!vid) vid = this.list[0]['id'];
-                    }
-
-                    // 定位选中的视频信息
-                    this.list.forEach((item, i) => {
-                        item.video_time = this.myTime(item.video_time);
-                        item.title = item.title.replace(/直播音频回放|（免费）/img, '');
-                        item.order = this.padding(i + 1);
-                        if (vid && item.id === vid) {
-                            currItem = item;
-                            idx = i;
-                        }
-                    });
-                    this.$nextTick(() => {
-                        this.player = videojs('my-video', this.options, function onPlayerReady() {
-                            // this.play(); 
-                            // 自动播放下一集
-                            // this.on('ended', function () {
-                            //     var nextIdx = that.currIdx + 1;
-                            //     var item = that.list[nextIdx];
-                            //     that.switchVideo(item, nextIdx);
-                            // });
-                            // 初始化视频当前视频播放位置
-
-                            var xkj_time = localStorage.getItem('xkj_time');
-                            that.xkj_time = xkj_time ? JSON.parse(xkj_time) : {}
-                            that.currTime = that.xkj_time['v' + that.id];
-                            that.currTime = that.currTime ? that.currTime : 0;
-
-                            // 初次加载播放视频
-                            that.switchVideo(currItem, idx, true);
-                            that.setDom(currItem);
-
-                        });
-
-                    })
+                    this.filterData(res);
 
                     // if (this.currTime) {
                     //     this.elevideo.currentTime = this.currTime;
@@ -497,8 +502,25 @@
                     // this.$nextTick(() => {
                     //     this.elevideo.load()
                     // })
-                    
+
                 })
+            },
+
+            getXj: function () {
+                var res = [];
+                var obj = {};
+                var title = '';
+                for (i = 1; i <= 40; i++) {
+                    title = '《心经》第' + i + '讲';
+                    obj = {
+                        id: i,
+                        title: title,
+                        video_time: 0,
+                        video_url: 'https://www.zxin669666.cn/audio/心经浅解/' + title + '.mp3'
+                    }
+                    res.push(obj)
+                }
+                this.filterData(res)
             }
         },
         created: function () {
@@ -506,7 +528,8 @@
 
         },
         mounted: function () {
-            this.elevideo = document.getElementById("my-video")
+            this.id = this.getParams('id'); // 页面id
+            this.elevideo = document.getElementById("my-video");
             this.options = {
                 autoplay: true,     // 自动播放
                 controls: true,      // 显示控制条
@@ -530,7 +553,13 @@
                 // width: 300,height: 300, // 设置宽高
                 //plugins:自动初始化要加载的插件
             };
-            this.getData();
+            // 从哪里过来
+            if (this.id === 'xj') {
+                this.getXj();
+            } else {
+                this.getData();
+            }
+
             // $.select_HH_MM_SS("#selectTs");
             if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
                 this.isDark = true;
