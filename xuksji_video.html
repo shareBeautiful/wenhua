@@ -290,6 +290,27 @@
                 localStorage.setItem('xkj_video', JSON.stringify(this.xkj_video))
             },
 
+            // 修改url
+            changeUrl: function (key, value) {
+                var uri = window.location.href;
+                var newurl;
+                if (!value) {
+                    newurl = uri;
+                }
+                var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+                var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+                if (uri.match(re)) {
+                    newurl = uri.replace(re, '$1' + key + "=" + value + '$2');
+                }
+                else {
+                    newurl = uri + separator + key + "=" + value;
+                }
+                //向当前url添加参数，没有历史记录
+                window.history.replaceState({
+                    path: newurl
+                }, '', newurl);
+            },
+
             // 切换视频播放
             switchVideo: function (item, idx, first) {
                 if (!item.video_url) return false;
@@ -308,6 +329,7 @@
                 this.currId = item.id;
                 this.currIdx = idx;
                 document.title = item.title;
+                
                 this.player.src(this.videoSrc);
                 this.player.load();
                 this.$nextTick(() => {
@@ -320,10 +342,10 @@
                             this.player.pause();
                         }, 100)
 
-
                     } else {
                         this.player.play();
                         this.setPlayPos(); // 清零
+                        this.changeUrl('vid', this.currId)
                     }
                     // 开启自动保存播放进度
                     that.savePlayPos();
@@ -454,7 +476,7 @@
 
                 // 定位选中的视频信息
                 this.list.forEach((item, i) => {
-                    item.video_time = item.video_time? this.myTime(item.video_time) : '';
+                    item.video_time = item.video_time ? this.myTime(item.video_time) : '';
                     item.title = item.title.replace(/直播音频回放|（免费）/img, '');
                     item.order = this.padding(i + 1);
                     if (vid && item.id === vid) {

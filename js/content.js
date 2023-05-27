@@ -505,6 +505,27 @@ function getContent() {
                     }
                 },
 
+                // 改变url
+                changeUrl: function (key, value) {
+                    var uri = window.location.href;
+                    var newurl;
+                    if (!value) {
+                        newurl = uri;
+                    }
+                    var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+                    var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+                    if (uri.match(re)) {
+                        newurl = uri.replace(re, '$1' + key + "=" + value + '$2');
+                    }
+                    else {
+                        newurl = uri + separator + key + "=" + value;
+                    }
+                    //向当前url添加参数，没有历史记录
+                    window.history.replaceState({
+                        path: newurl
+                    }, '', newurl);
+                },
+
                 // 过滤html
                 filterHtml: function (html, title) {
                     // if (keyword) {
