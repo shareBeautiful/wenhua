@@ -996,10 +996,10 @@ function getContent() {
                         // document.title = tit
                         this.showAudio = audioType; // 显示音频
                         if (audioType === 'mp4') {
-                            var src = './video/' + file + '/' + tit + '.' + audioType;
+                            var src = '/video/' + file + '/' + tit + '.' + audioType;
                             this.audioSrc = src;
                         } else {
-                            var src = './audio/' + file + '/' + tit + '.' + audioType;
+                            var src = '/audio/' + file + '/' + tit + '.' + audioType;
                             this.$nextTick(() => {
                                 var audio = playAudio(src);
                             })
