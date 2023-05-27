@@ -137,10 +137,7 @@
             background-color: rgba(43, 51, 63, 0.8);
         }
 
-        
-        .vjs-has-started.vjs-user-inactive.vjs-playing .vjs-control-bar {
-            opacity:1;
-        }
+  
         @media screen and (max-width: 640px) {
             .video-js .vjs-control-bar {
                 bottom: -10px;
@@ -563,6 +560,8 @@
                 muted: false,       // 是否静音
                 preload: 'auto',    // 预加载auto-自动
                 language: 'en',     // 设置语音
+                inactivityTimeout: 0, // 0不隐藏 多少毫秒自动隐藏进度条
+           
                 // playbackRates: [0.5, 0.8, 1, 1.25, 1.5, 2],  // 设置倍数
                 controlBar: true,   // 是否显示控制栏
                 // children: [
