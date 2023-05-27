@@ -346,7 +346,7 @@
                         this.player.play();
                         this.setPlayPos(); // 清零
                     }
-                    if(idx) this.changeUrl('vid', this.currId) // 改变从第二集的URL
+                    this.changeUrl('vid', this.currId) // 改变的URL
                     // 开启自动保存播放进度
                     that.savePlayPos();
                 })
