@@ -213,6 +213,8 @@
 
                     }
                     document.title = this.title;
+                    // 过滤论语
+                    /*
                     if (this.tagId == 1 || this.tagId == 2) {
                         this.list = res.filter(item => {
                             return (item.title.indexOf('论语') != -1);
@@ -220,6 +222,8 @@
                     } else {
                         this.list = res;
                     }
+                    */
+                    this.list = res;
 
                     if ([2, 3].includes(this.tagId)) {
                         this.list.push({
