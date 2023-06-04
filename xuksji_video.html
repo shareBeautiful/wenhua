@@ -289,7 +289,7 @@
                 // this.xkj_video['v' + this.id] = this.currId;
                 // localStorage.setItem('xkj_video', JSON.stringify(this.xkj_video));
                 this.xkj_video['vid'] = this.currId;
-                localStorage.setItem('v' + this.id, JSON.stringify(this.xkj_video))
+                localStorage.setItem('v_' + this.id, JSON.stringify(this.xkj_video))
             },
 
             // 修改url
@@ -315,7 +315,10 @@
 
             // 切换视频播放
             switchVideo: function (item, idx, first) {
-                if (!item.video_url) return false;
+                if (!item.video_url) {
+                    alert('不存在此视频！')
+                    return false;
+                }
                 if (this.currId === item.id) { // 是否是暂停状态
                     this.player.paused() ? this.player.play() : this.player.pause();
                     return false
@@ -348,6 +351,7 @@
                         this.player.play();
                         this.setPlayPos(); // 清零
                     }
+                    
                     this.changeUrl('vid', this.currId) // 改变的URL
                     // 开启自动保存播放进度
                     this.savePlayPos();
@@ -469,7 +473,6 @@
                 this.list = res;
                 var currItem, idx;
                 var xkj_video = localStorage.getItem('v_'+this.id);
-                console.log(xkj_video)
                 if (xkj_video) this.xkj_video = JSON.parse(xkj_video);
                 if (!vid) {// 默认本地哪一集参数优先
                     vid = this.xkj_video['vid'];
