@@ -226,8 +226,7 @@
                 elevideo: null,
                 player: null,
                 options: {},        // 视频设置
-                xkj_video: {},
-                xkj_time: {},
+                xkj_video: {},      // 保存视频的信息
                 saveTimer: null,   // 定时保存进度定时器
                 selectTimer: null, // 选择定时暂停的定时器
                 selectTime: [15, 30, 45, 60, 90],      // 选择定时的时间分钟
@@ -287,8 +286,10 @@
             saveVideo: function () {
                 var xkj_video = localStorage.getItem('xkj_video');
                 if (xkj_video) this.xkj_video = JSON.parse(xkj_video);
-                this.xkj_video['v' + this.id] = this.currId;
-                localStorage.setItem('xkj_video', JSON.stringify(this.xkj_video))
+                // this.xkj_video['v' + this.id] = this.currId;
+                // localStorage.setItem('xkj_video', JSON.stringify(this.xkj_video));
+                this.xkj_video['vid'] = this.currId;
+                localStorage.setItem('v' + this.id, JSON.stringify(this.xkj_video))
             },
 
             // 修改url
@@ -349,7 +350,7 @@
                     }
                     this.changeUrl('vid', this.currId) // 改变的URL
                     // 开启自动保存播放进度
-                    that.savePlayPos();
+                    this.savePlayPos();
                 })
 
 
@@ -451,11 +452,11 @@
             setPlayPos: function () {
                 // var time = this.elevideo.currentTime;
                 var time = this.player.currentTime();
-                this.xkj_time['v' + this.id] = time > 3 ? time : 0;
-                localStorage.setItem('xkj_time', JSON.stringify(this.xkj_time))
+                this.xkj_video['time'] = time > 3? time : 0;
+                localStorage.setItem('v_'+this.id, JSON.stringify(this.xkj_video))
                 // 获取剩余时间
                 // this.rtime = this.myTime(parseInt(this.player.remainingTime()));
-                this.rtime = this.myTime(parseInt(time));
+                this.rtime = this.myTime(parseInt(this.xkj_video['time']));
             },
 
             padding: function (num) {
@@ -467,10 +468,11 @@
                 var vid = parseInt(this.getParams('vid')); // 视频id
                 this.list = res;
                 var currItem, idx;
+                var xkj_video = localStorage.getItem('v_'+this.id);
+                console.log(xkj_video)
+                if (xkj_video) this.xkj_video = JSON.parse(xkj_video);
                 if (!vid) {// 默认本地哪一集参数优先
-                    var xkj_video = localStorage.getItem('xkj_video');
-                    if (xkj_video) this.xkj_video = JSON.parse(xkj_video);
-                    vid = this.xkj_video['v' + this.id];
+                    vid = this.xkj_video['vid'];
                     // 如果第一次访问且本地没有存在，则默认第一个视频id
                     if (!vid) vid = this.list[0]['id'];
                 }
@@ -495,13 +497,13 @@
                         //     that.switchVideo(item, nextIdx);
                         // });
                         // 初始化视频当前视频播放位置
-                        var xkj_time = localStorage.getItem('xkj_time');
-                        that.xkj_time = xkj_time ? JSON.parse(xkj_time) : {}
-                        that.currTime = that.xkj_time['v' + that.id];
+                        that.currTime = that.xkj_video['time'];
+                        console.log(that.xkj_video)
                         that.currTime = that.currTime ? that.currTime : 0;
 
                         // 初次加载播放视频
                         that.switchVideo(currItem, idx, true);
+                        // 跳转播放的条目
                         that.setDom(currItem);
                     });
 
