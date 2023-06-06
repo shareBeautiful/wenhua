@@ -24,10 +24,19 @@
         .box-item .head {
             position: relative;
             width: 100px;
+            height: 72px;
+            overflow: hidden;
         }
 
         .box-item .pic {
             width: 100%;
+            height: 100%;
+            transform: scale(1);
+            transition: transform .5s;
+        }
+        .box-item .pic:hover {
+            transform: scale(1.5);
+            transition: transform .3s;
         }
 
         .box-item .info {
@@ -229,7 +238,7 @@
                             "id": 1,
                             "column_id": 1,
                             "title": this.tagId === 2 ? "《心经》1-40讲浅解" : "《心经》文字浅解",
-                            "img_url": "",
+                            "img_url": "./images/xj_pic.png",
                             "zhaiyao": "",
                             "date": "2023-05-20",
                             "type": 3,
