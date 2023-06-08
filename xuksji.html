@@ -172,7 +172,6 @@
             // 切换标签
             switchTag: function (tagId) {
                 var path, body;
-                window.scrollTo(0, 0);
                 if (id) {
                     tagId = $echo.getParams('tid');
                     path = this.apiUrl + '/api/article/menu';
@@ -251,6 +250,7 @@
                     this.search();
                     this.$set(this.allList, tagId + '', this.list)
                 })
+                window.scrollTo(0, 0);
             }
         },
         created: function () {

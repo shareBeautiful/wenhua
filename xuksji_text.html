@@ -437,9 +437,10 @@
             toArticle: function (idx) {
                 window.scrollTo(0, 0); // 跳转到文章顶部
                 if (this.currIdx === idx) return false;
-                var item = this.menuList[idx]
+                this.menuList.some((item)=>{
+                    if(item.idx === idx) this.currItem = item;
+                })
                 this.currIdx = idx;
-                this.currItem = item;
                 this.saveText();  // 保存本地
                 if (this.currItem.articleD) {
                     this.articleD = this.currItem.articleD;
