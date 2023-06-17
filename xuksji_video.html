@@ -136,6 +136,9 @@
         .video-js .vjs-control-bar {
             background-color: rgba(43, 51, 63, 0.8);
         }
+        .box-item.no {
+            text-decoration:line-through;
+        }
 
   
         @media screen and (max-width: 640px) {
@@ -182,7 +185,7 @@
                 <div class="panel-body">
                     <div class="box">
                         <!-- @click="toPage(item)" -->
-                        <div class="box-item" v-for="(item,idx) in list" :key="item.id" @click="switchVideo(item, idx)"
+                        <div class="box-item" :class="{'no': !item.video_url}" v-for="(item,idx) in list" :key="item.id" @click="switchVideo(item, idx)"
                             :ref="'v'+item.id">
                             <div class="info" :class="{active:item.id === currId}">
                                 <div>
