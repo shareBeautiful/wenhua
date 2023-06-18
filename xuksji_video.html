@@ -136,8 +136,19 @@
         .video-js .vjs-control-bar {
             background-color: rgba(43, 51, 63, 0.8);
         }
-        .box-item.no {
+        .info.no {
             text-decoration:line-through;
+        }
+        .box-item {
+            position: relative;
+        }
+        .box-item .pg {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 10%;
+            height: 3px;
+            background-color: #3fb950;
         }
 
   
@@ -185,9 +196,9 @@
                 <div class="panel-body">
                     <div class="box">
                         <!-- @click="toPage(item)" -->
-                        <div class="box-item" :class="{'no': !item.video_url}" v-for="(item,idx) in list" :key="item.id" @click="switchVideo(item, idx)"
+                        <div class="box-item"  v-for="(item,idx) in list" :key="item.id" @click="switchVideo(item, idx)"
                             :ref="'v'+item.id">
-                            <div class="info" :class="{active:item.id === currId}">
+                            <div class="info" :class="{active:item.id === currId, 'no': !item.video_url}">
                                 <div>
                                     <span class="order">{{item.order}}.</span>
                                     <span class="title">{{item.title}}</span>
@@ -197,6 +208,7 @@
                                     <span>时间：{{item.date}}</span>
                                 </div>
                             </div>
+                            <div class="pg" v-if="item.id === currId" :style="{width: play_pg}"></div>
                         </div>
                     </div>
                 </div>
@@ -236,6 +248,7 @@
                 selectJi: 5,          // 可以选择定时播放的集数
                 currTimes: 0,      // 当前剩余的集数
                 countDown: 0,       // 选择倒计时显示
+                play_pg: 0,        // 播放进度0-100%
             }
         },
         methods: {
@@ -450,6 +463,7 @@
             // 获取设置视频播放位置
             savePlayPos: function () {
                 clearInterval(this.saveTimer);
+               
                 this.saveTimer = setInterval(() => {
                     this.setPlayPos();
                 }, 3000);
@@ -459,11 +473,13 @@
             setPlayPos: function () {
                 // var time = this.elevideo.currentTime;
                 var time = this.player.currentTime();
+                var duration = this.player.duration()
                 this.xkj_video['time'] = time > 3? time : 0;
                 localStorage.setItem('v_'+this.id, JSON.stringify(this.xkj_video))
                 // 获取剩余时间
                 // this.rtime = this.myTime(parseInt(this.player.remainingTime()));
                 this.rtime = this.myTime(parseInt(this.xkj_video['time']));
+                this.play_pg = (time/duration*100).toFixed(2)+'%';
             },
 
             padding: function (num) {
