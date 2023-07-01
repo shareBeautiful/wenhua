@@ -143,13 +143,20 @@
         .box-item .pg {
             position: absolute;
             left: 0;
-            bottom: 0;
-            width: 10%;
-            height: 2px;
-            background-color: green;
+            top: 0;
+            width: 0;
+            height: 100%;
+            background-color: rgba(0, 128, 0,.3);
+            border-bottom: 2px solid green;
+        }
+        .box-item .pg .pg-num {
+            position: absolute;
+            right: -33px;
+            bottom: -10px;
+            font-size: 12px;
         }
 
-        /* 一下为播放器自定义设置 */
+        /* 以下为播放器自定义设置 */
 
         @media screen and (max-width: 640px) {
             .video-js .vjs-control-bar {
@@ -242,7 +249,9 @@
                                     <span>时间：{{item.date}}</span>
                                 </div>
                             </div>
-                            <div class="pg" v-if="item.id === currId" :style="{width: play_pg}"></div>
+                            <div class="pg" v-if="item.id === currId && play_pg !=0" :style="{width: play_pg}">
+                                <!-- <div class="pg-num">{{play_pg}}</div> -->
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -511,7 +520,7 @@
                 localStorage.setItem('v_' + this.id, JSON.stringify(this.xkj_video))
                 // 计算播放进度
                 var duration = this.player.duration()
-                this.play_pg = (time / duration * 100).toFixed() + '%';
+                this.play_pg = (time / duration * 100).toFixed(1) + '%';
                 // 获取剩余时间
                 // this.rtime = this.myTime(parseInt(this.player.remainingTime()));
                 // this.rtime = this.myTime(parseInt(this.xkj_video['time']));
