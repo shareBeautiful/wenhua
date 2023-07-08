@@ -22,14 +22,16 @@
     }
 
     html {
-        max-width: 960px;
-        margin: 0 auto;
+        width: 100%;
         height: 100%;
         -webkit-user-select: none;
+        background-color: #111;
 
     }
 
     body {
+        max-width: 960px;
+        margin: 0 auto !important;
         background-image: url('images/bg.jpg');
         background-repeat: repeat;
     }
@@ -39,7 +41,6 @@
     }
 
     .panel {
-        margin-top: 36px;
         background: transparent;
     }
 
@@ -124,11 +125,11 @@
         font-size: 18px;
     }
 
-    .fixed {
-        position: fixed;
+    .search-box {
+        position: sticky !important;
         top: 0;
         left: 0;
-        width: 100%;
+        z-index: 1;
     }
 
     .form-control {
@@ -163,7 +164,7 @@
 
 <body>
     <div id="app" v-cloak :class="{'dark': isDark}">
-        <div class="input-group fixed">
+        <div class="search-box">
             <input type="search" class="form-control" @input="search" v-model="keyword" placeholder="搜索...">
         </div>
         <div class="panel panel-default">
