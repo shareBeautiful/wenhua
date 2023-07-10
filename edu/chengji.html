@@ -1,0 +1,310 @@
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr">
+<head>
+    <link href="css/WdatePicker.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="./css/semesterCalendar.css">
+</head>
+<body>
+<div id="allSemesterScoreForm" class="ajax_container">
+
+
+    <title></title>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="0">
+    <meta http-equiv="content-style-type" content="text/css">
+    <meta http-equiv="content-script-type" content="text/javascript">
+
+    <link id="jquery_theme_link" rel="stylesheet" href="css/jquery-ui.css?s2j=3.4.19"
+          type="text/css">
+    <link id="beangle_theme_link" href="css/beangle-ui,colorbox,chosen.css" rel="stylesheet"
+          type="text/css">
+
+
+    <div id="toolbar13572391471" class="toolbar notprint">
+        <div class="toolbar-title"><span class="toolbar-icon action-info"></span><strong>我的成绩</strong></div>
+        <div class="toolbar-items" id="toolbar13572391471_items">
+            <div class="toolbar-item toolbar-item-ge0" title="所有学期成绩"><span
+                    class="toolbar-icon action-default"></span>所有学期成绩
+            </div>
+        </div>
+        <div class="toolbar-msg" id="toolbar13572391471_msg" style="display: none;"></div>
+        <div class="toolbar-line"><img height="1" width="100%" align="top"
+                                       src="./images/keyline.png"></div>
+    </div>
+
+    <div style="background: url('images/semesterBarBg.png') repeat-x scroll 50% 50% #DEEDF7;border: 1px solid #AED0EA;color: #222222;font-weight: bold;height:28px;">
+        <form id="semesterForm" name="semesterForm" action="/eams/teach/grade/course/person.action" method="post"
+              target="">
+
+            <div style="margin-left:4px;margin-top:2px;float:left;line-height:22px;height:22px;">
+
+            </div>
+            <div style="margin-left:10px;margin-top:2px;float:left;line-height:18px;height:22px;">
+                <label for="semesterBar13572391471" style="display: none;">项目:</label>
+                <select id="semesterBar13572391471" name="project.id" style="display: none;">
+                    <option value="1" selected="">本科</option>
+                </select>
+                <input type="hidden" name="isEng" id="isEng" value="0">
+                <label for="semesterBar13572391471Semester" class="title">学年学期:</label>
+                <input id="semesterBar13572391471Semester" class="calendar-text calendar-text-state-default"
+                       title="学年学期" type="text" value="2022-2023学年1学期" readonly="true">
+                <div class="calendar-bar" style="display: none" tabindex="-1">
+                    <input id="semesterCalendar_target" type="hidden" name="semester.id" value="383">
+                    <a name="prev" href="javascript:void(0)" style="display:none"><img
+                            src="./images/semesterCalendar_prev.gif"></a>
+                    <input id="semesterCalendar_year" class="calendar-bar-input" type="text" index="6" value=""
+                           maxlength="4" size="4" readonly="true" style="display:none"><span
+                        style="display:none">学年</span>
+                    <a name="next" href="javascript:void(0)" style="display:none"><img
+                            src="./images/semesterCalendar_next.gif"></a>
+
+                    <a name="prev" href="javascript:void(0)" style="display:none"><img
+                            src="./images/semesterCalendar_prev.gif"></a>
+                    <input id="semesterCalendar_term" class="calendar-bar-input" type="text" index="1" value="" size="4"
+                           readonly="true" style="display:none"><span style="display:none">学期</span>
+                    <a name="next" href="javascript:void(0)" style="display:none"><img
+                            src="./images/semesterCalendar_next.gif"></a>
+                    <a href="javascript:void(0)" id="allSemester" style="display:none"></a>
+
+                    <table id="semesterCalendar_yearTb" class="semesterCalendar_yearTb"
+                           style="border-right: 1px solid rgb(221, 221, 221);">
+                        <tbody>
+                        <tr>
+                            <td class="calendar-bar-td-blankBorder" index="0">2016-2017</td>
+                            <td class="calendar-bar-td-blankBorder" index="1">2017-2018</td>
+                            <td class="calendar-bar-td-blankBorder" index="2">2018-2019</td>
+                        </tr>
+                        <tr>
+                            <td class="calendar-bar-td-blankBorder" index="3">2019-2020</td>
+                            <td class="calendar-bar-td-blankBorder" index="4">2020-2021</td>
+                            <td class="calendar-bar-td-blankBorder" index="5">2021-2022</td>
+                        </tr>
+                        <tr>
+                            <td class="calendar-bar-td-blankBorder" index="6">2022-2023</td>
+                            <td class="calendar-bar-td-blankBorder" index="7">2023-2024</td>
+                            <td class="calendar-bar-td-blankBorder"></td>
+                            <td class="calendar-bar-td-blankBorder"></td>
+                        </tr>
+                        <tr>
+                            <td class="calendar-bar-td-blankBorder"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <!-- 两个table之间的空div用来解决IE6 下莫名其妙重复渲染最后一个学年td中的文字的bug-->
+                    <div></div>
+                    <table id="semesterCalendar_termTb" class="semesterCalendar_termTb" style="border-left: 0px none;">
+                        <tbody>
+                        <tr>
+                            <td class="calendar-bar-td-blankBorder" val="363"><span>1</span>学期</td>
+                        </tr>
+                        <tr>
+                            <td class="calendar-bar-td-blankBorder" val="383"><span>2</span>学期</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+
+                <input type="submit" value="切换学期"
+                       onclick="return false;">
+            </div>
+
+        </form>
+    </div>
+    <div id="semesterGrade" class="ajax_container">
+        <div class="grid">
+
+
+            <table id="grid17711719231" class="gridtable">
+                <thead class="gridhead">
+
+
+                <tr>
+                    <th width="10%">学年学期</th>
+                    <th width="10%">课程代码</th>
+                    <th width="10%">课程序号</th>
+                    <th width="20%">课程名称</th>
+                    <th width="14%">课程类别</th>
+                    <th width="9%">学分</th>
+                    <th width="9%">总评成绩</th>
+                    <th width="9%">补考总评</th>
+                    <th width="9%">最终</th>
+                    <th width="9%">绩点</th>
+                </tr>
+
+                </thead>
+
+                <tbody id="grid17711719231_data">
+                <tr class="griddata-even   ">
+                    <td>2022-2023 2</td>
+                    <td>I0216010</td>
+                    <td>I0216010.01</td>
+                    <td>大学生学业认知与专业研讨</td>
+                    <td>公共模块</td>
+                    <td>1</td>
+                    <td style=""> 85
+
+                    </td>
+                    <td style="">--
+                    </td>
+                    <td style=""> 85
+
+                    </td>
+                    <td> 4
+                    </td>
+                </tr>
+                <tr class="griddata-odd    ">
+                    <td>2022-2023 2</td>
+                    <td>S0212110</td>
+                    <td>S0212110.05</td>
+                    <td>电路实验 I</td>
+                    <td>学院要求课</td>
+                    <td>1</td>
+                    <td style=""> 63
+
+                    </td>
+                    <td style="">--
+                    </td>
+                    <td style=""> 63
+
+                    </td>
+                    <td> 1.8
+                    </td>
+                </tr>
+                <tr class="griddata-even      ">
+                    <td>2022-2023 2</td>
+                    <td>U0201010</td>
+                    <td>U0201010.02</td>
+                    <td>多点温度无线监控系统（新生项目课程）</td>
+                    <td>新生项目式课程</td>
+                    <td>1</td>
+                    <td style=""> 86
+
+                    </td>
+                    <td style="">--
+                    </td>
+                    <td style=""> 86
+
+                    </td>
+                    <td> 4
+                    </td>
+                </tr>
+                <tr class="griddata-odd        ">
+                    <td>2022-2023 2</td>
+                    <td>U0200910</td>
+                    <td>U0200910.02</td>
+                    <td>集成光学材料与器件初探</td>
+                    <td>新生研讨课程</td>
+                    <td>1</td>
+                    <td style=""> 80
+
+                    </td>
+                    <td style="">--
+                    </td>
+                    <td style=""> 80
+
+                    </td>
+                    <td> 3.5
+                    </td>
+                </tr>
+                <tr class="griddata-even       ">
+                    <td>2022-2023 2</td>
+                    <td>B2005310</td>
+                    <td>B2005310.02</td>
+                    <td>乒乓球B</td>
+                    <td>大学体育Ⅱ</td>
+                    <td>1</td>
+                    <td style=""> 74
+
+                    </td>
+                    <td style="">--
+                    </td>
+                    <td style=""> 74
+
+                    </td>
+                    <td> 2.9
+                    </td>
+                </tr>
+                <tr class="griddata-odd      ">
+                    <td>2022-2023 2</td>
+                    <td>M1739420</td>
+                    <td>M1739420.04</td>
+                    <td>戏剧英语</td>
+                    <td>通识英语</td>
+                    <td>2</td>
+                    <td style=""> 75
+
+                    </td>
+                    <td style="">--
+                    </td>
+                    <td style=""> 75
+
+                    </td>
+                    <td> 3
+                    </td>
+                </tr>
+                <tr class="griddata-even">
+                    <td>2022-2023 2</td>
+                    <td>A6205420</td>
+                    <td></td>
+                    <td>宇宙简史</td>
+                    <td>通识类MOOC</td>
+                    <td>2</td>
+                    <td style=""> P
+
+                    </td>
+                    <td style="">--
+                    </td>
+                    <td style=""> P
+
+                    </td>
+                    <td> 4
+                    </td>
+                </tr>
+                <tr class="griddata-odd  ">
+                    <td>2022-2023 2</td>
+                    <td>R0212450</td>
+                    <td>R0212450.14</td>
+                    <td>电路分析与电子线路</td>
+                    <td>学院要求课</td>
+                    <td>5</td>
+                    <td style=""> 45
+                        (缓考)
+                    </td>
+                    <td style="">--
+                    </td>
+                    <td style="color:red"> 45
+
+                    </td>
+                    <td> 0
+                    </td>
+                </tr>
+                <tr class="griddata-even">
+                    <td>2022-2023 2</td>
+                    <td>D1100250</td>
+                    <td>D1100250.23</td>
+                    <td>微积分II</td>
+                    <td>数学与自然科学基础课</td>
+                    <td>5</td>
+                    <td style=""> 49
+
+                    </td>
+                    <td style="">--
+                    </td>
+                    <td style="color:red"> 49
+
+                    </td>
+                    <td> 0
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+</div>
+</body>
+</html>
