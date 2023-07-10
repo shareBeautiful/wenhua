@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<title></title>
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="cache-control" content="no-cache">
+<meta http-equiv="expires" content="0">
+<meta http-equiv="content-style-type" content="text/css">
+<meta http-equiv="content-script-type" content="text/javascript">
+
+<link id="jquery_theme_link" rel="stylesheet" href="./css/jquery-ui.css" type="text/css">
+<link id="beangle_theme_link" href="./css/beangle-ui,colorbox,chosen.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+
+<div id="toolbar15673611451" class="toolbar notprint">
+    <div class="toolbar-title"><span class="toolbar-icon action-info"></span><strong>用户权限面板</strong></div>
+    <div class="toolbar-items" id="toolbar15673611451_items">
+        <div class="toolbar-item toolbar-item-ge0" title="关闭"><span class="toolbar-icon action-close"></span>关闭
+        </div>
+    </div>
+    <div class="toolbar-msg" id="toolbar15673611451_msg" style="display: none;"></div>
+    <div class="toolbar-line"><img height="1" width="100%" align="top" src="./images/keyline.png"></div>
+</div>
+<script type="text/javascript">
+    bar = bg.ui.toolbar("toolbar15673611451", '用户权限面板');
+    bar.addClose("关闭");
+    bar.addHr();
+</script>
+<style>
+    #user-profile {
+        margin: 10px 5px;
+        width: 1010px;
+    }
+
+    #lspace {
+        float: left;
+        width: 230px;
+        padding: 2px;
+    }
+
+    #mspace {
+        float: left;
+        width: 420px;
+        padding: 2px;
+    }
+
+    #rspace {
+        float: right;
+        width: 340px;
+        padding: 2px;
+    }
+
+    #portrait {
+        height: 80px;
+    }
+
+    #portrait ul, ol {
+        list-style-type: none;
+    }
+
+    #portrait img {
+        float: left;
+        border: 1px solid #CCCCCC;
+        padding: 2px;
+        height: 60px;
+        width: 60px;
+    }
+
+    #portrait #olnks em {
+        color: #000000;
+        font-style: normal;
+        font-weight: bold;
+    }
+
+    #portrait #olnks ul {
+        font-size: 10pt;
+        line-height: 20px;
+        margin-top: 2px;
+    }
+
+    #portrait #olnks ul li {
+        float: left;
+        padding-left: 5px;
+        width: 70px;
+    }
+
+    #portrait #olnks ul li a:hover {
+        color: #AA0000;
+    }
+
+    div .ui-widget {
+        margin: 5px;
+    }
+
+    div .ui-widget-header {
+        margin: 2px;
+    }
+
+    div .portlet-content {
+        margin: 2px;
+    }
+
+    .ui-icon {
+        float: right;
+    }
+</style>
+<div id="user-profile">
+    <div id="lspace">
+        <div id="portrait">
+            <div id="portrait-img"><img title="潘影" alt="潘影" src="./my.action_files/my.action"></div>
+            <div id="olnks">
+                <em>潘影</em>
+                <ul>
+                    <li><a href="http://eams.uestc.edu.cn/eams/security/my!edit.action"
+                           onclick="return bg.Go(this,&#39;user-info&#39;)">修改密码</a></li>
+
+                    <li><a href="http://eams.uestc.edu.cn/eams/logout.action" target="_self">退出系统</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="ui-widget ui-widget-content ui-helper-clearfix ui-corner-all">
+            <div class="ui-widget-header ui-corner-all"><span class="title">在线信息</span>
+            </div>
+            <div class="portlet-content">
+                <div class="grid">
+
+
+                    <table id="grid15673611451" class="gridtable">
+                        <thead class="gridhead">
+
+
+                        <tr>
+                            <th width="35%">登录时间</th>
+                            <th width="30%">在线时长</th>
+                            <th width="35%">IP地址</th>
+                        </tr>
+
+                        </thead>
+
+                        <tbody id="grid15673611451_data">
+                        <tr class="griddata-even      ">
+                            <td><span title="过期">07-10 20:28</span></td>
+                            <td>26.96分</td>
+                            <td><span title="学生 Chrome 114.0.0.0/Windows ">222.197.164.147</span></td>
+                        </tr>
+                        <tr class="griddata-odd ">
+                            <td><span title="过期">07-10 20:55</span></td>
+                            <td>14.58分</td>
+                            <td><span title="学生 Chrome 114.0.0.0/Windows ">222.197.164.147</span></td>
+                        </tr>
+                        <tr class="griddata-even  ">
+                            <td><span title="在线">07-10 21:28</span></td>
+                            <td>0分</td>
+                            <td><span title="学生 Chrome 114.0.0.0/Windows ">222.197.164.147</span></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+        <div class="ui-widget ui-widget-content ui-helper-clearfix ui-corner-all">
+            <div class="ui-widget-header ui-corner-all"><span class="title">角色信息</span></div>
+            <div class="portlet-content">
+                <div class="grid">
+
+
+                    <table id="grid15673611452" class="gridtable">
+                        <thead class="gridhead">
+
+
+                        <tr>
+                            <th width="49%">角色信息</th>
+                            <th width="17%">成员</th>
+                            <th width="17%">授权</th>
+                            <th width="17%">管理</th>
+                        </tr>
+
+                        </thead>
+
+                        <tbody id="grid15673611452_data">
+                        <tr class="griddata-even">
+                            <td><span title="加入时间：2022-08-13 09:08">学生</span></td>
+                            <td><img src="./images/activate.png"></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div id="mspace">
+        <div id="user-info" class="ajax_container">
+            <div class="ui-widget ui-widget-content ui-helper-clearfix ui-corner-all">
+                <div class="ui-widget-header ui-corner-all"><span class="title">基本信息</span>
+
+                </div>
+                <div class="portlet-content">
+                    <table class="infoTable">
+                        <tbody>
+                        <tr>
+                            <td class="title" width="20%">&nbsp;名称:</td>
+                            <td class="content" width="30%"> 2022020914030</td>
+                            <td class="title" width="20%">&nbsp;姓名:</td>
+                            <td class="content" width="30%">潘影</td>
+                        </tr>
+                        <tr>
+                            <td class="title">&nbsp;电子邮件:</td>
+                            <td class="content"></td>
+                            <td class="title">&nbsp;创建时间:</td>
+                            <td class="content">2022-08-13</td>
+                        </tr>
+                        <tr>
+                            <td class="title">&nbsp;状态:</td>
+                            <td class="content">
+                                激活
+                            </td>
+                            <td class="title">&nbsp;修改时间:</td>
+                            <td class="content">2022-08-13</td>
+                        </tr>
+                        <tr>
+                            <td class="title">&nbsp;有效期限:</td>
+                            <td class="content">2022-08-13～</td>
+                            <td class="title">&nbsp;密码过期:</td>
+                            <td class="content">永不过期</td>
+                        </tr>
+                        <tr>
+                            <td class="title">&nbsp;备注:</td>
+                            <td class="content"></td>
+                            <td class="title">&nbsp;创建人:</td>
+                            <td class="content">Uestc_admin</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="ui-widget ui-widget-content ui-helper-clearfix ui-corner-all">
+            <div class="ui-widget-header ui-corner-all"><span class="title">菜单权限</span></div>
+            <div class="portlet-content  grid">
+                <table width="100%" class="gridtable">
+                    <tbody>
+                    <tr class="gridhead">
+                        <th width="40%">代码 名称</th>
+                        <th width="60%">可用资源</th>
+                    </tr>
+
+                    <tr class="griddata-even">
+                        <td align="left" title="学生 ">
+                            &nbsp;&nbsp;<em>1 我的信息
+                        </em>
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                    <tr class="griddata-odd">
+                        <td align="left" title="学生 ">
+                            &nbsp;&nbsp;&nbsp;&nbsp;1.1 我的注册
+
+                        </td>
+                        <td>
+                            注册申请
+                        </td>
+                    </tr>
+                    <tr class="griddata-even">
+                        <td align="left" title="学生 ">
+                            &nbsp;&nbsp;&nbsp;&nbsp;1.3 个人联系信息维护
+
+                        </td>
+                        <td>
+                            个人联系信息维护
+                        </td>
+                    </tr>
+                    <tr class="griddata-odd">
+                        <td align="left" title="学生 ">
+                            &nbsp;&nbsp;&nbsp;&nbsp;1.4 我的学籍
+
+                        </td>
+                        <td>
+                            /stdDetail
+                        </td>
+                    </tr>
+                    <tr class="griddata-even">
+                        <td align="left" title="学生 ">
+                            &nbsp;&nbsp;&nbsp;&nbsp;1.6 我的缴费信息
+
+                        </td>
+                        <td>
+                            我的缴费信息
+                        </td>
+                    </tr>
+                    <tr class="griddata-odd">
+                        <td align="left" title="学生 ">
+                            &nbsp;&nbsp;<em>2 课程管理
+                        </em>
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                    <tr class="griddata-even">
+                        <td align="left" title="学生 ">
+                            &nbsp;&nbsp;&nbsp;&nbsp;2.01 我的计划
+
+                        </td>
+                        <td>
+                            我的计划&nbsp;
+                            培养计划查询
+                        </td>
+                    </tr>
+                    <tr class="griddata-odd">
+                        <td align="left" title="学生 ">
+                            &nbsp;&nbsp;&nbsp;&nbsp;2.02 计划完成情况
+
+                        </td>
+                        <td>
+                            计划完成情况
+                        </td>
+                    </tr>
+                    <tr class="griddata-even">
+                        <td align="left" title="学生 ">
+                            &nbsp;&nbsp;&nbsp;&nbsp;2.03 学生替代课程申请
+
+                        </td>
+                        <td>
+                            学生替代课程申请
+                        </td>
+                    </tr>
+                    <tr class="griddata-odd">
+                        <td align="left" title="学生 ">
+                            &nbsp;&nbsp;&nbsp;&nbsp;2.06 全校开课查询
+
+                        </td>
+                        <td>
+                            公共开课查询
+                        </td>
+                    </tr>
+                    <tr class="griddata-even">
+                        <td align="left" title="学生 ">
+                            &nbsp;&nbsp;&nbsp;&nbsp;2.07 学分认定申请
+
+                        </td>
+                        <td>
+                            学生申请成绩的课程类别转换
+                        </td>
+                    </tr>
+                    <tr class="griddata-odd">
+                        <td align="left" title="学生 ">
+                            &nbsp;&nbsp;&nbsp;&nbsp;2.08 选 课
+
+                        </td>
+                        <td>
+                            选课&nbsp;
+                            按计划选课&nbsp;
+                            学生货币选课&nbsp;
+                            选课任务详细信息&nbsp;
+                            跨专业选课
+                        </td>
+                    </tr>
+                    <tr class="griddata-even">
+                        <td align="left" title="学生 ">
+                            &nbsp;&nbsp;&nbsp;&nbsp;2.09 我的选课日志
+
+                        </td>
+                        <td>
+                            选课日志(学生)
+                        </td>
+                    </tr>
+                    <tr class="griddata-odd">
+                        <td align="left" title="学生 ">
+                            &nbsp;&nbsp;&nbsp;&nbsp;2.10 我的课表
+
+                        </td>
+                        <td>
+                            学生课表
+                        </td>
+                    </tr>
+                    <tr class="griddata-even">
+                        <td align="left" title="学生 ">
+                            &nbsp;&nbsp;&nbsp;&nbsp;2.11 平时成绩查询
+
+                        </td>
+                        <td>
+                            学生平时成绩
+                        </td>
+                    </tr>
+                    <tr class="griddata-odd">
+                        <td align="left" title="学生 ">
+                            &nbsp;&nbsp;&nbsp;&nbsp;2.12 我的成绩
+
+                        </td>
+                        <td>
+                            我的成绩&nbsp;
+                            学生打印成绩单
+                        </td>
+                    </tr>
+                    <tr class="griddata-even">
+                        <td align="left" title="学生 ">
+                            &nbsp;&nbsp;&nbsp;&nbsp;2.13 成绩打印
+
+                        </td>
+                        <td>
+                            成绩打印(学生端)
+                        </td>
+                    </tr>
+                    <tr class="griddata-odd">
+                        <td align="left" title="学生 ">
+                            &nbsp;&nbsp;&nbsp;&nbsp;2.14 阶段课成绩查询
+
+                        </td>
+                        <td>
+                            阶段课成绩查询
+                        </td>
+                    </tr>
+                    <tr class="griddata-even">
+                        <td align="left" title="学生 ">
+                            &nbsp;&nbsp;&nbsp;&nbsp;2.15 已修学分统计
+
+                        </td>
+                        <td>
+                            我的成绩单
+                        </td>
+                    </tr>
+                    <tr class="griddata-odd">
+                        <td align="left" title="学生 ">
+                            &nbsp;&nbsp;&nbsp;&nbsp;2.19 转专业-报名申请
+
+                        </td>
+                        <td>
+                            学生转专业申请
+                        </td>
+                    </tr>
+                    <tr class="griddata-even">
+                        <td align="left" title="学生 ">
+                            &nbsp;&nbsp;&nbsp;&nbsp;2.20 专业确认报名
+
+                        </td>
+                        <td>
+                            大类分流报名
+                        </td>
+                    </tr>
+                    <tr class="griddata-odd">
+                        <td align="left" title="学生 ">
+                            &nbsp;&nbsp;&nbsp;&nbsp;2.23 我的考试
+
+                        </td>
+                        <td>
+                            我的考试
+                        </td>
+                    </tr>
+                    <tr class="griddata-even">
+                        <td align="left" title="学生 ">
+                            &nbsp;&nbsp;&nbsp;&nbsp;2.29 缓考申请
+
+                        </td>
+                        <td>
+                            缓考申请
+                        </td>
+                    </tr>
+                    <tr class="griddata-odd">
+                        <td align="left" title="学生 ">
+                            &nbsp;&nbsp;&nbsp;&nbsp;2.30 学生评教
+
+                        </td>
+                        <td>
+                            学生评教
+                        </td>
+                    </tr>
+                    <tr class="griddata-even">
+                        <td align="left" title="学生 ">
+                            &nbsp;&nbsp;&nbsp;&nbsp;2.31 教材订购登记
+
+                        </td>
+                        <td>
+                            学生-订购教材
+                        </td>
+                    </tr>
+                    <tr class="griddata-odd">
+                        <td align="left" title="学生 ">
+                            &nbsp;&nbsp;<em>3 我的重修
+                        </em>
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                    <tr class="griddata-even">
+                        <td align="left" title="学生 ">
+                            &nbsp;&nbsp;&nbsp;&nbsp;3.1 重修报名申请
+
+                        </td>
+                        <td>
+                            重修报名申请
+                        </td>
+                    </tr>
+                    <tr class="griddata-odd">
+                        <td align="left" title="学生 ">
+                            &nbsp;&nbsp;&nbsp;&nbsp;3.2 重修选课缴费
+
+                        </td>
+                        <td>
+                            我的重修申请
+                        </td>
+                    </tr>
+                    <tr class="griddata-even">
+                        <td align="left" title="学生 ">
+                            &nbsp;&nbsp;&nbsp;&nbsp;3.3 我的重修课表
+
+                        </td>
+                        <td>
+                            我的重修课表
+                        </td>
+                    </tr>
+                    <tr class="griddata-odd">
+                        <td align="left" title="学生 ">
+                            &nbsp;&nbsp;&nbsp;&nbsp;3.4 重修报名申请日志查询
+
+                        </td>
+                        <td>
+                            重修报名申请查询
+                        </td>
+                    </tr>
+                    <tr class="griddata-even">
+                        <td align="left" title="学生 ">
+                            &nbsp;&nbsp;<em>7 辅修与双学位
+                        </em>
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                    <tr class="griddata-odd">
+                        <td align="left" title="学生 ">
+                            &nbsp;&nbsp;&nbsp;&nbsp;7.1 报名
+
+                        </td>
+                        <td>
+                            学生辅修报名
+                        </td>
+                    </tr>
+                    <tr class="griddata-even">
+                        <td align="left" title="学生 ">
+                            &nbsp;&nbsp;&nbsp;&nbsp;7.2 选课与缴费
+
+                        </td>
+                        <td>
+                            双学士与辅修选课缴费
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div id="rspace">
+
+        <div class="ui-widget ui-widget-content ui-helper-clearfix ui-corner-all">
+            <div class="ui-widget-header ui-corner-all"><span class="title">默认数据权限</span></div>
+            <div class="portlet-content">
+                没有设置
+            </div>
+        </div>
+        <div class="ui-widget ui-widget-content ui-helper-clearfix ui-corner-all">
+            <div class="ui-widget-header ui-corner-all"><span class="title">最近的历史登录信息</span></div>
+            <div class="portlet-content">
+
+                <div class="grid">
+
+
+                    <table id="grid15673611453" class="gridtable" fixpagesize="1">
+                        <thead class="gridhead">
+
+
+                        <tr>
+                            <th width="15%">登录时间</th>
+                            <th width="10%">在线时长</th>
+                            <th width="10%">IP</th>
+                        </tr>
+
+                        </thead>
+
+                        <tbody id="grid15673611453_data">
+                        <tr class="griddata-even">
+                            <td><span title="退出时间:23-07-10 19:52">23-07-10 19:26</span></td>
+                            <td><span title="">26分7秒</span></td>
+                            <td>222.197.164.147</td>
+                        </tr>
+                        <tr class="griddata-odd">
+                            <td><span title="退出时间:23-07-10 19:26">23-07-10 19:21</span></td>
+                            <td><span title="">4分41秒</span></td>
+                            <td>222.197.164.147</td>
+                        </tr>
+                        <tr class="griddata-even griddata-over">
+                            <td><span title="退出时间:23-07-10 19:21">23-07-10 18:47</span></td>
+                            <td><span title="">33分39秒</span></td>
+                            <td>222.197.164.147</td>
+                        </tr>
+                        <tr class="griddata-odd  ">
+                            <td><span title="退出时间:23-07-10 18:47">23-07-10 18:43</span></td>
+                            <td><span title="">4分1秒</span></td>
+                            <td>222.197.164.147</td>
+                        </tr>
+                        <tr class="griddata-even    ">
+                            <td><span title="退出时间:23-07-10 18:43">23-07-10 18:42</span></td>
+                            <td><span title="">1分35秒</span></td>
+                            <td>222.197.164.147</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="cboxOverlay" style="display: none;"></div>
+<div id="colorbox" class="" role="dialog" tabindex="-1" style="display: none;">
+    <div id="cboxWrapper">
+        <div>
+            <div id="cboxTopLeft" style="float: left;"></div>
+            <div id="cboxTopCenter" style="float: left;"></div>
+            <div id="cboxTopRight" style="float: left;"></div>
+        </div>
+        <div style="clear: left;">
+            <div id="cboxMiddleLeft" style="float: left;"></div>
+            <div id="cboxContent" style="float: left;">
+                <div id="cboxTitle" style="float: left;"></div>
+                <div id="cboxCurrent" style="float: left;"></div>
+                <button type="button" id="cboxPrevious"></button>
+                <button type="button" id="cboxNext"></button>
+                <button id="cboxSlideshow"></button>
+                <div id="cboxLoadingOverlay" style="float: left;"></div>
+                <div id="cboxLoadingGraphic" style="float: left;"></div>
+            </div>
+            <div id="cboxMiddleRight" style="float: left;"></div>
+        </div>
+        <div style="clear: left;">
+            <div id="cboxBottomLeft" style="float: left;"></div>
+            <div id="cboxBottomCenter" style="float: left;"></div>
+            <div id="cboxBottomRight" style="float: left;"></div>
+        </div>
+    </div>
+    <div style="position: absolute; width: 9999px; visibility: hidden; display: none; max-width: none;"></div>
+</div>
+<div id="_my97DP" style="position: absolute; top: -1970px; left: -1970px;">
+    <iframe style="width: 186px; height: 197px;" src="./my.action_files/My97DatePicker.html" frameborder="0" border="0"
+            scrolling="no"></iframe>
+</div>
+</body>
+</html>

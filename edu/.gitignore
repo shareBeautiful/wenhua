@@ -1,0 +1,12 @@
+/node_modules/
+/.idea/
+/.vscode/
+/audio/
+/video/
+/public/
+/github.7z
+/gitbit.7z
+*.zip
+*.7z
+**/node_modules/
+**/images/猫砍大画/
