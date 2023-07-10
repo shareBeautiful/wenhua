@@ -2,17 +2,12 @@
 <head>
     <link href="css/WdatePicker.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" type="text/css" href="./css/semesterCalendar.css">
+    <link href="css/WdatePicker.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="css/jquery-ui.css" type="text/css">
-    <link href="css2/beangle-ui,colorbox,chosen.css" rel="stylesheet"
+    <link href="css/beangle-ui,colorbox,chosen.css" rel="stylesheet"
           type="text/css">
     <link href="css/homePage.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" type="text/css" href="css/semesterCalendar.css">
 </head>
-<style>
-    #grid8562813191 td {
-        font-size: 13px;
-    }
-</style>
 <body>
 <div id="Nav_bar">
     <div class="top_box">
@@ -71,53 +66,70 @@
         <div class="BlankLine1"></div>
         <div id="main" class="ajax_container">
             <div id="allSemesterScoreForm" class="ajax_container">
-                <div id="toolbar879363751" class="toolbar notprint">
+                <title></title>
+                <meta http-equiv="content-type" content="text/html;charset=utf-8">
+                <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                <meta http-equiv="pragma" content="no-cache">
+                <meta http-equiv="cache-control" content="no-cache">
+                <meta http-equiv="expires" content="0">
+                <meta http-equiv="content-style-type" content="text/css">
+                <meta http-equiv="content-script-type" content="text/javascript">
+
+                <link id="jquery_theme_link" rel="stylesheet" href="css/jquery-ui.css?s2j=3.4.19"
+                      type="text/css">
+                <link id="beangle_theme_link" href="css/beangle-ui,colorbox,chosen.css" rel="stylesheet"
+                      type="text/css">
+
+
+                <div id="toolbar13572391471" class="toolbar notprint">
                     <div class="toolbar-title"><span class="toolbar-icon action-info"></span><strong>我的成绩</strong>
                     </div>
-                    <div class="toolbar-items" id="toolbar879363751_items">
-                        <div class="toolbar-item-ge0 toolbar-item" title="所有学期成绩"><span
+                    <div class="toolbar-items" id="toolbar13572391471_items">
+                        <div class="toolbar-item toolbar-item-ge0" title="所有学期成绩"><span
                                 class="toolbar-icon action-default"></span>所有学期成绩
                         </div>
                     </div>
-                    <div class="toolbar-msg" id="toolbar879363751_msg" style="display: none;"></div>
+                    <div class="toolbar-msg" id="toolbar13572391471_msg" style="display: none;"></div>
                     <div class="toolbar-line"><img height="1" width="100%" align="top"
-                                                   src="images/keyline.png">
-                    </div>
+                                                   src="./images/keyline.png"></div>
                 </div>
-                <div style="background: url('\images/semesterBarBg.png') repeat-x scroll 50% 50% #DEEDF7;border: 1px solid #AED0EA;color: #222222;font-weight: bold;height:28px;">
 
+                <div style="background: url('images/semesterBarBg.png') repeat-x scroll 50% 50% #DEEDF7;border: 1px solid #AED0EA;color: #222222;font-weight: bold;height:28px;">
                     <form id="semesterForm" name="semesterForm" action="/eams/teach/grade/course/person.action"
-                          method="post" target="">
+                          method="post"
+                          target="">
 
                         <div style="margin-left:4px;margin-top:2px;float:left;line-height:22px;height:22px;">
 
                         </div>
                         <div style="margin-left:10px;margin-top:2px;float:left;line-height:18px;height:22px;">
-                            <label for="semesterBar879363751" style="display: none;">项目:</label>
-                            <select id="semesterBar879363751" name="project.id" style="display: none;">
+                            <label for="semesterBar13572391471" style="display: none;">项目:</label>
+                            <select id="semesterBar13572391471" name="project.id" style="display: none;">
                                 <option value="1" selected="">本科</option>
                             </select>
                             <input type="hidden" name="isEng" id="isEng" value="0">
-                            <label for="semesterBar879363751Semester" class="title">学年学期:</label>
-                            <input id="semesterBar879363751Semester" class="calendar-text calendar-text-state-default"
-                                   title="学年学期" type="text" value="2022-2023学年2学期" readonly="true">
-                            <div class="calendar-bar" tabindex="-1">
+                            <label for="semesterBar13572391471Semester" class="title">学年学期:</label>
+                            <input id="semesterBar13572391471Semester" class="calendar-text calendar-text-state-default"
+                                   title="学年学期" type="text" value="2022-2023学年2期" readonly="true">
+                            <div class="calendar-bar" style="display: none" tabindex="-1">
                                 <input id="semesterCalendar_target" type="hidden" name="semester.id" value="383">
                                 <a name="prev" href="javascript:void(0)" style="display:none"><img
-                                        src="/eams/static/themes/default/images/semesterCalendar_prev.gif"></a>
+                                        src="./images/semesterCalendar_prev.gif"></a>
                                 <input id="semesterCalendar_year" class="calendar-bar-input" type="text" index="6"
-                                       value="" maxlength="4" size="4" readonly="true" style="display:none"><span
+                                       value=""
+                                       maxlength="4" size="4" readonly="true" style="display:none"><span
                                     style="display:none">学年</span>
                                 <a name="next" href="javascript:void(0)" style="display:none"><img
-                                        src="/eams/static/themes/default/images/semesterCalendar_next.gif"></a>
+                                        src="./images/semesterCalendar_next.gif"></a>
 
                                 <a name="prev" href="javascript:void(0)" style="display:none"><img
-                                        src="/eams/static/themes/default/images/semesterCalendar_prev.gif"></a>
+                                        src="./images/semesterCalendar_prev.gif"></a>
                                 <input id="semesterCalendar_term" class="calendar-bar-input" type="text" index="1"
-                                       value="" size="4" readonly="true" style="display:none"><span
-                                    style="display:none">学期</span>
+                                       value=""
+                                       size="4"
+                                       readonly="true" style="display:none"><span style="display:none">学期</span>
                                 <a name="next" href="javascript:void(0)" style="display:none"><img
-                                        src="/eams/static/themes/default/images/semesterCalendar_next.gif"></a>
+                                        src="./images/semesterCalendar_next.gif"></a>
                                 <a href="javascript:void(0)" id="allSemester" style="display:none"></a>
 
                                 <table id="semesterCalendar_yearTb" class="semesterCalendar_yearTb"
@@ -158,67 +170,10 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <script type="text/javascript">
-                                if (jQuery.struts2_jquery.scriptCache["/scripts/semesterCalendar.js?s2j=" + jQuery.struts2_jquery.version]) {
-                                    jQuery("#semesterBar879363751Semester").semesterCalendar({
-                                        empty: "false",
-                                        onChange: "",
-                                        value: "383"
-                                    }, "");
-                                } else {
-                                    jQuery.struts2_jquery.require("/scripts/semesterCalendar.js", function () {
-                                        jQuery("#semesterBar879363751Semester").semesterCalendar({
-                                            empty: "false",
-                                            onChange: "",
-                                            value: "383"
-                                        }, "");
-                                    }, '/eams/static');
-                                }
 
-                            </script>
-                            <script type="text/javascript">
-                                jQuery("#semesterBar879363751").val(jQuery.post("/eams/dataQuery.action", {dataType: "projectId"}));
-                                jQuery("#semesterBar879363751").hide();
-                                jQuery("#semesterBar879363751").prev().hide();
-                                var semesterBar879363751res = jQuery.post("/eams/dataQuery.action", {entityId: ""}, function () {
-                                    if (semesterBar879363751res.status == 200) {
-                                        jQuery("#semesterBar879363751").empty();
-                                        if (semesterBar879363751res.responseText != "") {
-                                            jQuery("#semesterBar879363751").append(semesterBar879363751res.responseText);
-                                        }
-                                    }
-                                }, "text");
-                                jQuery("#semesterBar879363751").change(function () {
-                                    jQuery.post("/eams/dataQuery!changeProjectId.action", {projectId: this.value}, function () {
-                                        jQuery("#semesterBar879363751Semester")[0].getSemesters(jQuery("#semesterBar879363751Semester"), {
-                                            empty: "false",
-                                            value: "383"
-                                        });
-                                    }, "text");
-                                });
-                            </script>
+
                             <input type="submit" value="切换学期"
-                                   onclick="bg.form.submit('semesterForm',null,null,null);time(this, '切换学期');return false;">
-
-                            <script type="text/javascript">
-                                var wait = 3;
-
-                                function time(o, title) {
-                                    if (wait == 0) {
-                                        o.disabled = false;
-                                        o.value = title;
-                                        wait = 3;
-                                    } else {
-                                        o.disabled = true;
-                                        o.value = title + wait + "秒";
-                                        wait--;
-                                        setTimeout(function () {
-                                            time(o, title)
-                                        }, 1000);
-                                    }
-                                }
-
-                            </script>
+                                   onclick="return false;">
                         </div>
 
                     </form>
@@ -227,7 +182,7 @@
                     <div class="grid">
 
 
-                        <table id="grid8562813191" class="gridtable">
+                        <table id="grid17711719231" class="gridtable">
                             <thead class="gridhead">
 
 
@@ -246,8 +201,8 @@
 
                             </thead>
 
-                            <tbody id="grid8562813191_data">
-                            <tr class="griddata-even                         ">
+                            <tbody id="grid17711719231_data">
+                            <tr class="griddata-even   ">
                                 <td>2022-2023 2</td>
                                 <td>I0216010</td>
                                 <td>I0216010.01</td>
@@ -265,25 +220,25 @@
                                 <td> 4
                                 </td>
                             </tr>
-                            <tr class="griddata-odd                              ">
+                            <tr class="griddata-odd    ">
                                 <td>2022-2023 2</td>
                                 <td>S0212110</td>
                                 <td>S0212110.05</td>
                                 <td>电路实验 I</td>
                                 <td>学院要求课</td>
                                 <td>1</td>
-                                <td style=""> 88
+                                <td style=""> 63
 
                                 </td>
                                 <td style="">--
                                 </td>
-                                <td style=""> 88
+                                <td style=""> 63
 
                                 </td>
-                                <td> 4
+                                <td> 1.8
                                 </td>
                             </tr>
-                            <tr class="griddata-even                                   ">
+                            <tr class="griddata-even      ">
                                 <td>2022-2023 2</td>
                                 <td>U0201010</td>
                                 <td>U0201010.02</td>
@@ -301,7 +256,7 @@
                                 <td> 4
                                 </td>
                             </tr>
-                            <tr class="griddata-odd                                    ">
+                            <tr class="griddata-odd        ">
                                 <td>2022-2023 2</td>
                                 <td>U0200910</td>
                                 <td>U0200910.02</td>
@@ -319,7 +274,7 @@
                                 <td> 3.5
                                 </td>
                             </tr>
-                            <tr class="griddata-even                           ">
+                            <tr class="griddata-even       ">
                                 <td>2022-2023 2</td>
                                 <td>B2005310</td>
                                 <td>B2005310.02</td>
@@ -337,7 +292,7 @@
                                 <td> 2.9
                                 </td>
                             </tr>
-                            <tr class="griddata-odd                      ">
+                            <tr class="griddata-odd      ">
                                 <td>2022-2023 2</td>
                                 <td>M1739420</td>
                                 <td>M1739420.04</td>
@@ -355,7 +310,7 @@
                                 <td> 3
                                 </td>
                             </tr>
-                            <tr class="griddata-even                       ">
+                            <tr class="griddata-even">
                                 <td>2022-2023 2</td>
                                 <td>A6205420</td>
                                 <td></td>
@@ -373,75 +328,49 @@
                                 <td> 4
                                 </td>
                             </tr>
-                            <tr class="griddata-odd                  ">
+                            <tr class="griddata-odd  ">
                                 <td>2022-2023 2</td>
                                 <td>R0212450</td>
                                 <td>R0212450.14</td>
                                 <td>电路分析与电子线路</td>
                                 <td>学院要求课</td>
                                 <td>5</td>
-                                <td style=""> 86
+                                <td style=""> 45
+                                    (缓考)
                                 </td>
                                 <td style="">--
                                 </td>
-                                <td style="color:red"> 86
+                                <td style="color:red"> 45
 
                                 </td>
-                                <td> 4
+                                <td> 0
                                 </td>
                             </tr>
-                            <tr class="griddata-even                   ">
+                            <tr class="griddata-even">
                                 <td>2022-2023 2</td>
                                 <td>D1100250</td>
                                 <td>D1100250.23</td>
                                 <td>微积分II</td>
                                 <td>数学与自然科学基础课</td>
                                 <td>5</td>
-                                <td style=""> 82
+                                <td style=""> 49
 
                                 </td>
                                 <td style="">--
                                 </td>
-                                <td style="color:red"> 82
+                                <td style="color:red"> 49
 
                                 </td>
-                                <td> 3.7
+                                <td> 0
                                 </td>
                             </tr>
                             </tbody>
                         </table>
                     </div>
-                    <script type="text/javascript">
-                        var clearCheckbox_grid8562813191 = function () {
-                            jQuery("#grid8562813191").find(".box:checkbox").removeProp("checked");
-                            jQuery("#grid8562813191").find(".gridselect-top :checkbox").removeProp("checked");
-                            return true;
-                        }
 
-                        page_grid8562813191 = bg.page("/eams/teach/grade/course/person!search.action", "");
-                        {
-                            var _paramstring = 'semesterId=383&projectType=&_=1688989305798';
-                            var _params = _paramstring.split('&');
-                            for (var i = 0; i < _params.length; i++) {
-                                _params[i] = decodeURIComponent(_params[i]);
-                            }
-                            _paramstring = _params.join('&');
-                            page_grid8562813191.target("", 'grid8562813191').action("/eams/teach/grade/course/person!search.action").addParams(_paramstring).orderBy("null");
-                        }
-                        bg.ui.grid.init('grid8562813191', page_grid8562813191);
-                    </script>
                 </div>
-                <script>bg.ready(function () {
-                    bg.Go('/eams/teach/grade/course/person!search.action?semesterId=383&projectType=', 'semesterGrade')
-                });</script>
 
-                <form id="allSemesterForm" name="allSemesterForm" action="/eams/teach/grade/course/person.action"
-                      method="post" target="semesterGrade">
-
-
-                </form>
             </div>
-
         </div>
     </div>
 </div>
