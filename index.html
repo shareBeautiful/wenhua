@@ -18,83 +18,86 @@
 </head>
 
 <body>
-    <div id="app" v-cloak :class="{dark: isDark}">
-        <div class="bg-img" v-if="!isDark" :style="bgImg" @click="switchShow">
-            <div class="bg-mask" v-show="!bgImg['z-index']"></div>
-            <div class="bg-f bg-l" @click.stop="switchBg('l')"></div>
-            <div class="bg-f bg-r" @click.stop="switchBg('r')"></div>
-            <div class="bg-num">{{bgNum}}</div>
-        </div>
-        <div class="input-group" id="search">
-            <input type="search" class="form-control search" @input="search" v-model="keyword" placeholder="搜索...">
-            <div class="del" @click="del()" v-show="keyword.length">×</div>
-        </div>
-        <!-- 内容列表 -->
-        <div class="list-box">
-            <!-- 最近查看的的 -->
-            <div class="panel panel-default" v-if="lookInfo.list.length && !Boolean(this.keyword)">
-                <div class="panel-heading" @click="openMenu(lookInfo)">
-                    <div class="title">
-                        {{lookInfo.tit}}
-                        <span class="num">({{lookInfo.list.length}})</span>
+    <div id="body">
+        <div id="app" v-cloak :class="{dark: isDark}">
+            <div class="bg-img" v-if="!isDark" :style="bgImg" @click="switchShow">
+                <div class="bg-mask" v-show="!bgImg['z-index']"></div>
+                <div class="bg-f bg-l" @click.stop="switchBg('l')"></div>
+                <div class="bg-f bg-r" @click.stop="switchBg('r')"></div>
+                <div class="bg-num">{{bgNum}}</div>
+            </div>
+            <div class="input-group" id="search">
+                <input type="search" class="form-control search" @input="search" v-model="keyword" placeholder="搜索...">
+                <div class="del" @click="del()" v-show="keyword.length">×</div>
+            </div>
+            <!-- 内容列表 -->
+            <div class="list-box">
+                <!-- 最近查看的的 -->
+                <div class="panel panel-default" v-if="lookInfo.list.length && !Boolean(this.keyword)">
+                    <div class="panel-heading" @click="openMenu(lookInfo)">
+                        <div class="title">
+                            {{lookInfo.tit}}
+                            <span class="num">({{lookInfo.list.length}})</span>
+                        </div>
+                        <div class="icon">{{lookInfo.open? '关闭' : '展开'}}</div>
                     </div>
-                    <div class="icon">{{lookInfo.open? '关闭' : '展开'}}</div>
+                    <div class="panel-body" v-if="lookInfo.list.length" v-show="lookInfo.open">
+                        <div class="list-group panel-success">
+                            <template v-for="(item,idx) in lookInfo.list" :key="idx">
+                                <div href="" @click.stop="saveLook2(item,idx)" target="_blank" class="list-group-item">
+                                    <span class="l">{{idx+1}}. {{sliceStr(item.tit)}}
+                                        <span v-if="item.pwd" class="pwd-icon">*</span>
+                                    </span>
+                                    <span class="r">{{item.parent}} <span style="padding-left: 20px;color: #a00 !important"
+                                            @click.stop=delLookInfo(idx)>删除</span></span>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
                 </div>
-                <div class="panel-body" v-if="lookInfo.list.length" v-show="lookInfo.open">
-                    <div class="list-group panel-success">
-                        <template v-for="(item,idx) in lookInfo.list" :key="idx">
-                            <div href="" @click.stop="saveLook2(item,idx)" target="_blank" class="list-group-item">
-                                <span class="l">{{idx+1}}. {{sliceStr(item.tit)}}
-                                    <span v-if="item.pwd" class="pwd-icon">*</span>
-                                </span>
-                                <span class="r">{{item.parent}} <span style="padding-left: 20px;color: #a00 !important"
-                                        @click.stop=delLookInfo(idx)>删除</span></span>
-                            </div>
-                        </template>
+                <!-- 所有 -->
+                <div class="panel panel-default" :key="idxA" v-for="(itemA,idxA) in subList" v-if="!itemA.hide">
+                    <div class="panel-heading" @click="openMenu(itemA)" :class="{'sticky': itemA.open}">
+                        <div class="title">
+                            {{itemA.tit}}
+                            <span class="num">({{itemA.list.length}})</span>
+                            <span v-if="itemA.pwd" class="pwd-icon">*</span>
+                        </div>
+                        <div class="icon">{{itemA.open? '关闭' : '展开'}}</div>
+                    </div>
+                    <div class="panel-body" v-if="itemA.list.length" v-show="itemA.open">
+                        <div class="list-group panel-success">
+                            <!-- @click="clickItem(itemB, itemA)" -->
+                            <template v-for="(itemB,idxB) in itemA.list" :key="idxB">
+                                <a :href="itemB.href" @click="saveLook(itemA,itemB)" target="_blank"
+                                    class="list-group-item">
+                                    <span class="l">{{getOrder(idxB+1)}}. {{itemB.tit}}
+                                        <span v-if="itemB.pwd" class="pwd-icon">*</span>
+                                    </span>
+                                    <span class="r">{{itemB.parent}}</span>
+                                </a>
+                            </template>
+                        </div>
                     </div>
                 </div>
             </div>
-            <!-- 所有 -->
-            <div class="panel panel-default" :key="idxA" v-for="(itemA,idxA) in subList" v-if="!itemA.hide">
-                <div class="panel-heading" @click="openMenu(itemA)" :class="{'sticky': itemA.open}">
-                    <div class="title">
-                        {{itemA.tit}}
-                        <span class="num">({{itemA.list.length}})</span>
-                        <span v-if="itemA.pwd" class="pwd-icon">*</span>
-                    </div>
-                    <div class="icon">{{itemA.open? '关闭' : '展开'}}</div>
-                </div>
-                <div class="panel-body" v-if="itemA.list.length" v-show="itemA.open">
-                    <div class="list-group panel-success">
-                        <!-- @click="clickItem(itemB, itemA)" -->
-                        <template v-for="(itemB,idxB) in itemA.list" :key="idxB">
-                            <a :href="itemB.href" @click="saveLook(itemA,itemB)" target="_blank"
-                                class="list-group-item">
-                                <span class="l">{{getOrder(idxB+1)}}. {{itemB.tit}}
-                                    <span v-if="itemB.pwd" class="pwd-icon">*</span>
-                                </span>
-                                <span class="r">{{itemB.parent}}</span>
-                            </a>
-                        </template>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!--    密码框 -->
-        <div class="intro-box" v-show="showPwd" @click.self="close" @touchmove.self.prevent>
-            <div class="intro-wrap">
-                <div class="close" @click.self="close"></div>
-                <div class="intro">
-                    <div class="form-group">
-                        <label for="pwd">密码：</label>
-                        <input type="password" autofocus="autofocus" class="form-control" id="pwd"
-                            placeholder="Password">
+    
+            <!--    密码框 -->
+            <div class="intro-box" v-show="showPwd" @click.self="close" @touchmove.self.prevent>
+                <div class="intro-wrap">
+                    <div class="close" @click.self="close"></div>
+                    <div class="intro">
+                        <div class="form-group">
+                            <label for="pwd">密码：</label>
+                            <input type="password" autofocus="autofocus" class="form-control" id="pwd"
+                                placeholder="Password">
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    
 </body>
 <script src="js/comm.js"></script>
 <script>

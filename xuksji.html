@@ -224,7 +224,7 @@
                     // 过滤论语
                     
                     if (this.tagId == 1 || this.tagId == 2) {
-                        var re_ke = /(论语)|(孟子)/im
+                        var re_ke = /论语|孟子|老子|道德/im
                         this.list = res.filter(item => {
                             return re_ke.test(item.title);
                         });
