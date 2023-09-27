@@ -487,6 +487,9 @@
                             var html = res.match(re_all)[0]
                             var date = html.match(re_date)[0]
                             html = html.match(re_article)[0] // 正文
+                            if (html.indexOf('<img') !== -1) {
+                                html = html.replace(/(?<=<img.*?src=")(.*?)(?=")/img, this.apiUrl + '$1') // 给图片添加域名
+                            }
                             r({ html: html, date: date })
                         })
                     }

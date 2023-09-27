@@ -258,6 +258,7 @@ button.btn {
     font-size: 0;
     padding:0;
     margin: 0;
+    object-fit: contain;
 }
 
 .B1_text strong, .B1_text b {
@@ -289,7 +290,6 @@ button.btn {
 
 
 img {
-    max-width: 480px !important;
     width: 80% !important;
     height: auto !important;
     display: block !important;
