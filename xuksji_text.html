@@ -65,15 +65,15 @@
                         <span class="list-group-item fz book" :class="{active: item.id==theme}"
                             v-for="(item, index) in themeL" @click.stop="changeTheme(item)"
                             :key="item.id">{{item.n}}</span>
-                        <span class="list-group-item fz book" @click.stop="switchDark">
+                        <label class="list-group-item fz book" @click.stop="switchDark">
                             <i class="zhe"></i>
-                            <input class="switch" type="checkbox" v-model='isDark'>系统</span>
+                            <input class="switch" type="checkbox" v-model='isDark' />系统</label>
                     </div>
                     <div class="fx">
-                        <span @click.stop="switchPage" class="list-group-item fz book"><i class="zhe"></i><input
-                                class="switch" type="checkbox" v-model='isPage'>翻页</span>
-                        <span @click.stop="switchOrder" class="list-group-item fz book"><i class="zhe"></i><input
-                                class="switch" type="checkbox" v-model='isReverse'>倒序</span>
+                        <label @click.stop="switchPage" class="list-group-item fz book"><i class="zhe"></i><input
+                                class="switch" type="checkbox" v-model='isPage'>翻页</label>
+                        <label @click.stop="switchOrder" class="list-group-item fz book"><i class="zhe"></i><input
+                                class="switch" type="checkbox" v-model='isReverse'>倒序</label>
                         <span class="list-group-item fz book" v-if="len>5">共:{{len}}章</span>
                         <span class="list-group-item fz book" @click="getAllTotal">总: {{total('',allTotal)}}</span>
                     </div>
