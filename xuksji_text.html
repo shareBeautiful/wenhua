@@ -65,15 +65,15 @@
                         <span class="list-group-item fz book" :class="{active: item.id==theme}"
                             v-for="(item, index) in themeL" @click.stop="changeTheme(item)"
                             :key="item.id">{{item.n}}</span>
-                        <label class="list-group-item fz book" @click.stop="switchDark">
+                        <label class="list-group-item fz book">
                             <i class="zhe"></i>
-                            <input class="switch" type="checkbox" v-model='isDark' />系统</label>
+                            <input class="switch" type="checkbox" @change="switchDark" :checked="isDark" />系统</label>
                     </div>
                     <div class="fx">
-                        <label @click.stop="switchPage" class="list-group-item fz book"><i class="zhe"></i><input
-                                class="switch" type="checkbox" v-model='isPage'>翻页</label>
-                        <label @click.stop="switchOrder" class="list-group-item fz book"><i class="zhe"></i><input
-                                class="switch" type="checkbox" v-model='isReverse'>倒序</label>
+                        <label class="list-group-item fz book"><i class="zhe"></i><input class="switch" type="checkbox"
+                                @change="switchPage" :checked="isPage">翻页</label>
+                        <label class="list-group-item fz book"><i class="zhe"></i><input class="switch" type="checkbox"
+                                @change="switchOrder" :checked="isReverse">倒序</label>
                         <span class="list-group-item fz book" v-if="len>5">共:{{len}}章</span>
                         <span class="list-group-item fz book" @click="getAllTotal">总: {{total('',allTotal)}}</span>
                     </div>
@@ -164,6 +164,8 @@
     var that;
     var id = $echo.getParams('id');
     var key = $echo.getParams('key');
+    var tid = location.href.split('#')[1]
+    tid = tid? tid : null
     new Vue({
         el: '#app',
         data: {
@@ -255,8 +257,9 @@
                 // window.scrollTo(0, 0);
                 var mid = document.getElementById('m' + this.currItem.id);
                 var menu = document.getElementById('menu');
-                menu.scrollTop = mid.offsetTop - 240
+                menu.scrollTop = mid.offsetTop - 240;
             },
+
 
             // 裁剪标题
             subTit: function (title) {
@@ -417,9 +420,9 @@
                         this.showOpt = true;
                         this.getProcess(); // 计算进度条
                         this.savePos(); // 保存一次位置
-                        clearTimeout(this.dbTime); 
+                        clearTimeout(this.dbTime);
                         // 定时计算进度条
-                        this.dbTime = setInterval(()=> {
+                        this.dbTime = setInterval(() => {
                             this.getProcess();
                         }, 5000)
                     }, 220)
@@ -437,8 +440,8 @@
             toArticle: function (idx) {
                 window.scrollTo(0, 0); // 跳转到文章顶部
                 if (this.currIdx === idx) return false;
-                this.menuList.some((item)=>{
-                    if(item.idx === idx) this.currItem = item;
+                this.menuList.some((item) => {
+                    if (item.idx === idx) this.currItem = item;
                 })
                 this.currIdx = idx;
                 this.saveText();  // 保存本地
@@ -447,6 +450,16 @@
                     document.title = this.articleD.title;
                 } else {
                     this.getArticle(this.currItem);
+                }
+                this.setCurrentUrl(this.currItem.id)
+            },
+
+             // 设置当前url
+            setCurrentUrl(id) {
+                if (!!(window.history && history.pushState)) {
+                    // 支持History API
+                    var href = location.href.split('#')[0]
+                    history.replaceState(null, null, id? '#' + id : href)
                 }
             },
             // 下一章 // 上一章
@@ -488,7 +501,7 @@
                             var date = html.match(re_date)[0]
                             html = html.match(re_article)[0] // 正文
                             if (html.indexOf('<img') !== -1) {
-                                html = html.replace(/<img.*?src="(.*?".*?>)/img, '<img src="'+this.apiUrl + '$1') // 给图片添加域名
+                                html = html.replace(/<img.*?src="(.*?".*?>)/img, '<img src="' + this.apiUrl + '$1') // 给图片添加域名
                             }
                             r({ html: html, date: date })
                         })
@@ -578,7 +591,9 @@
             },
 
             savePos: function () {
-                this.xkj_text['tn' + id] = this.getProNum();
+                let tnid = this.getProNum()
+                if (this.xkj_text['tn' + id] == tnid) return false;
+                this.xkj_text['tn' + id] = tnid;
                 localStorage.setItem('xkj_text', JSON.stringify(this.xkj_text))
             },
 
@@ -624,11 +639,12 @@
                             res = res['data'];
                             var xkj_text = localStorage.getItem('xkj_text');
                             if (xkj_text) this.xkj_text = JSON.parse(xkj_text);
-
+                            let textId = this.xkj_text['t'+id];
+                            textId = textId? textId : tid
                             res.forEach((item, idx) => {
                                 item.title = item.title.replace(re, '');
                                 item.idx = idx;
-                                if (this.xkj_text['t' + id] == item.id) {
+                                if (textId == item.id) {
                                     idxs = idx;
                                 }
                             })
