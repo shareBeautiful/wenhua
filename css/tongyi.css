@@ -3,6 +3,8 @@ body {
     color: #323232;
     margin: 0;
     padding: 0;
+    word-wrap: break-word;
+    word-break: break-word;
 }
 
 div, p, ul, li, span, h1, dl, dd, dt {

@@ -4,12 +4,14 @@
 
 html {
     width: 100%;
-    height: 100%;
+    min-height: 100%;
     -webkit-user-select: none;
     background-color: #111;
-
+    word-wrap: break-word;
+    word-break: break-word;
 }
 body {
+    height: 100%;
     max-width: 960px;
     margin: 0 auto !important;
     /*background-image: url('images/bg.jpg');*/
@@ -130,7 +132,7 @@ body {
     z-index: 1;
 }
 .dark {
-    min-height: 100vh;
+    min-height: 100%;
     background-color: #222;
 }
 .dark .h,.dark .panel,.dark .form-control {

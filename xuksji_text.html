@@ -488,7 +488,7 @@
                             }
                             r({ html: html, date: date })
                         })
-                    } else if (key === 'xkj') {
+                    } else{
                         var path = this.apiUrl + '/api/article/menuInfoWeb?id=' + currItem.id;
                         this.getHtml(path).then(res => {
                             while (res.match(re3)) {
@@ -631,7 +631,7 @@
                             r(menu)
                         })
 
-                    } else if (key === 'xkj') {
+                    } else {
                         var path = this.apiUrl + '/api/article/menu';
                         var body = JSON.stringify({ "a_id": id });
                         var opt = { method: "post", body: body };
