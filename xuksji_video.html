@@ -535,9 +535,9 @@
                 // 计算播放进度
                 var duration = null;
                 let timer = setInterval(()=>{
+                    duration = this.player.duration();
                     if(duration) {
                         clearInterval(timer);
-                        duration = this.player.duration();
                         this.play_pg = (time / duration * 100).toFixed(1) + '%';
                     }
                 })
