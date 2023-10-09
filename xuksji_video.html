@@ -103,9 +103,7 @@
             font-size: 14px;
         }
 
-        .info.active {
-            color: #b3b3b3;
-        }
+       
 
         .h {
             position: sticky;
@@ -129,26 +127,43 @@
             display: flex;
             background-color: rgba(43, 51, 63, 0.9);
         }
-
-        .info.no {
-            text-decoration: line-through;
-        }
-
+       
         .box-item {
             position: relative;
         }
+
+        .box-item.active {
+            color: #b3b3b3;
+            
+        }
+        .box-item.no {
+            text-decoration: line-through;
+        }
+
+        .box-item .info {
+            position: relative;
+            z-index: 1;
+        }
+
 
         .box-item .pg {
             position: absolute;
             left: 0;
             top: 0;
-            width: 0;
+            width: 100%;
             height: 100%;
             /* background-color: rgba(0, 128, 0,.3); */
-            background: linear-gradient(90deg, rgba(0, 255, 0, 0.2), rgba(0, 255, 255,.2));
+            background: linear-gradient(90deg, rgba(0, 255, 0, .2), rgba(0, 255, 255,.2));
             border-bottom: 2px solid;
             border-image-source: linear-gradient(to right, #00ff00, #00ffff);
             border-image-slice: 1;
+        }
+        .box-item .pg .pg-inner {
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 100%;
+            height: calc(100% + 2px);
         }
         .box-item .pg .pg-num {
             position: absolute;
@@ -203,7 +218,7 @@
 </head>
 
 <body>
-    <div id="app" v-cloak :class="{'dark': isDark}">
+    <div id="app" v-cloak :class="{dark: isDark}">
         <!-- autoplay="autoplay" -->
         <div id="video-box" v-show="videoSrc">
             <div class="video-wrapper">
@@ -239,8 +254,8 @@
                     <div class="box">
                         <!-- @click="toPage(item)" -->
                         <div class="box-item" v-for="(item,idx) in list" :key="item.id" @click="switchVideo(item, idx)"
-                            :ref="'v'+item.id">
-                            <div class="info" :class="{active:item.id === currId, 'no': !item.video_url}">
+                            :ref="'v'+item.id" :class="{active:item.id === currId, 'no': !item.video_url}">
+                            <div class="info">
                                 <div>
                                     <span class="order">{{item.order}}.</span>
                                     <span class="title">{{item.title}}</span>
@@ -250,7 +265,8 @@
                                     <span>时间：{{item.date}}</span>
                                 </div>
                             </div>
-                            <div class="pg" v-if="item.id === currId && play_pg !=0" :style="{width: play_pg}">
+                            <div class="pg" v-if="item.id === currId && play_pg !=0">
+                                <div class="pg-inner" :class="{dark: isDark}" :style="{width: 'calc(100% - '+play_pg+')'}"></div>
                                 <!-- <div class="pg-num">{{play_pg}}</div> -->
                             </div>
                         </div>
@@ -402,10 +418,12 @@
                     if (first) {
                         // 设置当前默认播放时间 
                         this.player.currentTime(this.currTime);
+                        // 已播放的时间
                         this.rtime = this.myTime(parseInt(this.currTime));
                         setTimeout(() => {
                             this.player.pause();
                         }, 100)
+                        this.sumPer(this.currTime)
 
                     } else {
                         this.player.play();
@@ -507,21 +525,29 @@
             // 获取设置视频播放位置
             savePlayPos: function () {
                 clearInterval(this.saveTimer);
-
                 this.saveTimer = setInterval(() => {
                     this.setPlayPos();
                 }, 3000);
             },
 
+            // 计算播放百分比
+            sumPer(time) {
+                // 计算播放进度
+                var duration = null;
+                let timer = setInterval(()=>{
+                    duration = this.player.duration();
+                    this.play_pg = (time / duration * 100).toFixed(1) + '%';
+                    if(duration) clearInterval(timer)
+                })
+            },
+
             // 获取播放位置
             setPlayPos: function () {
+                
                 var time = this.player.currentTime();
-
                 this.xkj_video['time'] = time > 3 ? time : 0;
-                localStorage.setItem('v_' + this.id, JSON.stringify(this.xkj_video))
-                // 计算播放进度
-                var duration = this.player.duration()
-                this.play_pg = (time / duration * 100).toFixed(1) + '%';
+                localStorage.setItem('v_' + this.id, JSON.stringify(this.xkj_video));
+                this.sumPer(time)
                 // 获取剩余时间
                 // this.rtime = this.myTime(parseInt(this.player.remainingTime()));
                 // this.rtime = this.myTime(parseInt(this.xkj_video['time']));
