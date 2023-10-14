@@ -293,6 +293,8 @@ function getContent() {
                         s = num / 10000 + 'w'
                     }*/
                     var num = 0
+                    // 过滤掉标签内容
+                    str = str.replace(/<\/?[a-zA-Z]+.*?>/img, '')
                     for (i = 0; i < str.length; i++) {
                         s = str.charAt(i)
                         if ('\u4e00' <= s && s <= '\u9fef') {
