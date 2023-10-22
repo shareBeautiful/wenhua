@@ -5,6 +5,7 @@ html {
     word-break: break-word;
 }
 body {
+    position: relative;
     height: 100%;
     max-width: 1024px;
     margin: 0 auto;
