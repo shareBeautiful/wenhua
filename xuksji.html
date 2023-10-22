@@ -34,6 +34,7 @@
             transform: scale(1);
             transition: transform .5s;
         }
+
         .box-item .pic:hover {
             transform: scale(1.5);
             transition: transform .3s;
@@ -220,16 +221,16 @@
                     }
                     document.title = this.title;
                     // 过滤论语
-                    
-                    if (this.tagId == 1 || this.tagId == 2) {
+                    /* if (this.tagId == 1 || this.tagId == 2) {
                         var re_ke = /论语|孟子|老子|道德/im
                         this.list = res.filter(item => {
                             return re_ke.test(item.title);
                         });
                     } else {
                         this.list = res;
-                    }
-
+                    } */
+                    this.list = res;
+                    // 添加心经的内容
                     if ([2, 3].includes(this.tagId)) {
                         this.list.push({
                             "id": 1,

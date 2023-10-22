@@ -114,7 +114,7 @@
         #video-box .select {
             height: 24px;
             color: #ac3a39 !important;
-            padding: 0 3px;
+            padding: 0 6px;
             font-size: 14px;
         }
 
@@ -234,7 +234,7 @@
 
             <div class="panel-heading h">
                 <div class="h-r">
-                    {{title.slice(0,15)}}
+                    <span @click="switchAll">{{title.slice(0,15)}}</span>
                     <select class="form-control select" @change="selectTimes">
                         <option value="1">播完当前</option>
                         <option value="0" v-if="selectJi>6">全部循环</option>
@@ -256,7 +256,7 @@
                 <div class="panel-body">
                     <div class="box">
                         <!-- @click="toPage(item)" -->
-                        <div class="box-item" v-for="(item,idx) in list" :key="item.id" @click="switchVideo(item, idx)"
+                        <div class="box-item" v-for="(item,idx) in list" :key="item.id" @click="switchVideo(item, idx)" v-show="!item.show"
                             :ref="'v'+item.id" :class="{active:item.id === currId, 'no': !item.video_url}">
                             <div class="info">
                                 <div>
@@ -312,6 +312,7 @@
                 currTimes: 0,      // 当前剩余的集数
                 countDown: 0,       // 选择倒计时显示
                 play_pg: 0,        // 播放进度0-100%
+                showAll: false,    // 是否显示所有
             }
         },
         methods: {
@@ -563,6 +564,21 @@
                 return num < 10 ? '0' + num : num;
             },
 
+            switchAll: function() {
+                // 定位选中的视频信息
+                var re_name = /逢阳|孙菁|陶陶|佳涵|坤玉/
+                this.showAll = !this.showAll;
+                this.list.forEach((item, i, self) => {
+                    // 是否显示人名
+                    if(this.showAll) {
+                        item.show = false
+                    }else {
+                        item.show = re_name.test(item.title);
+                    }                   
+                    this.$set(this.list, i, item)
+                });
+            },
+
             // 过滤数据
             filterData: function (res) {
                 var vid = parseInt(this.getParams('vid')); // 视频id
@@ -577,10 +593,14 @@
                 }
 
                 // 定位选中的视频信息
+                var re_name = /逢阳|孙菁|陶陶|佳涵|坤玉/
                 this.list.forEach((item, i) => {
                     item.video_time = item.video_time ? this.myTime(item.video_time) : '';
                     item.title = item.title.replace(/直播音频回放|（免费）/img, '');
                     item.order = this.padding(i + 1);
+                    // 是否显示人名
+                    item.show = re_name.test(item.title);
+                    // 当前处于位置
                     if (vid && item.id === vid) {
                         currItem = item;
                         idx = i;
