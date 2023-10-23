@@ -154,7 +154,8 @@ function getContent() {
                     showMenu: false, // 切换显示菜单
                     allTotal: 0, // 总字数
                     noSleep: null, // 屏幕常亮对象
-                    font: [20, 22, 24, 26, 28, 30],
+                    font: [21, 22, 23, 24, 25, 26, 28],
+                    currFontS: 23,
                     fontF: [{
                             n: '默认',
                             v: 'inherit'
@@ -188,7 +189,7 @@ function getContent() {
                             v: 'kt'
                         }
                     ],
-                    currFontS: 24,
+                    
                     currFontF: 'inherit',
                     // footMenu: [{n:'目录'},{n:'进度'},{n:'设置'},{n:'夜间'}],
                     footMenu: [{
