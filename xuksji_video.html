@@ -303,6 +303,7 @@
                 currId: 0,
                 currTime: 0,
                 currIdx: 0,
+                currItem: {},
                 elevideo: null,
                 player: null,
                 options: {},        // 视频设置
@@ -518,10 +519,10 @@
             },
 
             // 设置当前播放视频列表的位置
-            setDom: function (item) {
+            setDom: function () {
                 this.$nextTick(() => {
-                    document.title = item.title;
-                    var dom = this.$refs['v' + item.id];
+                    document.title = this.currItem.title;
+                    var dom = this.$refs['v' + this.currItem.id];
                     dom = dom[0]
                     var toH = dom.offsetTop
                     window.scrollTo(0, toH - 80)
@@ -579,6 +580,9 @@
                     }                   
                     this.$set(this.list, i, item)
                 });
+                this.$nextTick(()=>{
+                    this.setDom()
+                })
             },
 
             // 过滤数据
@@ -605,6 +609,7 @@
                     // 当前处于位置
                     if (vid && item.id === vid) {
                         currItem = item;
+                        this.currItem = item;
                         idx = i;
                     }
                 });
@@ -624,7 +629,7 @@
                         // 初次加载播放视频
                         that.switchVideo(currItem, idx, true);
                         // 跳转播放的条目
-                        that.setDom(currItem);
+                        that.setDom();
                     });
 
                 })
