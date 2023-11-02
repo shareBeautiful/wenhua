@@ -24,6 +24,7 @@
             margin: 0;
             box-sizing: border-box;
         }
+
         #app {
             width: 100%;
             padding: 10px 5px;
@@ -103,7 +104,7 @@
             font-size: 14px;
         }
 
-       
+
 
         .h {
             position: sticky;
@@ -129,15 +130,16 @@
             display: flex;
             background-color: rgba(43, 51, 63, 0.9);
         }
-       
+
         .box-item {
             position: relative;
         }
 
         .box-item.active {
             color: #b3b3b3;
-            
+
         }
+
         .box-item.no {
             text-decoration: line-through;
         }
@@ -155,11 +157,12 @@
             width: 100%;
             height: 100%;
             /* background-color: rgba(0, 128, 0,.3); */
-            background: linear-gradient(90deg, rgba(0, 255, 0, .2), rgba(0, 255, 255,.2));
+            background: linear-gradient(90deg, rgba(0, 255, 0, .2), rgba(0, 255, 255, .2));
             border-bottom: 2px solid;
             border-image-source: linear-gradient(to right, #00ff00, #00ffff);
             border-image-slice: 1;
         }
+
         .box-item .pg .pg-inner {
             position: absolute;
             right: 0;
@@ -167,9 +170,11 @@
             width: 100%;
             height: calc(100% + 2px);
         }
+
         .white {
             background-color: #fff;
         }
+
         .box-item .pg .pg-num {
             position: absolute;
             right: -33px;
@@ -258,8 +263,9 @@
                 <div class="panel-body">
                     <div class="box">
                         <!-- @click="toPage(item)" -->
-                        <div class="box-item" v-for="(item,idx) in list" :key="item.id" @click="switchVideo(item, idx)" v-show="!item.show"
-                            :ref="'v'+item.id" :class="{active:item.id === currId, 'no': !item.video_url}">
+                        <div class="box-item" v-for="(item,idx) in list" :key="item.id" @click="switchVideo(item, idx)"
+                            v-show="!item.show" :ref="'v'+item.id"
+                            :class="{active:item.id === currId, 'no': !item.video_url}">
                             <div class="info">
                                 <div>
                                     <span class="order">{{item.order}}.</span>
@@ -271,7 +277,8 @@
                                 </div>
                             </div>
                             <div class="pg" v-if="item.id === currId && play_pg !=0">
-                                <div class="pg-inner" :class="{dark: isDark, white: !isDark}" :style="{width: 'calc(100% - '+play_pg+')'}"></div>
+                                <div class="pg-inner" :class="{dark: isDark, white: !isDark}"
+                                    :style="{width: 'calc(100% - '+play_pg+')'}"></div>
                                 <!-- <div class="pg-num">{{play_pg}}</div> -->
                             </div>
                         </div>
@@ -541,9 +548,9 @@
             sumPer(time) {
                 // 计算播放进度
                 var duration = null;
-                let timer = setInterval(()=>{
+                let timer = setInterval(() => {
                     duration = this.player.duration();
-                    if(duration) {
+                    if (duration) {
                         clearInterval(timer);
                         this.play_pg = (time / duration * 100).toFixed(1) + '%';
                     }
@@ -552,7 +559,7 @@
 
             // 获取播放位置
             setPlayPos: function () {
-                
+
                 var time = this.player.currentTime();
                 this.xkj_video['time'] = time > 3 ? time : 0;
                 localStorage.setItem('v_' + this.id, JSON.stringify(this.xkj_video));
@@ -567,20 +574,20 @@
                 return num < 10 ? '0' + num : num;
             },
 
-            switchAll: function() {
+            switchAll: function () {
                 // 定位选中的视频信息
                 var re_name = /逢阳|孙菁|陶陶|佳涵|坤玉/
                 this.showAll = !this.showAll;
                 this.list.forEach((item, i, self) => {
                     // 是否显示人名
-                    if(this.showAll) {
+                    if (this.showAll) {
                         item.show = false
-                    }else {
+                    } else {
                         item.show = re_name.test(item.title);
-                    }                   
+                    }
                     this.$set(this.list, i, item)
                 });
-                this.$nextTick(()=>{
+                this.$nextTick(() => {
                     this.setDom()
                 })
             },
@@ -671,6 +678,14 @@
                     res.push(obj)
                 }
                 this.filterData(res)
+            },
+            isPhone() {
+                //获取浏览器navigator对象的userAgent属性（浏览器用于HTTP请求的用户代理头的值）
+                var info = navigator.userAgent;
+                //通过正则表达式的test方法判断是否包含“Mobile”字符串
+                var isPhone = /mobile/i.test(info);
+                //如果包含“Mobile”（是手机设备）则返回true
+                return isPhone;
             }
         },
         created: function () {
@@ -680,6 +695,23 @@
         mounted: function () {
             this.id = this.getParams('id'); // 页面id
             this.elevideo = document.getElementById("my-video");
+            var children = [
+                { name: 'PlayToggle' },                     // 播放按钮
+                { name: 'volumePanel', inline: true },       // 音量调节
+                { name: 'CurrentTimeDisplay' },             // 当前已播时间
+                { name: 'ProgressControl' },                // 进度条
+                { name: 'RemainingTimeDisplay' },           // 剩余时间
+                // {name: 'timeDivider'},                      // 分割线‘/’
+                // {name: 'DurationDisplay'},                  // 总时间
+                { name: 'PictureInPictureToggle' },         // 后台播放
+                { name: 'FullscreenToggle' },               // 全屏按钮
+                // { name: 'playbackRateMenuButton' },         // 倍数播放
+                // {name: 'ControlBar'},                       // 显示所有控制信息
+
+            ]
+            if(this.isPhone()) {
+                children.splice(1,1);
+            }
             this.options = {
                 autoplay: true,     // 自动播放
                 controls: true,      // 显示控制条
@@ -690,21 +722,7 @@
                 inactivityTimeout: 0, // 0不隐藏 多少毫秒自动隐藏进度条
                 // controlBar: true,   // 是否显示控制栏
                 controlBar: {
-                    children: [
-                        { name: 'PlayToggle' },                     // 播放按钮
-                        {name: 'volumePanel', inline: false},       // 音量调节
-                        { name: 'CurrentTimeDisplay' },             // 当前已播时间
-                        { name: 'ProgressControl' },                // 进度条
-                        { name: 'RemainingTimeDisplay' },           // 剩余时间
-                        // {name: 'timeDivider'},                      // 分割线‘/’
-                        // {name: 'DurationDisplay'},                  // 总时间
-                        { name: 'PictureInPictureToggle' },         // 后台播放
-                        { name: 'FullscreenToggle' },               // 全屏按钮
-                        // { name: 'playbackRateMenuButton' },         // 倍数播放
-                        // {name: 'ControlBar'},                       // 显示所有控制信息
-                        
-
-                    ]
+                    children: children
                 },
                 // playbackRates: [0.5, 0.8, 1, 1.2, 1.5, 2],  // 设置倍数
 
@@ -729,7 +747,7 @@
             // $.select_HH_MM_SS("#selectTs");
             if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
                 this.isDark = true;
-               
+
             } else {
                 this.isDark = false;
             }
