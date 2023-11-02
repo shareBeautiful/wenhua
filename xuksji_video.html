@@ -697,7 +697,7 @@
             this.elevideo = document.getElementById("my-video");
             var children = [
                 { name: 'PlayToggle' },                     // 播放按钮
-                { name: 'volumePanel', inline: true },       // 音量调节
+                { name: 'volumePanel', inline: true },       // 音量调节 inline 是否水平
                 { name: 'CurrentTimeDisplay' },             // 当前已播时间
                 { name: 'ProgressControl' },                // 进度条
                 { name: 'RemainingTimeDisplay' },           // 剩余时间
@@ -709,6 +709,7 @@
                 // {name: 'ControlBar'},                       // 显示所有控制信息
 
             ]
+            // 如果是手机取消音量调节按钮
             if(this.isPhone()) {
                 children.splice(1,1);
             }
