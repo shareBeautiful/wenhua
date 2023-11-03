@@ -1101,7 +1101,11 @@ function getContent() {
                 this.localInfo = this.getInfo(); // 获取当前页本地信息
                 // 字体大小
                 var size = this.localInfo['size'];
-                if (size) this.setFontS(size, true)
+                if (size) {
+                    this.setFontS(size, true)
+                }else {
+                    this.setFontS(this.currFontS, true)
+                }
                 // size?  this.setFontS(size, true): this.setFontS(this.currFontS);
                 // 字体
                 var font = localStorage.getItem('font')

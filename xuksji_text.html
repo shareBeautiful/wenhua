@@ -24,7 +24,7 @@
         }
 
         #bodyBox {
-            font-size: 26px;
+            font-size: 23px;
         }
 
         #readOpt .header,
@@ -683,6 +683,8 @@
                 // 字号
                 if (fontSize) {
                     this.setFontS(fontSize)
+                }else {
+                    this.setFontS(this.currFontS)
                 }
                 var xkj_text = localStorage.getItem('xkj_text');
                 if (xkj_text) this.xkj_text = JSON.parse(xkj_text);
