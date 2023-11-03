@@ -554,7 +554,7 @@
                     duration = this.player.duration();
                     if (duration) {
                         clearInterval(timer);
-                        this.play_pg = (time / duration * 100).toFixed(1) + '%';
+                        this.play_pg = (time / duration * 100).toFixed(2) + '%';
                     }
                 })
             },
