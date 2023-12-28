@@ -267,7 +267,8 @@
                         <!-- @click="toPage(item)" -->
                         <div class="box-item" v-for="(item,idx) in list" :key="item.id" @click="switchVideo(item, idx)"
                             v-show="!item.show" :ref="'v'+item.id"
-                            :class="{active:item.id === currId, 'no': !item.video_url}">
+                            :class="{active:item.id === currId, 'no': !item.video_url}" 
+                            :video-src="item.video_url">
                             <div class="info">
                                 <div>
                                     <span class="order">{{item.order}}.</span>
