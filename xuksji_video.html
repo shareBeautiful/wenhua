@@ -598,6 +598,12 @@
             filterData: function (res) {
                 var vid = parseInt(this.getParams('vid')); // 视频id
                 this.list = res;
+                // 循环一遍判断是否是道德经给上固定的视频地址
+                this.list.forEach((item, i) => {
+                    if (this.sid==='lz' && !item.video_url) {
+                        item.video_url = `/audio2/道德经浅解/${i+1}.m4a`
+                    }
+                })
                 var currItem, idx;
                 var xkj_video = localStorage.getItem('v_' + this.id);
                 if (xkj_video) this.xkj_video = JSON.parse(xkj_video);
@@ -695,7 +701,8 @@
 
         },
         mounted: function () {
-            this.id = this.getParams('id'); // 页面id
+            this.id = this.getParams('id'); // 当前课程id
+            this.sid = this.getParams('sid'); // 特殊固定id
             this.elevideo = document.getElementById("my-video");
             var children = [
                 { name: 'PlayToggle' },                     // 播放按钮
@@ -741,9 +748,10 @@
                 //plugins:自动初始化要加载的插件
             };
             // 从哪里过来
-            if (this.id === 'xj') {
+            
+            if (this.id === 'xj') {// 心经
                 this.getXj();
-            } else {
+            } else{
                 this.getData();
             }
 

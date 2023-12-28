@@ -215,6 +215,11 @@
                                 item.href = './xuksji_text.html?id=' + item.id;
                             } else {
                                 item.href = './xuksji_video.html?id=' + item.id;
+                                // 判断道德经课程 给id为固定的lz
+                                if(item.title.indexOf('道德经') !== -1) {
+                                    item.href = item.href+'&sid=lz';
+                                }
+                                
                             }
                             item.date = item.add_time.slice(0, 11)
                         })
