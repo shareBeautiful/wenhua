@@ -416,10 +416,17 @@
                     this.player.paused() ? this.player.play() : this.player.pause();
                     return false
                 };
+                
                 // 判断是视频还是音频更新样式
                 this.isVideo = item.video_url.indexOf('.mp4') > -1 ? 1 : 2;
                 var $video = document.getElementById('my-video_html5_api');
-                this.isVideo === 1 ? $video.classList.add('video') : $video.classList.add('audio')
+                if (this.isVideo === 1) {
+                    $video.classList.remove('audio')
+                    $video.classList.add('video')
+                }else {
+                    $video.classList.remove('video')
+                    $video.classList.add('audio')
+                }
 
                 // 更新视频连接
                 this.videoSrc = item.video_url;
