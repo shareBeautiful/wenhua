@@ -606,12 +606,7 @@
             filterData: function (res) {
                 var vid = parseInt(this.getParams('vid')); // 视频id
                 this.list = res;
-                // 循环一遍判断是否是道德经给上固定的视频地址
-                this.list.forEach((item, i) => {
-                    if (this.sid==='lz' && !item.video_url) {
-                        item.video_url = `/audio2/道德经浅解/${i+1}.m4a`
-                    }
-                })
+                
                 var currItem, idx;
                 var xkj_video = localStorage.getItem('v_' + this.id);
                 if (xkj_video) this.xkj_video = JSON.parse(xkj_video);
@@ -622,18 +617,27 @@
                 }
 
                 // 定位选中的视频信息
-                var re_name = /逢阳|孙菁|陶陶|佳涵|坤玉/
+                var re_name = /逢阳|孙菁|陶陶|佳涵|坤玉/g
                 this.list.forEach((item, i) => {
                     item.video_time = item.video_time ? this.myTime(item.video_time) : '';
-                    item.title = item.title.replace(/直播音频回放|（免费）/img, '');
                     item.order = this.padding(i + 1);
-                    // 是否显示人名
-                    item.show = re_name.test(item.title);
+                    // 是否显示其它老师直播
+                    if (item.title.indexOf('直播') !== -1) {
+                        item.show = re_name.test(item.title);
+                    }
+                    item.title = item.title.replace(/直播音频回放|（免费）/img, '');
+
+                    
                     // 当前处于位置
                     if (vid && item.id === vid) {
                         currItem = item;
                         this.currItem = item;
                         idx = i;
+                    }
+
+                    // 循环一遍判断是否是道德经给上固定的视频地址
+                    if (this.sid==='lz' && !item.video_url) {
+                        item.video_url = `/audio2/道德经浅解/${i+1}.m4a`
                     }
                 });
                 this.$nextTick(() => {
