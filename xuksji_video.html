@@ -292,9 +292,6 @@
     </div>
 </body>
 <script type="text/javascript" src="js/vue.js"></script>
-<!-- <script type="text/javascript" src="js/jq.js"></script>
-<script type="text/javascript" src="js/jqselectortime/mobileSelect.js"></script> 
-<script type="text/javascript" src="js/jqselectortime/selectDate.js"></script>  -->
 <script type="text/javascript" src="js/video.js"></script>
 <script>
     var that;
@@ -325,7 +322,7 @@
                 currTimes: 0,      // 当前剩余的集数
                 countDown: 0,       // 选择倒计时显示
                 play_pg: 0,        // 播放进度0-100%
-                showAll: false,    // 是否显示所有
+                showAll: true,    // 是否显示所有
             }
         },
         methods: {
@@ -585,9 +582,13 @@
             },
 
             switchAll: function () {
+               
                 // 定位选中的视频信息
                 var re_name = /逢阳|孙菁|陶陶|佳涵|坤玉/
-                this.showAll = !this.showAll;
+                if (!this.list.some(item => re_name.test(item.title))) {
+                    return false
+                }
+                        
                 this.list.forEach((item, i, self) => {
                     // 是否显示人名
                     if (this.showAll) {
@@ -597,6 +598,7 @@
                     }
                     this.$set(this.list, i, item)
                 });
+                this.showAll = !this.showAll;
                 this.$nextTick(() => {
                     this.setDom()
                 })
