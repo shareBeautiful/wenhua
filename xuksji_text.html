@@ -149,8 +149,9 @@
                 <span class="h-r" @click="clickShowMenu()">目录</span>
             </div>
             <div class="footer">
-                <div class="f-item">
+                <div class="f-item" @click="copyText">
                     <span>字：{{articleD.total}} -- 进：{{process}} -- {{read_time}}</span>
+                    <span class="copy-text">复制</span>
                 </div>
                 <!-- <span class="f-page">{{pageCurr}}/{{pageAll}}</span> -->
             </div>
@@ -603,6 +604,19 @@
                 this.processTime = setTimeout(() => {
                     this.getProcess();
                 }, 600)
+            },
+
+            // 复制文章
+            copyText: function() {
+                var re_text = /<\/?\w+.*?>|\n{2,}/img
+                var text = this.articleD.html.replace(re_text, '\n').replace(re_text, '\n\n')
+                var textareaC = document.createElement('textarea');
+                textareaC.setAttribute('readonly', 'readonly'); //设置只读属性防止手机上弹出软键盘
+                textareaC.value = text;
+                document.body.appendChild(textareaC); //将textarea添加为body子元素
+                textareaC.select();
+                var res = document.execCommand('copy');
+                document.body.removeChild(textareaC);//移除DOM元素
             },
 
 

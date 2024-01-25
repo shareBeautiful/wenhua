@@ -673,3 +673,7 @@ img {
 .fx {
     display: flex;
 }
+.copy-text {
+    padding: 0 10px;
+    color: #d6403e;
+}
