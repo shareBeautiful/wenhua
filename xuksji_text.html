@@ -609,8 +609,8 @@
             // 复制文章
             copyText: function() {
                 var re_text = /<\/?\w+.*?>/img
-                var re_p = /<\/(p|div)>/img
-                var text = this.articleD.html.replace(re_p, '\n\n').replace(re_text, '')
+                var re_p = /<\/(p|div)>|\n{2,}/img
+                var text = this.articleD.html.replace(re_p, '\n').replace(re_p, '\n\n').replace(re_text, '')
                 var textareaC = document.createElement('textarea');
                 textareaC.setAttribute('readonly', 'readonly'); //设置只读属性防止手机上弹出软键盘
                 textareaC.value = text;
