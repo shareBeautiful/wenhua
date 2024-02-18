@@ -568,7 +568,8 @@
             setPlayPos: function () {
 
                 var time = this.player.currentTime();
-                this.xkj_video['time'] = time > 3 ? time : 0;
+                this.currTime = time > 3 ? time : 0;
+                this.xkj_video['time'] = this.currTime;
                 localStorage.setItem('v_' + this.id, JSON.stringify(this.xkj_video));
                 this.sumPer(time)
                 // 获取剩余时间
@@ -660,6 +661,9 @@
                         that.switchVideo(currItem, idx, true);
                         // 跳转播放的条目
                         that.setDom();
+                        
+                        // 添加长按事件
+                        that.longPress()
                     });
 
                 })
@@ -686,6 +690,7 @@
                 })
             },
 
+            // 获取心经内容
             getXj: function () {
                 var res = [];
                 var obj = {};
@@ -702,6 +707,27 @@
                 }
                 this.filterData(res)
             },
+
+            // 按左右键快进退15s
+            longPress() {
+                document.onkeydown = (e) => {
+                    let key = e.key;
+                    if (key === 'ArrowRight' || key === 'd') {
+                        if(this.player.remainingTime()>=20) {
+                            this.currTime+=15;
+                            this.player.currentTime(this.currTime);
+                        }
+                       
+                    };
+                    if (key === 'ArrowLeft' || key === 'a') {
+                        this.currTime-=15;
+                        if(this.currTime <=0) this.currTime = 0;
+                        this.player.currentTime(this.currTime);
+                    };
+                }
+            },
+
+            // 判断设备类型
             isPhone() {
                 //获取浏览器navigator对象的userAgent属性（浏览器用于HTTP请求的用户代理头的值）
                 var info = navigator.userAgent;
