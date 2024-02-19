@@ -124,7 +124,7 @@
                 <span @click.stop="pageNext('+')" v-if="currIdx+1<len">下一章</span>
             </div>
             <div class="body-box" @dblclick.capture="clickShowMenu()">
-                <div :class="['panel','panel-'+colors[currIdx%4]]" @click.stop="showReadOpt()">
+                <div :class="['panel','panel-'+colors[currIdx%4]]" @click.stop="showReadOpt()" @mousedown="handleSelect()">
                     <div class="panel-heading">
                         <h3 class="panel-title text-center">
                             {{articleD.title}}
@@ -233,6 +233,7 @@
             read_time: "0", // 阅读时间
             readtimer: null, // 阅读时间定时器
             timerDeb: null, // 防抖计时器
+            selectStr: '',  // 被选中的文本
         },
         methods: {
             // 获取html请求函数
@@ -422,10 +423,14 @@
                 this.isPage = !this.isPage;
             },
 
+            // 鼠标按下
+            handleSelect: function() {
+                this.selectStr = window.getSelection().toString()
+            },
+
             // 显示阅读设置
             showReadOpt: function (id, item) {
-                
-                if (window.getSelection().toString()) {
+                if (window.getSelection().toString() || this.selectStr) {
                     return false;
                 }
 
