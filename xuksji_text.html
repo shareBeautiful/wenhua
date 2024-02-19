@@ -70,12 +70,12 @@
                             <input class="switch" type="checkbox" @change="switchDark" :checked="isDark" />系统</label>
                     </div>
                     <div class="fx">
-                        <label class="list-group-item fz book"><i class="zhe"></i><input class="switch" type="checkbox"
-                                @change="switchPage" :checked="isPage">翻页</label>
+                        <!-- <label class="list-group-item fz book"><i class="zhe"></i><input class="switch" type="checkbox"
+                                @change="switchPage" :checked="isPage">翻页</label> -->
                         <label class="list-group-item fz book"><i class="zhe"></i><input class="switch" type="checkbox"
                                 @change="switchOrder" :checked="isReverse">倒序</label>
-                        <span class="list-group-item fz book" v-if="len>5">共:{{len}}章</span>
-                        <span class="list-group-item fz book" @click="getAllTotal">总: {{total('',allTotal)}}</span>
+                        <span class="list-group-item fz book" v-if="len>5" @click="getAllTotal">共:{{len}}章</span>
+                        <span class="list-group-item fz book">总: {{total('',allTotal)}}</span>
                     </div>
                     <div class="list-group-item fz book curr" @click="toTop">
                         <!-- {{subProcess}}- -->
@@ -211,7 +211,7 @@
             allTotal: 0,// 总字数
             word: '', // 搜索目录关键字
             height: 0,// 屏幕的高度
-            isDark: false, // 默认系统主题
+            isDark: true, // 默认系统主题
             isReverse: false, // 默认目录排序
             isPage: false, // 是否开启翻页
             currItem: '', // 当前标题名称
@@ -716,9 +716,8 @@
                 }, 50);
 
             })
-
-            this.isDark = Boolean(eval($echo.getStorage('isDark'))); // 转换布尔值
-            if (this.isDark) { // 是否开启跟随系统
+            this.isDark  = $echo.getStorage('isDark') === 'false'? false : true; // 转换布尔值
+            if (this.isDark === true) { // 是否开启跟随系统
                 if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
                     this.theme = 4;
                 } else {

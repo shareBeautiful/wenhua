@@ -1116,7 +1116,7 @@ function getContent() {
                 // 书签
                 var book = this.localInfo['book'];
                 this.book = book ? book : [];
-                this.isDark = Boolean(eval($echo.getStorage('isDark'))); // 转换布尔值
+                this.isDark  = $echo.getStorage('isDark') === 'false'? false : true; // 转换布尔值
                 this.currTime = $echo.getStorage('currTime') || this.currTime; // 自动阅读时间
                 if (this.isDark) { // 是否开启跟随系统
                     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
