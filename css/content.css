@@ -238,6 +238,7 @@ body {
 #font-option {
     position: sticky;
     bottom: 0;
+    z-index: 2;
 }
 button.btn {
     position: fixed;
