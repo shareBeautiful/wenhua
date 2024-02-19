@@ -745,8 +745,8 @@
         },
         mounted: function () {
             this.height = window.screen.availHeight;
-            var font = localStorage.getItem("font");
-            var fontSize = localStorage.getItem("fontSize");
+            var font = $echo.getStorage("font");
+            var fontSize =  $echo.getStorage("fontSize");
             this.$nextTick(() => {
                  // 字体
                 if (font) {
