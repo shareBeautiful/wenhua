@@ -2,17 +2,17 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name=App-Config content="fullscreen=yes,useHistoryState=yes,transition=yes">
-    <meta content=yes name=apple-mobile-web-app-capable>
-    <meta name=”apple-touch-fullscreen” content=”yes”>
-    <meta name="theme-color" content="#1a1a1a">
-    <meta content="telephone=no,email=no" name=format-detection>
+    <meta charset="UTF-8" />
+    <meta name="App-Config" content="fullscreen=yes,useHistoryState=yes,transition=yes" />
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta name="”apple-touch-fullscreen”" content="”yes”" />
+    <meta name="theme-color" content="#1a1a1a" />
+    <meta content="telephone=no,email=no" name="format-detection" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <meta name=viewport
-        content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=yes,viewport-fit=cover">
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=yes,viewport-fit=cover" />
     <title></title>
-    <link rel="stylesheet" href="css/content.css">
+    <link rel="stylesheet" href="css/content.css" />
     <style>
         .B1_text p {
             padding: 10px 0;
@@ -58,7 +58,7 @@
             <div>
                 <div class="search-box" v-if="len>15">
                     <input type="search" class="form-control search" @input="search" @keyup.enter="enterSearch"
-                        v-model="word" placeholder="搜索...">
+                        v-model="word" placeholder="搜索..." />
                 </div>
                 <div :class="{'curr-pos': len>15}">
                     <div class="fx">
@@ -73,7 +73,7 @@
                         <!-- <label class="list-group-item fz book"><i class="zhe"></i><input class="switch" type="checkbox"
                                 @change="switchPage" :checked="isPage">翻页</label> -->
                         <label class="list-group-item fz book"><i class="zhe"></i><input class="switch" type="checkbox"
-                                @change="switchOrder" :checked="isReverse">倒序</label>
+                                @change="switchOrder" :checked="isReverse" />倒序</label>
                         <span class="list-group-item fz book" v-if="len>5" @click="getAllTotal">共:{{len}}章</span>
                         <span class="list-group-item fz book">总: {{total('',allTotal)}}</span>
                     </div>
@@ -86,31 +86,32 @@
                 <!-- 目录列表 -->
                 <div class="menu-item" v-for="(item, idx) in menuList" :key="item.id" v-show="!item.hide"
                     :id="'m'+item.id">
-                    <a class="list-group-item " href="javascript:" @click="toArticle(item.idx);"
+                    <a class="list-group-item" href="javascript:" @click="toArticle(item.idx);"
                         :class="['list-group-item-'+colors[idx%4],{active: item.idx===currIdx}]">
                         {{item.idx+1}}--{{item.title}}
                         <span v-if="item.articleD && item.articleD.total">({{item.articleD.total}})</span>
                     </a>
                 </div>
-                <!-- 字体大小设置 -->
-                <div>
-                    <span class="list-group-item fz" :key="item" :class="{'active': item == currFontS}"
-                        v-for="item in font" @click="setFontS(item)">{{item}}
-                    </span>
-
-                </div>
-                <div>
-                    <span class="list-group-item fz">当前字号：{{ currFontS }}</span>
-                    <span class="list-group-item  fz" @click="setFontS('+')">+</span>
-                    <span class="list-group-item fz" @click="setFontS('-')">-</span>
-                </div>
                 <!-- 字体设置 -->
-                <div>
-                    <span class="list-group-item fz" :key="item" :class="{'active': item.v == currFontF}"
-                        v-for="(item) in fontF" @click="setFontF(item)">{{item.n}}
-                    </span>
+                <div id="font-option">
+                    <!-- 字体大小设置 -->
+                    <!-- <div>
+                        <span class="list-group-item fz" :key="item" :class="{'active': item == currFontS}"
+                            v-for="item in font" @click="setFontS(item)">{{item}}
+                        </span>
+                    </div> -->
+                    <div>
+                        <span class="list-group-item fz">当前字号：{{ currFontS }}</span>
+                        <span class="list-group-item fz" @click="setFontS('+')">+</span>
+                        <span class="list-group-item fz" @click="setFontS('-')">-</span>
+                    </div>
+                    <!-- 字体设置 -->
+                    <div>
+                        <span class="list-group-item fz" :key="item" :class="{'active': item.v == currFontF}"
+                            v-for="(item) in fontF" @click="setFontF(item)">{{item.n}}
+                        </span>
+                    </div>
                 </div>
-
             </div>
         </div>
 
@@ -129,8 +130,7 @@
                             <!-- <span class="author">({{item.total}})</span> -->
                         </h3>
                     </div>
-                    <div class="panel-footer">
-                        发布时间：{{articleD.date}}</div>
+                    <div class="panel-footer">发布时间：{{articleD.date}}</div>
                     <div class="panel-body" v-html="articleD.html"></div>
                 </div>
             </div>
@@ -163,67 +163,74 @@
 <script src="js/jq.js"></script>
 <script>
     var that;
-    var id = $echo.getParams('id');
-    var key = $echo.getParams('key');
-    var tid = location.href.split('#')[1]
-    tid = tid? tid : null
+    var id = $echo.getParams("id");
+    var key = $echo.getParams("key");
+    var tid = location.href.split("#")[1];
+    tid = tid ? tid : null;
     new Vue({
-        el: '#app',
+        el: "#app",
         data: {
-            title: '虚空济',
-            apiUrl: 'https://api2022.xukongji.com',
+            title: "虚空济",
+            apiUrl: "https://api2022.xukongji.com",
             articleD: {}, // 所有数据列表
             menuList: [], // 菜单列表
             len: 0,
-            colors: ['success', 'info', 'warning', 'danger'],
+            colors: ["success", "info", "warning", "danger"],
             showMenu: false, // 切换显示菜单
             font: [21, 22, 23, 24, 25, 26, 28],
             fontF: [
-                { n: '默认', v: 'inherit' },
-                { n: '楷体1', v: 'kt1' },
-                { n: '楷体2', v: 'kt2' },
-                { n: '盛世', v: 'ss' },
-                { n: '今楷', v: 'jk' },
-                { n: '云黑', v: 'yh' },
-                { n: '行黑', v: 'xh' },
-                { n: '卡通', v: 'kt' }
+                { n: "默认", v: "inherit" },
+                { n: "楷体1", v: "kt1" },
+                { n: "楷体2", v: "kt2" },
+                { n: "盛世", v: "ss" },
+                { n: "今楷", v: "jk" },
+                { n: "云黑", v: "yh" },
+                { n: "行黑", v: "xh" },
+                { n: "卡通", v: "kt" },
             ],
             currFontS: 23,
-            currFontF: 'inherit',
-            footMenu: [{
-                n: '设置'
-            }],
-            themeL: [{ // 主题
-                n: '阅读',
-                id: 1
-            }, {
-                n: '古风',
-                id: 2
-            }, {
-                n: '白天',
-                id: 3
-            }, {
-                n: '夜晚',
-                id: 4
-            }],
+            currFontF: "inherit",
+            footMenu: [
+                {
+                    n: "设置",
+                },
+            ],
+            themeL: [
+                {
+                    // 主题
+                    n: "阅读",
+                    id: 1,
+                },
+                {
+                    n: "古风",
+                    id: 2,
+                },
+                {
+                    n: "白天",
+                    id: 3,
+                },
+                {
+                    n: "夜晚",
+                    id: 4,
+                },
+            ],
             theme: 1, // 1默认，1，bg1,bg2
             process: 0, // 当前阅读进度
-            allTotal: 0,// 总字数
-            word: '', // 搜索目录关键字
-            height: 0,// 屏幕的高度
+            allTotal: 0, // 总字数
+            word: "", // 搜索目录关键字
+            height: 0, // 屏幕的高度
             isDark: true, // 默认系统主题
             isReverse: false, // 默认目录排序
             isPage: false, // 是否开启翻页
-            currItem: '', // 当前标题名称
-            currIdx: '', // 当前索引
+            currItem: "", // 当前标题名称
+            currIdx: "", // 当前索引
             showOpt: false, // 是否显示设置
             dbTime: null, // 双击单机时间计时器
             processTime: null, // 获取百分比计时器
             xkj_text: {}, // 本地id
-            read_time: '0', // 阅读时间
-            readtimer: null,        // 阅读时间定时器
+            read_time: "0", // 阅读时间
+            readtimer: null, // 阅读时间定时器
             timerDeb: null, // 防抖计时器
-
         },
         methods: {
             // 获取html请求函数
@@ -237,61 +244,58 @@
                         contentType: "application/x-www-form-urlencoded",
                         dataType: "html",
                         success: function (res) {
-                            r(res)
+                            r(res);
                         },
                         error: function (res) {
                             if (res.status === 404) {
-                                alert('当前网页维护中...，请点击确定关闭')
+                                alert("当前网页维护中...，请点击确定关闭");
                                 window.close();
                             } else {
-                                alert('当前网页出错！！！')
+                                alert("当前网页出错！！！");
                                 window.close();
                             }
-
-                        }
+                        },
                     });
-                })
-
+                });
             },
 
             // 跳转到顶部
             toTop: function () {
                 // window.scrollTo(0, 0);
-                var mid = document.getElementById('m' + this.currItem.id);
-                var menu = document.getElementById('menu');
+                var mid = document.getElementById("m" + this.currItem.id);
+                var menu = document.getElementById("menu");
                 menu.scrollTop = mid.offsetTop - 240;
             },
 
-
             // 裁剪标题
             subTit: function (title) {
-                return title.slice(0, 20)
+                return title.slice(0, 20);
             },
 
             // 计算总数
             total: function (str, n) {
                 if (n) {
                     if (n >= 1000 && n < 10000) {
-                        n = n / 1000 + 'k'
+                        n = n / 1000 + "k";
                     } else if (n >= 10000) {
-                        n = n / 10000 + 'w'
+                        n = n / 10000 + "w";
                     }
                     return n;
                 }
-                var num = 0
-                str = str.replace(/<\/?[a-zA-Z]+.*?>/img, '')
+                var num = 0;
+                str = str.replace(/<\/?[a-zA-Z]+.*?>/gim, "");
                 for (i = 0; i < str.length; i++) {
-                    s = str.charAt(i)
-                    if ('\u4e00' <= s && s <= '\u9fef') {
+                    s = str.charAt(i);
+                    if ("\u4e00" <= s && s <= "\u9fef") {
                         num += 1;
                     }
                 }
                 if (num >= 1000 && num < 10000) {
-                    s = num / 1000 + 'k'
+                    s = num / 1000 + "k";
                 } else if (num >= 10000) {
-                    s = num / 10000 + 'w'
+                    s = num / 10000 + "w";
                 } else {
-                    s = num
+                    s = num;
                 }
                 return { s: s, n: num };
             },
@@ -301,48 +305,51 @@
                     if (!item.articleD) {
                         setTimeout(() => {
                             this.getArticle(item, true);
-                        }, idx * 30)
+                        }, idx * 30);
                     }
-                })
-
+                });
             },
 
             // 设置字体大小
             setFontS: function (size) {
-                if (size == '+') {
-                    s = (s + 1)
-                } else if (size == '-') {
-                    s = (s - 1)
-                } else {
+                let s = Number(size);
+                if (!s || isNaN(s)) {
+                    s = this.currFontS;
+                }
+                if (size == "+") {
+                    ++s
+                } else if (size == "-") {
+                    --s
+                }else {
                     s = size;
                 }
-                var dom = document.querySelector('#bodyBox');
-                dom.style.fontSize = s + 'px';
+                var dom = document.querySelector("#bodyBox");
+                dom.style.fontSize = s + "px";
 
                 // 由于字体改变后页面高度变化，需要延迟重新计算回到当前位置
                 this.currFontS = s;
-                $echo.setStorage('fontSize', this.currFontS);
+                $echo.setStorage("fontSize", this.currFontS);
             },
 
             // 显示菜单切换
             clickShowMenu: function () {
                 this.showMenu = true;
-                setTimeout(this.hideReadOpt, 200)
+                setTimeout(this.hideReadOpt, 200);
             },
 
             // 向左滑动隐藏菜单
             clickHideMenu: function () {
-                this.showMenu = false
+                this.showMenu = false;
             },
 
             // 清空设置
             reset: function (s) {
-                var is = window.confirm('是否清空？')
+                var is = window.confirm("是否清空？");
                 if (is) {
-                    if (s === 's') {
-                        localStorage.removeItem('localInfo_' + type)
+                    if (s === "s") {
+                        localStorage.removeItem("localInfo_" + type);
                         sessionStorage.clear();
-                    } else if (s === 'c') {
+                    } else if (s === "c") {
                         INDEXDB.deleteItem(type);
                     }
                 }
@@ -351,50 +358,52 @@
             // 搜索目录
             search: function () {
                 this.menuList.forEach((item, id) => {
-                    if ((id + 1 + '--' + item.title).indexOf(this.word) > -1) {
+                    if ((id + 1 + "--" + item.title).indexOf(this.word) > -1) {
                         item.hide = false;
                     } else {
                         item.hide = true;
                     }
-                })
+                });
             },
             // 回车
-            enterSearch: function () {
-
-            },
+            enterSearch: function () { },
 
             // 切换排序倒序
             switchOrder: function () {
-                this.isReverse = !this.isReverse
+                this.isReverse = !this.isReverse;
                 this.menuList.reverse();
             },
 
             // 设置主题
             changeTheme: function (item) {
-                this.theme = item.id
-                $echo.setStorage('theme', this.theme);
+                this.theme = item.id;
+                $echo.setStorage("theme", this.theme);
             },
 
             // 设置字体
             setFontF: function (item) {
                 if (item) {
                     this.currFontF = item.v;
-                    $echo.setStorage('font', this.currFontF);
+                    $echo.setStorage("font", this.currFontF);
                 }
                 setTimeout(() => {
-                    document.body.style.fontFamily = this.currFontF
-                }, 16)
+                    document.body.style.fontFamily = this.currFontF;
+                }, 16);
             },
 
             // 开启跟随系统主题
             switchDark: function () {
                 this.isDark = !this.isDark;
-                if (this.isDark && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                if (
+                    this.isDark &&
+                    window.matchMedia &&
+                    window.matchMedia("(prefers-color-scheme: dark)").matches
+                ) {
                     this.theme = 4;
                 } else {
                     this.theme = localStorage.theme;
                 }
-                localStorage.setItem('isDark', this.isDark)
+                localStorage.setItem("isDark", this.isDark);
             },
 
             // 切换白天和黑夜
@@ -413,7 +422,7 @@
 
             // 显示阅读设置
             showReadOpt: function (id, item) {
-                if (window.getSelection().toString() !== '') return false;
+                if (window.getSelection().toString() !== "") return false;
                 clearTimeout(this.dbTime);
                 // 双击菜单和单机菜单定时器冲突
                 if (this.showOpt) {
@@ -427,10 +436,9 @@
                         // 定时计算进度条
                         this.dbTime = setInterval(() => {
                             this.getProcess();
-                        }, 5000)
-                    }, 220)
+                        }, 5000);
+                    }, 220);
                 }
-
             },
 
             // 隐藏阅读设置
@@ -445,86 +453,96 @@
                 if (this.currIdx === idx) return false;
                 this.menuList.some((item) => {
                     if (item.idx === idx) this.currItem = item;
-                })
+                });
                 this.currIdx = idx;
-                this.saveText();  // 保存本地
+                this.saveText(); // 保存本地
                 if (this.currItem.articleD) {
                     this.articleD = this.currItem.articleD;
                     document.title = this.articleD.title;
                 } else {
                     this.getArticle(this.currItem);
                 }
-                this.setCurrentUrl(this.currItem.id)
+                this.setCurrentUrl(this.currItem.id);
             },
 
-             // 设置当前url
+            // 设置当前url
             setCurrentUrl(id) {
                 if (!!(window.history && history.pushState)) {
                     // 支持History API
-                    var href = location.href.split('#')[0]
-                    history.replaceState(null, null, id? '#' + id : href)
+                    var href = location.href.split("#")[0];
+                    history.replaceState(null, null, id ? "#" + id : href);
                 }
             },
             // 下一章 // 上一章
             pageNext: function (type) {
-                if (type === '+') {
-                    this.toArticle(this.currIdx + 1)
-                } else if (type === '-') {
-                    this.toArticle(this.currIdx - 1)
+                if (type === "+") {
+                    this.toArticle(this.currIdx + 1);
+                } else if (type === "-") {
+                    this.toArticle(this.currIdx - 1);
                 }
             },
 
             // 获取html
             getArticle: function (currItem, isAll) {
                 new Promise((r, s) => {
-                    var re3 = /[\r\n\f\t]|(<\/?br\/?>)+|\sstyle=".*?"|(&nbsp;)|<strong>[\s\t\r\f\n]*<\/strong>|<span>[\s\t\r\f\n]*<\/span>|<p>[\s\t\r\f\n]*<\/p>|<div>[\s\t\r\f\n]*<\/div>/img
-                    if (key === 'brws') {
-                        var path = 'https://www.shishengru.com' + currItem.id;
-                        this.getHtml(path).then(res => {
-                            var reimg = /<img.*?>/img
-                            res = res.replace(reimg, '')
+                    var re3 =
+                        /[\r\n\f\t]|(<\/?br\/?>)+|\sstyle=".*?"|(&nbsp;)|<strong>[\s\t\r\f\n]*<\/strong>|<span>[\s\t\r\f\n]*<\/span>|<p>[\s\t\r\f\n]*<\/p>|<div>[\s\t\r\f\n]*<\/div>/gim;
+                    if (key === "brws") {
+                        var path = "https://www.shishengru.com" + currItem.id;
+                        this.getHtml(path).then((res) => {
+                            var reimg = /<img.*?>/gim;
+                            res = res.replace(reimg, "");
                             $doc = $(res);
-                            var html = $doc.find('.article-content').html();
-                            var date = $doc.find('.f-reveal-time strong').eq(2).text();
+                            var html = $doc.find(".article-content").html();
+                            var date = $doc.find(".f-reveal-time strong").eq(2).text();
                             while (html.match(re3)) {
                                 html = html.replace(re3, "");
                             }
-                            r({ html: html, date: date })
-                        })
-                    } else{
-                        var path = this.apiUrl + '/api/article/menuInfoWeb?id=' + currItem.id;
-                        this.getHtml(path).then(res => {
+                            r({ html: html, date: date });
+                        });
+                    } else {
+                        var path =
+                            this.apiUrl + "/api/article/menuInfoWeb?id=" + currItem.id;
+                        this.getHtml(path).then((res) => {
                             while (res.match(re3)) {
                                 res = res.replace(re3, "");
                             }
-                            var re_all = /<article class=\"article\">.*<\/article>/mgi;  // 文章部分
-                            var re_article = /<div class=\"content\">.*<\/div>/img  // 正文部分
-                            var re_date = /\d+-\d+-\d+(\s+\d+:\d+)?/img
-                            var html = res.match(re_all)[0]
-                            var date = html.match(re_date)[0]
-                            html = html.match(re_article)[0] // 正文
-                            if (html.indexOf('<img') !== -1) {
-                                html = html.replace(/<img.*?src="(.*?".*?>)/img, '<img src="' + this.apiUrl + '$1') // 给图片添加域名
+                            var re_all = /<article class=\"article\">.*<\/article>/gim; // 文章部分
+                            var re_article = /<div class=\"content\">.*<\/div>/gim; // 正文部分
+                            var re_date = /\d+-\d+-\d+(\s+\d+:\d+)?/gim;
+                            var html = res.match(re_all)[0];
+                            var date = html.match(re_date)[0];
+                            html = html.match(re_article)[0]; // 正文
+                            if (html.indexOf("<img") !== -1) {
+                                html = html.replace(
+                                    /<img.*?src="(.*?".*?>)/gim,
+                                    '<img src="' + this.apiUrl + "$1"
+                                ); // 给图片添加域名
                             }
-                            r({ html: html, date: date })
-                        })
+                            r({ html: html, date: date });
+                        });
                     }
                 }).then((res) => {
                     html = res.html;
                     date = res.date;
-                    html = '<div class="B1_text">' + html + '</div>'
+                    html = '<div class="B1_text">' + html + "</div>";
                     var total = this.total(html);
                     this.allTotal += total.n; // 计算总字数
                     // 设置字数到目录上
                     var title = currItem.title;
-                    var articleD = { 'title': title, 'html': html, 'date': date, 'total': total.s }
+                    var articleD = {
+                        title: title,
+                        html: html,
+                        date: date,
+                        total: total.s,
+                    };
                     if (!isAll) {
                         this.articleD = articleD;
                         document.title = title;
                     }
-                    this.$set(currItem, 'articleD', articleD); // 把页面数据赋给菜单上
+                    this.$set(currItem, "articleD", articleD); // 把页面数据赋给菜单上
                     this.setReadTime(); // 开启阅读时间
-                })
+                });
             },
 
             // 获取阅读时间
@@ -533,37 +551,38 @@
                 var n = 0;
                 this.readtimer = setInterval(() => {
                     ++n;
-                    this.read_time = this.getTimes(n)
-                }, 1000)
+                    this.read_time = this.getTimes(n);
+                }, 1000);
             },
 
             getTimes: function (t) {
-                var h = parseInt(t / 60 / 60 % 24)
-                var m = parseInt(t / 60 % 60)
-                var s = parseInt(t % 60)
+                var h = parseInt((t / 60 / 60) % 24);
+                var m = parseInt((t / 60) % 60);
+                var s = parseInt(t % 60);
                 //三元表达式 补零 如果小于10 则在前边进行补零 如果大于10 则不需要补零
                 // h = h < 10 ? '0' + h : h
                 // m = m < 10 ? '0' + m : m
                 // s = s < 10 ? '0' + s : s
-                h = h ? h + '时:' : '';
-                m = m ? m + '分:' : '';
-                s = s + '秒';
-                return h + m + s
+                h = h ? h + "时:" : "";
+                m = m ? m + "分:" : "";
+                s = s + "秒";
+                return h + m + s;
             },
 
             // 保存本地视频位置
             saveText: function () {
-                var xkj_text = localStorage.getItem('xkj_text');
+                var xkj_text = localStorage.getItem("xkj_text");
                 if (xkj_text) this.xkj_text = JSON.parse(xkj_text);
-                this.xkj_text['t' + id] = this.currItem.id;
-                localStorage.setItem('xkj_text', JSON.stringify(this.xkj_text))
+                this.xkj_text["t" + id] = this.currItem.id;
+                localStorage.setItem("xkj_text", JSON.stringify(this.xkj_text));
             },
 
             // 计算当前位置的百分比数字
             getProNum: function () {
-                var elH = document.documentElement.scrollHeight || document.body.scrollHeight; // 当前章节高度
+                var elH =
+                    document.documentElement.scrollHeight || document.body.scrollHeight; // 当前章节高度
                 var scrollTop = document.documentElement.scrollTop; // 滚动高度
-                var p = (scrollTop) / (elH - this.height);
+                var p = scrollTop / (elH - this.height);
                 p = p.toFixed(6);
                 p = parseFloat(p);
                 return p;
@@ -573,119 +592,121 @@
             toPos: function (p) {
                 p = parseFloat(p);
                 this.$nextTick(() => {
-                    var elH = document.documentElement.scrollHeight || document.body.scrollHeight; // 当前章节高度
+                    var elH =
+                        document.documentElement.scrollHeight ||
+                        document.body.scrollHeight; // 当前章节高度
                     var scrollTop = p * (elH - this.height);
                     window.scrollTo(0, scrollTop);
-                })
+                });
             },
 
             // 计算阅读百分比
             getProcess: function () {
                 p = this.getProNum();
                 p = p >= 1 ? 1 : p;
-                p = (p * 100).toFixed(2)
+                p = (p * 100).toFixed(2);
                 if (p == 0) {
                     p = 0;
                 } else if (p >= 100) {
                     p = 100;
                 }
-                this.process = p + '%';
-
+                this.process = p + "%";
             },
 
             savePos: function () {
-                let tnid = this.getProNum()
-                if (this.xkj_text['tn' + id] == tnid) return false;
-                this.xkj_text['tn' + id] = tnid;
-                localStorage.setItem('xkj_text', JSON.stringify(this.xkj_text))
+                let tnid = this.getProNum();
+                if (this.xkj_text["tn" + id] == tnid) return false;
+                this.xkj_text["tn" + id] = tnid;
+                localStorage.setItem("xkj_text", JSON.stringify(this.xkj_text));
             },
 
             getP: function () {
                 clearInterval(this.processTime);
                 this.processTime = setTimeout(() => {
                     this.getProcess();
-                }, 600)
+                }, 600);
             },
 
             // 复制文章
-            copyText: function(type) {
-                var re_text = /<\/?\w+.*?>/img
-                var re_p = /<\/(p|div)>|\n{2,}/img
-                var text = this.articleD.html.replace(re_p, '\n').replace(re_p, '\n\n').replace(re_text, '')
-                if(type) return text
-                var textareaC = document.createElement('textarea');
-                textareaC.setAttribute('readonly', 'readonly'); //设置只读属性防止手机上弹出软键盘
+            copyText: function (type) {
+                var re_text = /<\/?\w+.*?>/gim;
+                var re_p = /<\/(p|div)>|\n{2,}/gim;
+                var text = this.articleD.html
+                    .replace(re_p, "\n")
+                    .replace(re_p, "\n\n")
+                    .replace(re_text, "");
+                if (type) return text;
+                var textareaC = document.createElement("textarea");
+                textareaC.setAttribute("readonly", "readonly"); //设置只读属性防止手机上弹出软键盘
                 textareaC.value = text;
                 document.body.appendChild(textareaC); //将textarea添加为body子元素
                 textareaC.select();
-                var res = document.execCommand('copy');
-                document.body.removeChild(textareaC);//移除DOM元素
+                var res = document.execCommand("copy");
+                document.body.removeChild(textareaC); //移除DOM元素
             },
-
 
             // 获取当前列表
             getArticleList: function () {
                 var menu = [];
                 var idxs = 0;
-                var re = /《.*?》|（.*?）/img
+                var re = /《.*?》|（.*?）/gim;
                 new Promise((r, s) => {
-                    if (key === 'brws') {
-                        var path = 'https://www.shishengru.com' + id;
-                        this.getHtml(path).then(res => {
-                            var xkj_text = localStorage.getItem('xkj_text');
+                    if (key === "brws") {
+                        var path = "https://www.shishengru.com" + id;
+                        this.getHtml(path).then((res) => {
+                            var xkj_text = localStorage.getItem("xkj_text");
                             if (xkj_text) this.xkj_text = JSON.parse(xkj_text);
-                            var reimg = /<img.*?>/img
-                            res = res.replace(reimg, '')
-                            $box = $(res).find('.f-article-text > span')
+                            var reimg = /<img.*?>/gim;
+                            res = res.replace(reimg, "");
+                            $box = $(res).find(".f-article-text > span");
                             $box.each(function (idx) {
-                                title = $(this).find('a').text();
-                                href = $(this).find('a').attr('href');
+                                title = $(this).find("a").text();
+                                href = $(this).find("a").attr("href");
                                 menu.push({
-                                    'title': title,
-                                    'id': href,
-                                    'idx': idx
-                                })
-                            })
-                            r(menu)
-                        })
-
+                                    title: title,
+                                    id: href,
+                                    idx: idx,
+                                });
+                            });
+                            r(menu);
+                        });
                     } else {
-                        var path = this.apiUrl + '/api/article/menu';
-                        var body = JSON.stringify({ "a_id": id });
+                        var path = this.apiUrl + "/api/article/menu";
+                        var body = JSON.stringify({ a_id: id });
                         var opt = { method: "post", body: body };
                         $echo.getJson(path, opt).then((res) => {
-                            res = res['data'];
-                            var xkj_text = localStorage.getItem('xkj_text');
+                            res = res["data"];
+                            var xkj_text = localStorage.getItem("xkj_text");
                             if (xkj_text) this.xkj_text = JSON.parse(xkj_text);
-                            let textId = this.xkj_text['t'+id];
-                            textId = textId? textId : tid
+                            let textId = this.xkj_text["t" + id];
+                            textId = textId ? textId : tid;
                             res.forEach((item, idx) => {
-                                item.title = item.title.replace(re, '');
+                                item.title = item.title.replace(re, "");
                                 item.idx = idx;
                                 if (textId == item.id) {
                                     idxs = idx;
                                 }
-                            })
+                            });
                             menu = res;
                             r(res);
-                        })
+                        });
                     }
                 }).then((menu) => {
                     menu.forEach((item, idx) => {
-                        item.title = item.title.replace(re, '');
+                        item.title = item.title.replace(re, "");
                         item.idx = idx;
-                        if (this.xkj_text['t' + id] == item.id) {
+                        if (this.xkj_text["t" + id] == item.id) {
                             idxs = idx;
                         }
-                    })
+                    });
                     this.menuList = menu;
                     this.len = menu.length;
                     // 获取文章内容
                     this.toArticle(idxs);
 
                     // 添加空格事件阅读文章
-                    this.watchKey()
-                })
+                    this.watchKey();
+                });
             },
 
             // 防抖
@@ -695,77 +716,78 @@
                         clearTimeout(this.timerDeb);
                     }
                     this.timerDeb = setTimeout(fn, delay);
-                }
+                };
             },
 
             watchKey() {
                 document.onkeydown = (e) => {
                     let key = e.key;
-                    window.speechSynthesis.cancel()
+                    window.speechSynthesis.cancel();
                     // 如果点击的是空格
-                    if(key === 'r') {
-                        this.debounce(()=>{
+                    if (key === "r") {
+                        this.debounce(() => {
                             let word = this.copyText(true);
                             window.speechSynthesis.cancel(); // 取消掉之前播放的
                             let msg = new SpeechSynthesisUtterance(word);
                             msg.rate = 1;
                             window.speechSynthesis.speak(msg);
-                        }, 300)()
+                        }, 300)();
                     }
-                    if (key === 'f') {
+                    if (key === "f") {
                         // window.speechSynthesis.pause()
                         window.speechSynthesis.cancel();
                     }
-                }
-            }
+                };
+            },
         },
         created: function () {
             that = this;
         },
         mounted: function () {
-            this.height = window.screen.availHeight
-            // 字体
-            var font = localStorage.getItem('font')
-            var fontSize = localStorage.getItem('fontSize');
+            this.height = window.screen.availHeight;
+            var font = localStorage.getItem("font");
+            var fontSize = localStorage.getItem("fontSize");
             this.$nextTick(() => {
+                 // 字体
                 if (font) {
                     this.currFontF = font;
                     this.setFontF();
                 }
                 // 字号
                 if (fontSize) {
-                    this.setFontS(fontSize)
-                }else {
-                    this.setFontS(this.currFontS)
+                    this.setFontS(fontSize);
                 }
-                var xkj_text = localStorage.getItem('xkj_text');
+                var xkj_text = localStorage.getItem("xkj_text");
                 if (xkj_text) this.xkj_text = JSON.parse(xkj_text);
                 var t = setInterval(() => {
                     if (this.articleD.html) {
                         clearInterval(t); // 清除计时器
                         // 跳转已阅读位置
-                        this.toPos(this.xkj_text['tn' + id])
+                        this.toPos(this.xkj_text["tn" + id]);
                         // 启动自动保存
                         setInterval(() => {
                             this.savePos();
                         }, 6000);
                     }
                 }, 50);
-
-            })
-            this.isDark  = $echo.getStorage('isDark') === 'false'? false : true; // 转换布尔值
-            if (this.isDark === true) { // 是否开启跟随系统
-                if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            });
+            this.isDark = $echo.getStorage("isDark") === "false" ? false : true; // 转换布尔值
+            if (this.isDark === true) {
+                // 是否开启跟随系统
+                if (
+                    window.matchMedia &&
+                    window.matchMedia("(prefers-color-scheme: dark)").matches
+                ) {
                     this.theme = 4;
                 } else {
                     this.theme = 1;
                 }
             } else {
-                this.theme = localStorage.getItem('theme') || 1;
+                this.theme = localStorage.getItem("theme") || 1;
             }
             this.getArticleList();
-        }
-    })
+        },
+    });
 </script>
 
 </html>

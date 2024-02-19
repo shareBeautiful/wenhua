@@ -208,7 +208,6 @@ body {
     height: 100vh;
     left: -100vw;
     top: 0;
-    padding-bottom: 50px;
     z-index: 10;
     transition: left .3s;
     overflow-y: auto;
@@ -236,7 +235,10 @@ body {
     font-size: 16px;
     padding: 5px 10px;
 }
-
+#font-option {
+    position: sticky;
+    bottom: 0;
+}
 button.btn {
     position: fixed;
     right: 10px;
