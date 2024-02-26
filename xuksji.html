@@ -17,7 +17,6 @@
     <link rel="stylesheet" href="css/maokan.css">
     <title></title>
     <style>
-        
         .box-item {
             padding: 10px 0;
         }
@@ -216,10 +215,10 @@
                             } else {
                                 item.href = './xuksji_video.html?id=' + item.id;
                                 // 判断道德经课程 给id为固定的lz
-                                if(item.title.indexOf('道德经') !== -1) {
-                                    item.href = item.href+'&sid=lz';
+                                if (item.title.indexOf('道德经') !== -1) {
+                                    item.href = item.href + '&sid=lz';
                                 }
-                                
+
                             }
                             item.date = item.add_time.slice(0, 11)
                         })
@@ -236,20 +235,32 @@
                         this.list = res;
                     } */
                     this.list = res;
-                    // 添加心经的内容
+                    // 自定义添加心经的内容
                     if ([2, 3].includes(this.tagId)) {
-                        this.list.push({
-                            "id": 1,
-                            "column_id": 1,
-                            "title": this.tagId === 2 ? "《心经》1-40讲浅解" : "《心经》文字浅解",
-                            "img_url": "./images/xj_pic.png",
-                            "zhaiyao": "",
-                            "date": "2023-05-20",
-                            "type": 3,
-                            "plays_num": 0,
-                            "menu_num": 40,
-                            "href": this.tagId === 2 ? './xuksji_video.html?id=xj' : './content.html?type=xukongji&key=xjw'
-                        })
+                        let newList = [
+                            {
+                                "id": 1,
+                                "column_id": 1,
+                                "title": this.tagId === 2 ? "《心经》1-40讲浅解" : "《心经》文字浅解",
+                                "img_url": "./images/xj_pic.png",
+                                "zhaiyao": "",
+                                "date": "2023-05-20",
+                                "type": 3,
+                                "plays_num": 0,
+                                "menu_num": 40,
+                                "href": this.tagId === 2 ? './xuksji_video.html?id=xj' : './content.html?type=xukongji&key=xjw'
+                            },
+                            {
+                                "id": 280,
+                                "title": "《道德经》原文诵读",
+                                "img_url": "https://api2022.xukongji.com/uploadFile/uploadFile/20240223020236-65d78c3ccce17.jpg",
+                                "date": '2024-2-21',
+                                "type": 2,
+                                "menu_num": 3,
+                                "href": './xuksji_video.html?id=280'
+                            }
+                        ]
+                        this.list.push(...newList)
                     }
 
                     this.search();
