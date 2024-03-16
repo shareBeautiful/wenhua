@@ -208,6 +208,7 @@
                         })
                     } else { // 课程页面
                         if (this.sortStatus) res.reverse();
+                        let reTit = /道德经.*?版本一/im
                         res.forEach(item => {
                             if (this.tagId === 3) {
                                 // item.href = './xuksji.html?id=' + item.id + '&tid=' + tagId;
@@ -215,7 +216,7 @@
                             } else {
                                 item.href = './xuksji_video.html?id=' + item.id;
                                 // 判断道德经课程 给id为固定的lz
-                                if (item.title.indexOf('道德经') !== -1) {
+                                if (reTit.test(item.title)) {
                                     item.href = item.href + '&sid=lz';
                                 }
 
