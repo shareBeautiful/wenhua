@@ -12,8 +12,7 @@
     <meta content="telephone=no,email=no" name=format-detection>
     <meta name="theme-color" content="#1a1a1a">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <meta name=viewport
-        content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+    <meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover">
     <link rel="stylesheet" href="css/maokan.css">
     <title></title>
     <style>
@@ -250,15 +249,18 @@
                             "menu_num": 40,
                             "href": this.tagId === 2 ? './xuksji_video.html?id=xj' : './content.html?type=xukongji&key=xjw'
                         })
-                        this.list.unshift({
-                            "id": 280,
-                            "title": "《道德经》原文诵读",
-                            "img_url": "https://api2022.xukongji.com/uploadFile/uploadFile/20240223020236-65d78c3ccce17.jpg",
-                            "date": '2024-2-21',
-                            "type": 2,
-                            "menu_num": 3,
-                            "href": './xuksji_video.html?id=280'
-                        })
+                        if (this.tagId === 2) {
+                            this.list.push({
+                                "id": 280,
+                                "title": "《道德经》原文诵读",
+                                "img_url": "https://api2022.xukongji.com/uploadFile/uploadFile/20240223020236-65d78c3ccce17.jpg",
+                                "date": '2024-2-21',
+                                "type": 2,
+                                "menu_num": 3,
+                                "href": './xuksji_video.html?id=280'
+                            })
+                        }
+
                     }
 
                     this.search();
