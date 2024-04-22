@@ -646,7 +646,7 @@
                     .replace(re_p, "\n")
                     .replace(re_p, "\n\n")
                     .replace(re_text, "");
-                if (type) return text;
+                if (type === true) return text;
                 var textareaC = document.createElement("textarea");
                 textareaC.setAttribute("readonly", "readonly"); //设置只读属性防止手机上弹出软键盘
                 textareaC.value = text;
@@ -734,6 +734,10 @@
                 document.onkeydown = (e) => {
                     let key = e.key;
                     window.speechSynthesis.cancel();
+                    // 复制
+                    if (key === "c") {
+                        this.copyText()
+                    }
                     // 如果点击的是空格
                     if (key === "r") {
                         this.debounce(() => {
