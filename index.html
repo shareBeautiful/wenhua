@@ -1,434 +1,460 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Cache-control" content="no-cache">
-    <meta http-equiv="Cache" content="no-cache">
-    <meta name=App-Config content="fullscreen=yes,useHistoryState=yes,transition=yes">
-    <meta content=yes name=apple-mobile-web-app-capable>
-    <meta content=yes name=apple-touch-fullscreen>
-    <meta name="theme-color" content="#1a1a1a">
-    <meta content="telephone=no,email=no" name=format-detection>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Cache-control" content="no-cache" />
+    <meta http-equiv="Cache" content="no-cache" />
+    <meta name="App-Config" content="fullscreen=yes,useHistoryState=yes,transition=yes" />
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="yes" name="apple-touch-fullscreen" />
+    <meta name="theme-color" content="#1a1a1a" />
+    <meta content="telephone=no,email=no" name="format-detection" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <meta name=viewport content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=yes,viewport-fit=cover">
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=yes,viewport-fit=cover"
+    />
     <title>典经</title>
-    <link rel="stylesheet" href="./css/index.css">
-</head>
+    <link rel="stylesheet" href="./css/index.css" />
+  </head>
 
-<body>
+  <body>
     <div id="body">
-        <div id="app" v-cloak :class="{dark: isDark}">
-            <div class="bg-img" v-if="!isDark" :style="bgImg" @click="switchShow">
-                <div class="bg-mask" v-show="!bgImg['z-index']"></div>
-                <div class="bg-f bg-l" @click.stop="switchBg('l')"></div>
-                <div class="bg-f bg-r" @click.stop="switchBg('r')"></div>
-                <div class="bg-num">{{bgNum}}</div>
-            </div>
-            <div class="input-group" id="search">
-                <input type="search" class="form-control search" @input="search" v-model="keyword" placeholder="搜索...">
-                <div class="del" @click="del()" v-show="keyword.length">×</div>
-            </div>
-            <!-- 内容列表 -->
-            <div class="list-box">
-                <!-- 最近查看的的 -->
-                <div class="panel panel-default" v-if="lookInfo.list.length && !Boolean(this.keyword)">
-                    <div class="panel-heading" @click="openMenu(lookInfo)">
-                        <div class="title">
-                            {{lookInfo.tit}}
-                            <span class="num">({{lookInfo.list.length}})</span>
-                        </div>
-                        <div class="icon">{{lookInfo.open? '关闭' : '展开'}}</div>
-                    </div>
-                    <div class="panel-body" v-if="lookInfo.list.length" v-show="lookInfo.open">
-                        <div class="list-group panel-success">
-                            <template v-for="(item,idx) in lookInfo.list" :key="idx">
-                                <div href="" @click.stop="saveLook2(item,idx)" target="_blank" class="list-group-item">
-                                    <span class="l">{{idx+1}}. {{sliceStr(item.tit)}}
-                                        <span v-if="item.pwd" class="pwd-icon">*</span>
-                                    </span>
-                                    <span class="r">{{item.parent}} <span style="padding-left: 20px;color: #a00 !important"
-                                            @click.stop=delLookInfo(idx)>删除</span></span>
-                                </div>
-                            </template>
-                        </div>
-                    </div>
-                </div>
-                <!-- 所有 -->
-                <div class="panel panel-default" :key="idxA" v-for="(itemA,idxA) in subList" v-if="!itemA.hide">
-                    <div class="panel-heading" @click="openMenu(itemA)" :class="{'sticky': itemA.open}">
-                        <div class="title">
-                            {{itemA.tit}}
-                            <span class="num">({{itemA.list.length}})</span>
-                            <span v-if="itemA.pwd" class="pwd-icon">*</span>
-                        </div>
-                        <div class="icon">{{itemA.open? '关闭' : '展开'}}</div>
-                    </div>
-                    <div class="panel-body" v-if="itemA.list.length" v-show="itemA.open">
-                        <div class="list-group panel-success">
-                            <!-- @click="clickItem(itemB, itemA)" -->
-                            <template v-for="(itemB,idxB) in itemA.list" :key="idxB">
-                                <a :href="itemB.href" @click="saveLook(itemA,itemB)" target="_blank"
-                                    class="list-group-item">
-                                    <span class="l">{{getOrder(idxB+1)}}. {{itemB.tit}}
-                                        <span v-if="itemB.pwd" class="pwd-icon">*</span>
-                                    </span>
-                                    <span class="r">{{itemB.parent}}</span>
-                                </a>
-                            </template>
-                        </div>
-                    </div>
-                </div>
-            </div>
-    
-            <!--    密码框 -->
-            <div class="intro-box" v-show="showPwd" @click.self="close" @touchmove.self.prevent>
-                <div class="intro-wrap">
-                    <div class="close" @click.self="close"></div>
-                    <div class="intro">
-                        <div class="form-group">
-                            <label for="pwd">密码：</label>
-                            <input type="password" autofocus="autofocus" class="form-control" id="pwd"
-                                placeholder="Password">
-                        </div>
-                    </div>
-                </div>
-            </div>
+      <div id="app" v-cloak :class="{dark: isDark}">
+        <div class="bg-img" v-if="!isDark" :style="bgImg" @click="switchShow">
+          <div class="bg-mask" v-show="!bgImg['z-index']"></div>
+          <div class="bg-f bg-l" @click.stop="switchBg('l')"></div>
+          <div class="bg-f bg-r" @click.stop="switchBg('r')"></div>
+          <div class="bg-num">{{bgNum}}</div>
         </div>
+        <div class="input-group" id="search">
+          <input
+            type="search"
+            class="form-control search"
+            @input="search"
+            v-model="keyword"
+            placeholder="搜索..."
+          />
+          <div class="del" @click="del()" v-show="keyword.length">×</div>
+        </div>
+        <!-- 内容列表 -->
+        <div class="list-box">
+          <!-- 最近查看的的 -->
+          <div class="panel panel-default" v-if="lookInfo.list.length && !Boolean(this.keyword)">
+            <div class="panel-heading" @click="openMenu(lookInfo)">
+              <div class="title">
+                {{lookInfo.tit}}
+                <span class="num">({{lookInfo.list.length}})</span>
+              </div>
+              <div class="icon">{{lookInfo.open? '关闭' : '展开'}}</div>
+            </div>
+            <div class="panel-body" v-if="lookInfo.list.length" v-show="lookInfo.open">
+              <div class="list-group panel-success">
+                <template v-for="(item,idx) in lookInfo.list" :key="idx">
+                  <div
+                    href=""
+                    @click.stop="saveLook2(item,idx)"
+                    target="_blank"
+                    class="list-group-item"
+                  >
+                    <span class="l"
+                      >{{idx+1}}. {{sliceStr(item.tit)}}
+                      <span v-if="item.pwd" class="pwd-icon">*</span>
+                    </span>
+                    <span class="r"
+                      >{{item.parent}}
+                      <span
+                        style="padding-left: 20px; color: #a00 !important"
+                        @click.stop="delLookInfo(idx)"
+                        >删除</span
+                      ></span
+                    >
+                  </div>
+                </template>
+              </div>
+            </div>
+          </div>
+          <!-- 所有 -->
+          <div
+            class="panel panel-default"
+            :key="idxA"
+            v-for="(itemA,idxA) in subList"
+            v-if="!itemA.hide"
+          >
+            <div class="panel-heading" @click="openMenu(itemA)" :class="{'sticky': itemA.open}">
+              <div class="title">
+                {{itemA.tit}}
+                <span class="num">({{itemA.list.length}})</span>
+                <span v-if="itemA.pwd" class="pwd-icon">*</span>
+              </div>
+              <div class="icon">{{itemA.open? '关闭' : '展开'}}</div>
+            </div>
+            <div class="panel-body" v-if="itemA.list.length" v-show="itemA.open">
+              <div class="list-group panel-success">
+                <!-- @click="clickItem(itemB, itemA)" -->
+                <template v-for="(itemB,idxB) in itemA.list" :key="idxB">
+                  <a
+                    :href="itemB.href"
+                    @click="saveLook(itemA,itemB)"
+                    target="_blank"
+                    class="list-group-item"
+                  >
+                    <span class="l"
+                      >{{getOrder(idxB+1)}}. {{itemB.tit}}
+                      <span v-if="itemB.pwd" class="pwd-icon">*</span>
+                    </span>
+                    <span class="r">{{itemB.parent}}</span>
+                  </a>
+                </template>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!--    密码框 -->
+        <div class="intro-box" v-show="showPwd" @click.self="close" @touchmove.self.prevent>
+          <div class="intro-wrap">
+            <div class="close" @click.self="close"></div>
+            <div class="intro">
+              <div class="form-group">
+                <label for="pwd">密码：</label>
+                <input
+                  type="password"
+                  autofocus="autofocus"
+                  class="form-control"
+                  id="pwd"
+                  placeholder="Password"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    
-</body>
-<script src="js/comm.js"></script>
-<script>
+  </body>
+  <script src="js/comm.js"></script>
+  <script>
     var that;
-    $echo.getJson('./data/menu.json').then(function (res) {
-        $echo.setStorage('menuData', res)
-        new Vue({
-            el: '#app',
-            data: function () {
-                return {
-                    keyword: '',    // 搜索关键
-                    list: res,      // 数据列表
-                    subList: [],    // 复制的数据列表
-                    showPwd: false,    // 显示密码框
-                    currItem: {},   // 当前点击的item
-                    currType: '',    // 当前点击的类型
-                    pwd: '669666',  // 设置的密码
-                    pwdSure: false,  // 密码时候正确
-                    isDark: false,  // 是否夜间
-                    bgImg: {},      // 背景
-                    bgNum: null,    // 随机背景图
-                    bgMax: 63,      // 最多背景图片数量
-                    lookInfo: { tit: '最近阅读', type: 'zuijin', open: true, hide: false, list: [] }    // 最近阅读的
-                }
-            },
-            computed: {
-                getOrder: function () {
-                    return function (num) { return num < 10 ? '0' + num : num }
-                }
-            },
-            methods: {
-                // 随机背景图
-                randomBg: function () {
-                    if (!this.bgNum) {
-                        this.bgNum = Math.floor(Math.random() * (this.bgMax)) + 1;
-                    }
-                    this.$set(this.bgImg, 'backgroundImage', "url(./images/壁纸/" + this.bgNum + '.jpg)');
-                },
-                // 获取url地址
-                getUrl: function (itemB, itemA) {
-                    var currItem = itemB;
-                    var currType = itemA.type ? itemA.type : itemB.type;
-                    if (currItem.href) {
-                        var params = { key: currItem.key, type: currType };
-                        return $echo.open(currItem.href, params, 'get')
-                    } else {
-                        var params = { type: currType, key: currItem.key };
-                        return $echo.open('content', params, 'get')
-                    }
-                },
-
-                // 显示密码输入框 已废弃
-                clickItem: function (itemB, itemA) {
-                    this.currItem = itemB;
-                    this.currType = itemA.type ? itemA.type : itemB.type;
-                    var pwd = $echo.getStorage('pwd')
-                    if (itemA.pwd && pwd !== this.pwd) {
-                        this.showPwd = true
-                        return false;
-                    } else {
-                        this.toPage();
-                    }
-                },
-                // 输入密码 已废弃
-                inputPwd: function (e) {
-                    var pwd = e.target.value;
-                    if (pwd === this.pwd) {
-                        $echo.setStorage("pwd", pwd)
-                        this.toPage();
-                    } else if (pwd === '000') {
-                        $echo.removeStorage("pwd")
-                    }
-                },
-
-                // 关闭密码框 已废弃
-                close: function () {
-                    this.showPwd = false
-                },
-
-
-                // 跳转事件 已废弃
-                toPage: function () {
-                    if (this.currItem.href) {
-                        var params = { key: this.currItem.key, type: this.currType };
-                        $echo.open(this.currItem.href, params, true)
-                    } else {
-                        var params = { type: this.currType, key: this.currItem.key };
-                        // var type = $echo.getBrowser('pc');
-                        $echo.open('content', params, true)
-                    }
-                },
-
-                // 展开目录
-                openMenu: function (item) {
-                    if (!item.type) return false;
-                    if (item.type === 'zuijin') {
-                        this.$set(item, 'open', !item.open);
-                    } else {
-                        $echo.setStorage('menuOpen', { type: item.type, open: item.open })
-                        this.subList.forEach(obj => {
-                            if (obj.type === item.type) {
-                                this.$set(obj, 'open', !item.open);
-                            } else {
-                                this.$set(obj, 'open', false);
-                            }
-                        })
-                    }
-
-                },
-
-                // 清空搜索关键词
-                del: function () {
-                    this.keyword = ''
-                    this.search();
-                },
-
-                // 搜索
-                search: function () {
-
-                    if (this.keyword) {
-                        if (this.keyword === this.pwd) {
-                            $echo.setStorage('pwd', this.keyword); // 储存密码
-                            this.pwdSure = true;
-                            this.updateList(); // 更新数据
-                            event.target.blur()
-                            this.keyword = ""
-                            return;
-                        } else if (this.keyword === '000') {
-                            $echo.removeStorage("pwd");
-                            this.pwdSure = false;
-                            this.updateList(); // 更新数据
-                            event.target.blur()
-                            this.keyword = ""
-                            return;
-                        } else if (this.keyword === 'dark') {
-                            this.isDark = true;
-                            this.updateList(); // 更新数据
-                            event.target.blur()
-                            this.keyword = ""
-                            return;
-                        } else if (this.keyword === 'white') {
-                            this.isDark = false;
-                            this.updateList(); // 更新数据
-                            event.target.blur()
-                            this.keyword = ""
-                            return;
-                        } else if (/[#@%$\\\/]/.test(this.keyword)) {
-                            var re = /.*?[#@%$\\\/].*?(\d+)/img
-                            var s = re.exec(this.keyword)
-                            if (s) {
-                                this.bgNum = s[1];
-                                this.randomBg();
-                            }
-
-                        }
-
-                        // 过滤搜索的内容
-                        var list = []
-                        this.copyList(this.list).forEach(itemA => {
-                            itemA.list.forEach(itemB => {
-                                var key = itemB.tit + itemB.key;
-                                if (key.indexOf(this.keyword.toLowerCase()) > -1) {
-                                    itemB.type = itemA.type;
-                                    itemB.parent = itemA.tit.slice(0, 3);
-                                    list.push(itemB)
-                                }
-                            })
-                        })
-                        this.subList = [{ tit: '搜索结果', open: true, list: list }];
-                    } else {
-                        this.updateList();
-                    }
-                },
-
-                // 显示背景
-                switchShow: function () {
-                    if (!this.bgImg['z-index'] == !0) {
-                        this.$set(this.bgImg, 'z-index', 99)
-                        this.$set(this.bgImg, 'opacity', 1)
-                    } else {
-                        this.$set(this.bgImg, 'z-index', 0)
-                        this.$set(this.bgImg, 'opacity', 0.8)
-                    }
-
-                },
-
-                // 切换背景图
-                switchBg: function (s) {
-                    if (s === 'l') {
-                        if (this.bgNum > 1) {
-                            --this.bgNum;
-                        } else {
-                            this.bgNum = this.bgMax;
-                        }
-                    } else if (s === 'r') {
-                        if (this.bgNum < this.bgMax) {
-                            ++this.bgNum;
-                        } else {
-                            this.bgNum = 1;
-                        }
-                    }
-                    this.randomBg()
-                },
-
-                saveLook2: function (item, idx) {
-                    this.lookInfo.list.splice(idx, 1);
-                    this.lookInfo.list.unshift(item);
-                    $echo.setStorage('lookInfo', this.lookInfo.list);
-                    $echo.open(item.href, null, true);
-                },
-
-                // 保存查看过的
-                saveLook: function (itemA, itemB) {
-                    // 已存在就删除它
-                    this.lookInfo.list.some((item, idx, $this) => {
-                        if (item.href === itemB.href) {
-                            $this.splice(idx, 1);
-                        }
-                    })
-                    itemB = this.copyList(itemB)
-                    itemB.parent = itemB.parent? itemB.parent : itemA.tit.slice(0, 3);
-                    itemB.type = itemB.type? itemB.type : itemA.type;
-                    this.lookInfo.list.unshift(itemB); // 重新开头插入
-                    this.lookInfo.list.splice(6);       // 限制只有6条
-                    $echo.setStorage('lookInfo', this.lookInfo.list);
-                },
-
-                // 删除看过的列表
-                delLookInfo: function (idx) {
-                    this.lookInfo.list.splice(idx, 1)
-                    $echo.setStorage('lookInfo', this.lookInfo.list)
-                },
-
-                // 截取指定数目字符串
-                sliceStr: function (str, n) {
-                    n = n ? n : 8;
-                    return str.slice(0, n)
-                },
-
-                // 复制引用对象
-                copyList: function (list) {
-                    list = list || this.list;
-                    return JSON.parse(JSON.stringify(list))
-                },
-                // 初始化数据
-                updateList: function (isClose) {
-                    subList = []
-                    this.copyList().forEach(itemA => {
-                        var list = [];
-                        itemA.list.forEach(itemB => {
-                            if (itemA.pwd) itemB.pwd = true;
-                            if (!itemB.pwd || this.pwdSure) list.push(itemB)
-                        })
-                        itemA.list = list;
-                        if (!itemA.pwd || this.pwdSure) subList.push(itemA)
-                    });
-                    this.subList = subList;
-
-                    if (!isClose) {
-                        // 默认展开的目录
-                        var menuOpen = $echo.getStorage('menuOpen');
-                        if (menuOpen) this.openMenu(menuOpen);
-                    }
-
-                }
-            },
-            created: function () {
-                that = this;
-                var show = $echo.getParams('show');      // 关键字
-                var hide = $echo.getParams('hide');      // 关键字
-                var list = [];
-                var re = /[,#\/\-\_\\]/g
-                if (show) {
-                    list = show.split(re)
-                } else if (hide) {
-                    list = hide.split(re)
-                }
-                var len = list.length;
-                // 显示隐藏目录
-                if (len) {
-                    this.list = res.filter((item) => {
-                        var is = list.includes(item.type)
-                        if (show && is) {
-                            item.open = true;
-                            return item;
-                        } else if (hide && !is) {
-                            item.open = true;
-                            return item;
-                        }
-                    })
-                }
-
-                // 设置地址的url链接
-                this.list.forEach(itemA => {
-                    itemA.list.forEach(itemB => {
-                        itemB.href = this.getUrl(itemB, itemA);
-                    })
-                })
-
-                // 有密码的项目取消隐藏
-                var pwd = $echo.getStorage('pwd');
-                this.pwdSure = (this.pwd === pwd);
-                var lookInfo = $echo.getStorage('lookInfo');
-                if (lookInfo) this.lookInfo.list = lookInfo
-
-                // 初始化更新数据
-                this.updateList(len);
-
-                setTimeout(() => {
-                    this.randomBg();
-                }, 16)
-
-            },
-            mounted: function () {
-
-                // 白天还是黑夜
-                if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                    this.isDark = true;
-                } else {
-                    this.isDark = false;
-                }
-                // var time = parseInt($echo.getTime().replace(/:.*/img, ''));
-                // if (21 <= time || time < 7) {
-                //     this.isDark = true;
-                // } else {
-                //     this.isDark = false;
-                // }
-
+    $echo.getJson("./data/menu.json").then(function (res) {
+      $echo.setStorage("menuData", res);
+      new Vue({
+        el: "#app",
+        data: function () {
+          return {
+            keyword: "", // 搜索关键
+            list: res, // 数据列表
+            subList: [], // 复制的数据列表
+            showPwd: false, // 显示密码框
+            currItem: {}, // 当前点击的item
+            currType: "", // 当前点击的类型
+            pwd: "669666", // 设置的密码
+            pwdSure: false, // 密码时候正确
+            isDark: false, // 是否夜间
+            bgImg: {}, // 背景
+            bgNum: null, // 随机背景图
+            bgMax: 63, // 最多背景图片数量
+            lookInfo: { tit: "最近阅读", type: "zuijin", open: true, hide: false, list: [] }, // 最近阅读的
+          };
+        },
+        computed: {
+          getOrder: function () {
+            return function (num) {
+              return num < 10 ? "0" + num : num;
+            };
+          },
+        },
+        methods: {
+          // 随机背景图
+          randomBg: function () {
+            if (!this.bgNum) {
+              this.bgNum = Math.floor(Math.random() * this.bgMax) + 1;
             }
-        })
-    })
-</script>
+            this.$set(this.bgImg, "backgroundImage", "url(./images/壁纸/" + this.bgNum + ".jpg)");
+          },
+          // 获取url地址
+          getUrl: function (itemB, itemA) {
+            var currItem = itemB;
+            var currType = itemA.type ? itemA.type : itemB.type;
+            if (currItem.href) {
+              var params = { key: currItem.key, type: currType };
+              return $echo.open(currItem.href, params, "get");
+            } else {
+              var params = { type: currType, key: currItem.key };
+              return $echo.open("content", params, "get");
+            }
+          },
 
+          // 显示密码输入框 已废弃
+          clickItem: function (itemB, itemA) {
+            this.currItem = itemB;
+            this.currType = itemA.type ? itemA.type : itemB.type;
+            var pwd = $echo.getStorage("pwd");
+            if (itemA.pwd && pwd !== this.pwd) {
+              this.showPwd = true;
+              return false;
+            } else {
+              this.toPage();
+            }
+          },
+          // 输入密码 已废弃
+          inputPwd: function (e) {
+            var pwd = e.target.value;
+            if (pwd === this.pwd) {
+              $echo.setStorage("pwd", pwd);
+              this.toPage();
+            } else if (pwd === "000") {
+              $echo.removeStorage("pwd");
+            }
+          },
+
+          // 关闭密码框 已废弃
+          close: function () {
+            this.showPwd = false;
+          },
+
+          // 跳转事件 已废弃
+          toPage: function () {
+            if (this.currItem.href) {
+              var params = { key: this.currItem.key, type: this.currType };
+              $echo.open(this.currItem.href, params, true);
+            } else {
+              var params = { type: this.currType, key: this.currItem.key };
+              // var type = $echo.getBrowser('pc');
+              $echo.open("content", params, true);
+            }
+          },
+
+          // 展开目录
+          openMenu: function (item) {
+            if (!item.type) return false;
+            if (item.type === "zuijin") {
+              this.$set(item, "open", !item.open);
+            } else {
+              $echo.setStorage("menuOpen", { type: item.type, open: item.open });
+              this.subList.forEach((obj) => {
+                if (obj.type === item.type) {
+                  this.$set(obj, "open", !item.open);
+                } else {
+                  this.$set(obj, "open", false);
+                }
+              });
+            }
+          },
+
+          // 清空搜索关键词
+          del: function () {
+            this.keyword = "";
+            this.search();
+          },
+
+          // 搜索
+          search: function () {
+            if (this.keyword) {
+              if (this.keyword === this.pwd) {
+                $echo.setStorage("pwd", this.keyword); // 储存密码
+                this.pwdSure = true;
+                this.updateList(); // 更新数据
+                event.target.blur();
+                this.keyword = "";
+                return;
+              } else if (this.keyword === "000") {
+                $echo.removeStorage("pwd");
+                this.pwdSure = false;
+                this.updateList(); // 更新数据
+                event.target.blur();
+                this.keyword = "";
+                return;
+              } else if (this.keyword === "dark") {
+                this.isDark = true;
+                this.updateList(); // 更新数据
+                event.target.blur();
+                this.keyword = "";
+                return;
+              } else if (this.keyword === "white") {
+                this.isDark = false;
+                this.updateList(); // 更新数据
+                event.target.blur();
+                this.keyword = "";
+                return;
+              } else if (/[#@%$\\\/]/.test(this.keyword)) {
+                var re = /.*?[#@%$\\\/].*?(\d+)/gim;
+                var s = re.exec(this.keyword);
+                if (s) {
+                  this.bgNum = s[1];
+                  this.randomBg();
+                }
+              }
+
+              // 过滤搜索的内容
+              var list = [];
+              this.copyList(this.list).forEach((itemA) => {
+                itemA.list.forEach((itemB) => {
+                  var key = itemB.tit + itemB.key;
+                  if (key.indexOf(this.keyword.toLowerCase()) > -1) {
+                    itemB.type = itemA.type;
+                    itemB.parent = itemA.tit.slice(0, 3);
+                    list.push(itemB);
+                  }
+                });
+              });
+              this.subList = [{ tit: "搜索结果", open: true, list: list }];
+            } else {
+              this.updateList();
+            }
+          },
+
+          // 显示背景
+          switchShow: function () {
+            if (!this.bgImg["z-index"] == !0) {
+              this.$set(this.bgImg, "z-index", 99);
+              this.$set(this.bgImg, "opacity", 1);
+            } else {
+              this.$set(this.bgImg, "z-index", 0);
+              this.$set(this.bgImg, "opacity", 0.8);
+            }
+          },
+
+          // 切换背景图
+          switchBg: function (s) {
+            if (s === "l") {
+              if (this.bgNum > 1) {
+                --this.bgNum;
+              } else {
+                this.bgNum = this.bgMax;
+              }
+            } else if (s === "r") {
+              if (this.bgNum < this.bgMax) {
+                ++this.bgNum;
+              } else {
+                this.bgNum = 1;
+              }
+            }
+            this.randomBg();
+          },
+
+          saveLook2: function (item, idx) {
+            this.lookInfo.list.splice(idx, 1);
+            this.lookInfo.list.unshift(item);
+            $echo.setStorage("lookInfo", this.lookInfo.list);
+            $echo.open(item.href, null, true);
+          },
+
+          // 保存查看过的
+          saveLook: function (itemA, itemB) {
+            // 已存在就删除它
+            this.lookInfo.list.some((item, idx, $this) => {
+              if (item.href === itemB.href) {
+                $this.splice(idx, 1);
+              }
+            });
+            itemB = this.copyList(itemB);
+            itemB.parent = itemB.parent ? itemB.parent : itemA.tit.slice(0, 3);
+            itemB.type = itemB.type ? itemB.type : itemA.type;
+            this.lookInfo.list.unshift(itemB); // 重新开头插入
+            this.lookInfo.list.splice(6); // 限制只有6条
+            $echo.setStorage("lookInfo", this.lookInfo.list);
+          },
+
+          // 删除看过的列表
+          delLookInfo: function (idx) {
+            this.lookInfo.list.splice(idx, 1);
+            $echo.setStorage("lookInfo", this.lookInfo.list);
+          },
+
+          // 截取指定数目字符串
+          sliceStr: function (str, n) {
+            n = n ? n : 8;
+            return str.slice(0, n);
+          },
+
+          // 复制引用对象
+          copyList: function (list) {
+            list = list || this.list;
+            return JSON.parse(JSON.stringify(list));
+          },
+          // 初始化数据
+          updateList: function (isClose) {
+            subList = [];
+            this.copyList().forEach((itemA) => {
+              var list = [];
+              itemA.list.forEach((itemB) => {
+                if (itemA.pwd) itemB.pwd = true;
+                if (!itemB.pwd || this.pwdSure) list.push(itemB);
+              });
+              itemA.list = list;
+              if (!itemA.pwd || this.pwdSure) subList.push(itemA);
+            });
+            this.subList = subList;
+
+            if (!isClose) {
+              // 默认展开的目录
+              var menuOpen = $echo.getStorage("menuOpen");
+              if (menuOpen) this.openMenu(menuOpen);
+            }
+          },
+        },
+        created: function () {
+          that = this;
+          var show = $echo.getParams("show"); // 关键字
+          var hide = $echo.getParams("hide"); // 关键字
+          var list = [];
+          var re = /[,#\/\-\_\\]/g;
+          if (show) {
+            list = show.split(re);
+          } else if (hide) {
+            list = hide.split(re);
+          }
+          var len = list.length;
+          // 显示隐藏目录
+          if (len) {
+            this.list = res.filter((item) => {
+              var is = list.includes(item.type);
+              if (show && is) {
+                item.open = true;
+                return item;
+              } else if (hide && !is) {
+                item.open = true;
+                return item;
+              }
+            });
+          }
+
+          // 设置地址的url链接
+          this.list.forEach((itemA) => {
+            itemA.list.forEach((itemB) => {
+              itemB.href = this.getUrl(itemB, itemA);
+            });
+          });
+
+          // 有密码的项目取消隐藏
+          var pwd = $echo.getStorage("pwd");
+          this.pwdSure = this.pwd === pwd;
+          var lookInfo = $echo.getStorage("lookInfo");
+          if (lookInfo) this.lookInfo.list = lookInfo;
+
+          // 初始化更新数据
+          this.updateList(len);
+
+          setTimeout(() => {
+            this.randomBg();
+          }, 16);
+        },
+        mounted: function () {
+          // 白天还是黑夜
+          if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+            this.isDark = true;
+          } else {
+            this.isDark = false;
+          }
+          // var time = parseInt($echo.getTime().replace(/:.*/img, ''));
+          // if (21 <= time || time < 7) {
+          //     this.isDark = true;
+          // } else {
+          //     this.isDark = false;
+          // }
+        },
+      });
+    });
+  </script>
 </html>
