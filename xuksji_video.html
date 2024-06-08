@@ -265,7 +265,7 @@
                     </select>
                     <!-- <input type="text" id="selectTs" readonly   />  -->
                     <!-- <span class="rtime">{{rtime}}</span> -->
-                    <span class="rtime" v-show="play_pg">{{play_pg}}</span>
+                    <span class="rtime" @click="copyVideoSrc()" v-show="play_pg">{{play_pg}}</span>
                 </div>
                 <div class="lock" @click="switchLock">
                     <svg v-if="isLock" t="1710837960332" class="icon" viewBox="0 0 1024 1024" version="1.1"
@@ -612,9 +612,18 @@
                 return num < 10 ? '0' + num : num;
             },
 
+            copyVideoSrc: function(){
+                var textareaC = document.createElement("input");
+                textareaC.setAttribute("readonly", "readonly"); //设置只读属性防止手机上弹出软键盘
+                textareaC.value = this.videoSrc;
+                document.body.appendChild(textareaC); //将textarea添加为body子元素
+                textareaC.select();
+                var res = document.execCommand("copy");
+                document.body.removeChild(textareaC); //移除DOM元素
+            },
+
             // 切换显示所有
             switchAll: function () {
-
                 // 定位选中的视频信息
                 var re_name = /逢阳|孙菁|陶陶|佳涵|坤玉/
                 // 判断视频集中是否有人名，如果没有则不进行操作
