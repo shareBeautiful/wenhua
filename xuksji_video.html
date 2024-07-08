@@ -330,7 +330,7 @@
                 list: [],
                 isDark: false,
                 isVideo: 0, // 0 无状态，1 视频，2 音频
-                apiUrl: 'https://api2022.xukongji.com',
+                apiUrl: 'http://api2022.xukongji.com',
                 videoSrc: '',
                 rtime: 0,
                 currId: 0,
@@ -671,7 +671,7 @@
                         item.show = re_name.test(item.title);
                     }
                     item.title = item.title.replace(/直播音频回放|（免费）/img, '');
-                    item.video_url = item.video_url.replace('http://', 'https://');
+                    // item.video_url = item.video_url.replace('http://', 'https://');
 
                     // 当前处于位置
                     if (vid && item.id === vid) {

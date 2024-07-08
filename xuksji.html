@@ -113,7 +113,7 @@
                 sortStatus: false,
                 isDark: false,
                 title: '虚空济',
-                apiUrl: 'https://api2022.xukongji.com',
+                apiUrl: 'http://api2022.xukongji.com',
                 tags: [
                     { id: 1, tit: '视频' },
                     { id: 2, tit: '音频' },
@@ -198,7 +198,7 @@
                         this.title = res[0]['title'].slice(0, 11);
                         res.forEach(item => {
                             if (this.tagId == 3) {
-                                res.forEach(item => item.href = 'https://api2022.xukongji.com/api/article/menuInfoWeb?id=' + item.id)
+                                res.forEach(item => item.href = this.apiUrl + '/api/article/menuInfoWeb?id=' + item.id)
                             } else {
                                 // item.href = item.video_url;
                                 item.href = './xuksji_video.html?id=' + id + '&vid=' + item.id
