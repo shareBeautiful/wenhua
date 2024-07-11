@@ -641,11 +641,13 @@
             // 复制文章
             copyText: function (type) {
                 var re_text = /<\/?\w+.*?>/gim;
-                var re_p = /<\/(p|div)>|\n{2,}/gim;
+                var re_p = /<\/(p|div)>/gim;
+                var re_n = /\n{1,}/gim;
                 var text = this.articleD.html
                     .replace(re_p, "\n")
-                    .replace(re_p, "\n\n")
-                    .replace(re_text, "");
+                    .replace(re_text, "")
+                    .replace(re_n, "\n\n")
+                    .trim();
                 if (type === true) return text;
                 var textareaC = document.createElement("textarea");
                 textareaC.setAttribute("readonly", "readonly"); //设置只读属性防止手机上弹出软键盘
