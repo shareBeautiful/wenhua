@@ -173,9 +173,27 @@ body {
 }
 
 .bg4 .body-box a {
-    color: #ac3a39;
+    color: #952a28;
 }
-
+.bg4 input {
+    color: #ccc;
+}
+.bg4 #menu * {
+    background-color: #1a1a1a;
+}
+.bg4 #menu {
+    color: #ccc;
+}
+.bg4 #menu .menu-item a {
+    border-color: #666
+}
+.bg4 #menu .menu-item a.active {
+    border-color: #ccc;
+}
+.bg4 #menu .book .zhe {
+    color: #ccc;
+    background-color: transparent;
+}
 
 .panel-footer {
     font-size: 18px;
@@ -309,13 +327,14 @@ img {
     display: inline-block;
 }
 
-.book {
+#menu .book {
     position: relative !important;
     padding: 5px 8px;
-    z-index: 0
+    z-index: 0;
+   
 }
 
-.book .zhe {
+#menu .book .zhe {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -324,13 +343,13 @@ img {
     z-index: 1;
 }
 
-.book .switch {
+#menu .book .switch {
     vertical-align: middle;
     margin: 0 5px 0 0;
     line-height: 0;
 }
 
-.book .del {
+#menu .book .del {
     position: absolute;
     right: -3px;
     top: -8px;
@@ -438,7 +457,7 @@ img {
     width: 100vw;
     height: 100vh;
     visibility: hidden;
-    font-size: 13px;
+    font-size: 15px;
     transition: visibility .15s;
 }
 
