@@ -5,7 +5,7 @@
      */
     // 定义通用变量
     function Echo() {
-        this.VERSION = '0.04';
+        this.VERSION = '0.01';
         this.apiUrl = "";
     }
 

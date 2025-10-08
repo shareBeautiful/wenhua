@@ -243,7 +243,9 @@ function getContent() {
                     idHeightL: [], // 每个id章节的高度列表
                     idOffTopL: [], // 每个id章节距离顶部的距离列表
                     pageAll: 0, // 总页码
-                    pageCurr: 0 // 当前页面
+                    pageCurr: 0, // 当前页面
+                    readtimer: null,
+                    read_time: "0", // 阅读时间
 
                 }
             },
@@ -957,6 +959,29 @@ function getContent() {
                         })
 
                     })
+                },
+
+                getTimes: function (t) {
+                    var h = parseInt((t / 60 / 60) % 24);
+                    var m = parseInt((t / 60) % 60);
+                    var s = parseInt(t % 60);
+                    //三元表达式 补零 如果小于10 则在前边进行补零 如果大于10 则不需要补零
+                    // h = h < 10 ? '0' + h : h
+                    // m = m < 10 ? '0' + m : m
+                    // s = s < 10 ? '0' + s : s
+                    h = h ? h + "时:" : "";
+                    m = m ? m + "分:" : "";
+                    s = s + "秒";
+                    return h + m + s;
+                },
+                // 获取阅读时间
+                setReadTime: function () {
+                    clearInterval(this.readtimer);
+                    var n = 0;
+                    this.readtimer = setInterval(() => {
+                        ++n;
+                        this.read_time = this.getTimes(n);
+                    }, 1000);
                 },
 
                 init: function () {

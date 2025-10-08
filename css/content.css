@@ -178,8 +178,9 @@ body {
 .bg4 input {
     color: #ccc;
 }
-.bg4 #menu * {
+.bg4 #menu .list-group-item,.bg4 #menu span,.bg4 #menu input {
     background-color: #1a1a1a;
+    /* background-color: rgba(0, 0, 0, .5) */
 }
 .bg4 #menu {
     color: #ccc;
@@ -234,7 +235,7 @@ body {
     overflow-y: auto;
     overflow-x:hidden;
     color: #323232;
-    background-color: rgba(0, 0, 0, .5);
+    background-color: rgba(0, 0, 0, .6);
     font-family: none;
 }
 
