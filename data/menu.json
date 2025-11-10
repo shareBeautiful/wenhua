@@ -904,7 +904,7 @@
     "type": "nahuaijin",
     "open": false,
     "memory": true,
-    "hide": true,
+    "hide": false,
     "list": [
       {
         "id": 1,
@@ -1183,7 +1183,7 @@
     "tit": "虚空济",
     "type": "xukongji",
     "open": false,
-    "pwd": true,
+    "pwd": false,
     "memory": true,
     "word": true,
     "list": [

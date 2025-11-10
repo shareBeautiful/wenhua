@@ -612,7 +612,7 @@
                 return num < 10 ? '0' + num : num;
             },
 
-            copyVideoSrc: function(){
+            copyVideoSrc: function () {
                 var textareaC = document.createElement("input");
                 textareaC.setAttribute("readonly", "readonly"); //设置只读属性防止手机上弹出软键盘
                 textareaC.value = this.videoSrc;
@@ -645,6 +645,7 @@
                     this.setDom()
                     this.copyVideoSrc()
                 })
+                localStorage.setItem('xkj_showAll', this.showAll)
             },
 
             // 过滤只有老师数据
@@ -663,13 +664,19 @@
 
                 // 定位选中的视频信息
                 var re_name = /逢阳|孙菁|陶陶|佳涵|坤玉|海妮/
+                xkj_showAll = localStorage.getItem('xkj_showAll');
+                this.showAll = xkj_showAll == 'true'? true : false;
+
                 this.list.forEach((item, i) => {
                     item.video_time = item.video_time ? this.myTime(item.video_time) : '';
                     item.order = this.padding(i + 1);
                     // 是否显示其它老师直播
-                    if (item.title.indexOf('直播') !== -1) {
-                        item.show = re_name.test(item.title);
+                    if (this.showAll) {
+                        if (item.title.indexOf('直播') !== -1) {
+                            item.show = re_name.test(item.title);
+                        }
                     }
+
                     item.title = item.title.replace(/直播音频回放|（免费）/img, '');
                     // item.video_url = item.video_url.replace('http://', 'https://');
 
