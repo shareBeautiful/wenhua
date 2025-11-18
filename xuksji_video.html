@@ -255,14 +255,14 @@
             <div class="panel-heading h">
                 <div class="h-r">
                     <span @click="switchAll">{{title.slice(0,15)}}</span>
-                    <select class="form-control select" @change="selectTimes">
+                    <!-- <select class="form-control select" @change="selectTimes">
                         <option value="1">播完当前</option>
                         <option value="0" v-if="selectJi>6">全部循环</option>
                         <option :value="n" v-for="n in selectTime">{{n}}分钟</option>
                         <option :value="n" v-if="n>1" v-for="n in selectJi" :key="n">
                             播完{{n}}集
                         </option>
-                    </select>
+                    </select> -->
                     <!-- <input type="text" id="selectTs" readonly   />  -->
                     <!-- <span class="rtime">{{rtime}}</span> -->
                     <span class="rtime" @click="copyVideoSrc()" v-show="play_pg">{{play_pg}}</span>
