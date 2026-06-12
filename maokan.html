@@ -31,7 +31,7 @@
             <div class="panel-body">
                 <div class="box">
                     <!-- @click="toPage(item)" -->
-                    <a :href="item.href" :download="key? item.href : null" class="box-item" target="_blank" :key="idx"
+                    <a :href="item.href" download class="box-item" target="_blank" :key="idx"
                         v-for="(item,idx) in subList" v-show="!item.hide">
                         <span class="order">{{sortStatus? subList.length-idx : idx+1}}.</span>
                         <span class="title">{{item.title}}_</span>
@@ -60,10 +60,12 @@
         if (key === 'fjxz') { // 修改佛经下载本地地址
             // 本地地址
             res.forEach(item => {
+                item.title = item.title.replace('_', '');
                 item.href = './pdf/' + item.title + '.pdf';
             })
             // 远程地址
             /* res.forEach(item => {
+                item.title = item.title.replace('_', '');
                 item.href = '/whfiles/pdf/' + item.title + '.pdf';
             }) */
 
