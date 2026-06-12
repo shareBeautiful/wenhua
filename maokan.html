@@ -57,9 +57,15 @@
     document.title = title;
     $echo.getJson(path, opt).then(function (res) {
         if (key === 'fjxz') { // 修改佛经下载本地地址
-            res.forEach(item => {
+            // 本地地址
+            /*res.forEach(item => {
                 item.href = './pdf/' + item.title + '.pdf';
+            })*/
+            // 远程地址
+            res.forEach(item => {
+                item.href = '/whfiles/pdf/' + item.title + '.pdf';
             })
+
         }
         new Vue({
             el: '#app',
