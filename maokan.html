@@ -30,7 +30,8 @@
             </div>
             <div class="panel-body">
                 <div class="box">
-                    <a href="javascript:" @click="toPage(item)" class="box-item" :key="idx"
+                    <!-- @click="toPage(item)" -->
+                    <a :href="item.href" :download="key? item.href : null" class="box-item" :key="idx"
                         v-for="(item,idx) in subList" v-show="!item.hide">
                         <span class="order">{{sortStatus? subList.length-idx : idx+1}}.</span>
                         <span class="title">{{item.title}}_</span>
@@ -71,6 +72,7 @@
             el: '#app',
             data: function () {
                 return {
+                    key: key,
                     list: res,
                     subList: res,
                     keyword: '',
