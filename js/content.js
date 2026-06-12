@@ -93,7 +93,7 @@ function getContent() {
     // if (keyword) type = type + '_' + keyword;  // 如果是关键名词加上他的关键词
     // if (dirType === 'ximalaya') type = type + '_' + idx;// 如果是喜马拉雅过来的加上idx
     if (keyword === 'dzj' || keyword === 'qldzj' || keyword === 'brws') { // 大藏经 改成 远程地址
-        var url = './whfiles/' + dirType + '/' + file + '.json';
+        var url = '/whfiles/' + dirType + '/' + file + '.json';
     }else {
         var url = './data/' + dirType + '/' + file + '.json';
     }
