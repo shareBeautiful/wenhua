@@ -178,7 +178,7 @@
             var currType = itemA.type ? itemA.type : itemB.type;
             var params = { key: currItem.key, type: currType };
             if (currItem.href) {
-              if (currType == 'richang') { // 判断日常去掉type参数
+              if (currType == 'fozhou') { // 判断日常去掉type参数
                 return $echo.open(currItem.href, { key: currItem.key }, "get");
               } else {
                 return $echo.open(currItem.href, params, "get");
@@ -219,11 +219,10 @@
 
           // 跳转事件 已废弃
           toPage: function () {
+             var params = { key: this.currItem.key, type: this.currType };
             if (this.currItem.href) {
-              var params = { key: this.currItem.key, type: this.currType };
               $echo.open(this.currItem.href, params, true);
             } else {
-              var params = { type: this.currType, key: this.currItem.key };
               // var type = $echo.getBrowser('pc');
               $echo.open("content", params, true);
             }
