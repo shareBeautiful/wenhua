@@ -92,7 +92,12 @@ function getContent() {
     // 暂时不需要存直接请求
     // if (keyword) type = type + '_' + keyword;  // 如果是关键名词加上他的关键词
     // if (dirType === 'ximalaya') type = type + '_' + idx;// 如果是喜马拉雅过来的加上idx
-    var url = './data/' + dirType + '/' + file + '.json';
+    if (keyword === 'dzj' || keyword === 'qldzj' || keyword === 'brws') { // 大藏经 改成 远程地址
+        var url = './whfiles/' + dirType + '/' + file + '.json';
+    }else {
+        var url = './data/' + dirType + '/' + file + '.json';
+    }
+    
     new Promise((r, s) => {
         $echo.checkVersion(type);
         // 如果是有关键名词过来，或者是 喜马拉雅过来则不需要缓存
