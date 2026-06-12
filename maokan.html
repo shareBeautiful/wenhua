@@ -34,8 +34,8 @@
                     <a :href="item.href" download class="box-item" target="_blank" :key="idx"
                         v-for="(item,idx) in subList" v-show="!item.hide">
                         <span class="order">{{sortStatus? subList.length-idx : idx+1}}.</span>
-                        <span class="title">{{item.title}}_</span>
-                        <span class="time" v-if="item.date">{{item.date}}</span>
+                        <span class="title">{{item.title}}</span>
+                        <span class="time" v-if="item.date">_{{item.date}}</span>
                     </a>
                 </div>
             </div>
@@ -60,7 +60,6 @@
         if (key === 'fjxz') { // 修改佛经下载本地地址
             // 本地地址
             res.forEach(item => {
-                item.title = item.title.replace('_', '');
                 item.href = './pdf/' + item.title + '.pdf';
             })
             // 远程地址
