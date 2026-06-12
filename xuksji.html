@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="Cache" content="no-cache">
+    <meta name=App-Config content="fullscreen=yes,useHistoryState=yes,transition=yes">
+    <meta content=yes name=apple-mobile-web-app-capable>
+    <meta content=yes name=apple-touch-fullscreen>
+    <meta content="telephone=no,email=no" name=format-detection>
+    <meta name="theme-color" content="#1a1a1a">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover">
+    <link rel="stylesheet" href="css/maokan.css">
+    <title></title>
+    <style>
+        .box-item {
+            padding: 10px 0;
+        }
+
+        .box-item .head {
+            position: relative;
+            width: 100px;
+            height: 72px;
+            overflow: hidden;
+        }
+
+        .box-item .pic {
+            width: 100%;
+            height: 100%;
+            transform: scale(1);
+            transition: transform .5s;
+        }
+
+        .box-item .pic:hover {
+            transform: scale(1.5);
+            transition: transform .3s;
+        }
+
+        .box-item .info {
+            flex: 1;
+            padding-left: 15px;
+        }
+
+        .info .time {
+            display: flex;
+        }
+
+        .info .time span:first-child {
+            padding-right: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" v-cloak :class="{'dark': isDark}">
+        <div class="input-group fixed search-box">
+            <input type="text" class="form-control" @input="search" v-model="keyword" placeholder="搜索...">
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading h">
+                <div class="h-r"></div>
+                <div><span class="tag" :class="{active: item.id === tagId}" v-for="item in tags" :key="item.id"
+                        @click="switchTag(item.id)">
+                        {{item.tit}}
+                    </span>
+                </div>
+                <div class="h-l">
+                    <span @click="switchSort">{{ sortStatus?"倒序↑":"正序↓" }}</span>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="box" v-for="(v,k) in allList" :key="k" v-show="k==tagId">
+                    <!-- @click="toPage(item)" -->
+                    <a :href="item.href" class="box-item" v-for="(item,idx) in v" :key="item.id" v-show="!item.hide"
+                        target="_blank">
+                        <div class="head">
+                            <img class="pic" :src="item.img_url" alt="" />
+                        </div>
+                        <div class="info">
+                            <div>
+                                <span class="order">{{sortStatus? list.length-idx : idx+1}}.</span>
+                                <span class="title">{{item.title}}</span>
+                                <span v-if="item.video_time">{{item.video_time}}</span>
+                            </div>
+                            <div class="time" v-if="item.date">
+                                <span>时间：{{item.date}}</span>
+                            </div>
+                            <div class="time" v-if="item.menu_num">
+                                <span>共：{{item.menu_num}}讲 </span>
+                                <span> 阅读：{{getCount(item.plays_num)}} 次</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="js/comm.js"></script>
+<script>
+    var that;
+    var id = $echo.getParams('id');
+    new Vue({
+        el: '#app',
+        data: function () {
+            return {
+                list: [],
+                allList: {},
+                keyword: '',
+                sortStatus: false,
+                isDark: false,
+                title: '虚空济',
+                apiUrl: 'https://api2022.xukongji.com',
+                tags: [
+                    { id: 1, tit: '视频' },
+                    { id: 2, tit: '音频' },
+                    { id: 13, tit: '直播' },
+                    { id: 3, tit: '文字' }
+                ],
+                tagId: 13    // 默认选择的标签
+            }
+        },
+        methods: {
+            // 跳转
+            toPage: function (item) {
+                $echo.open(item.href)
+            },
+
+            // 搜索
+            search: function () {
+                this.list.forEach((item, idx) => {
+                    if ((idx + item.pinyin + item.title + item.date).indexOf(this.keyword) > -1) {
+                        item.hide = false
+                    } else {
+                        item.hide = true
+                    }
+                });
+            },
+            getCount: function (n) {
+                if (n >= 10000) {
+                    n = n / 10000 + 'w'
+                }
+                return n;
+            },
+            // 切换排序
+            switchSort: function () {
+                this.sortStatus = !this.sortStatus;
+                Object.keys(this.allList).forEach(item => {
+                    this.allList[item].reverse();
+                })
+            },
+
+            // 将秒转换成分和秒
+            myTime: function (time) {
+                var hr = ~~(time / 3600);
+                var min = ~~((time % 3600) / 60);
+                var sec = time % 60;
+                var sec_min = "";
+                if (hr > 0) {
+                    sec_min += "" + hr + ":" + (min < 10 ? "0" : "");
+                }
+                sec_min += "" + min + ":" + (sec < 10 ? "0" : "");
+                sec_min += "" + sec;
+                return sec_min;
+            },
+
+            // 切换标签
+            switchTag: function (tagId) {
+                var path, body;
+                if (id) {
+                    tagId = $echo.getParams('tid');
+                    path = this.apiUrl + '/api/article/menu';
+                    body = JSON.stringify({ "a_id": id });
+                } else {
+                    path = this.apiUrl + '/api/article/list';
+                    body = JSON.stringify({ "page_size": 100, "page_no": 1, "c_id": tagId });
+                }
+                this.tagId = parseInt(tagId);
+                sessionStorage.setItem('tagId', this.tagId);
+                if (this.allList[tagId + '']) {
+                    this.list = this.allList[tagId + '']
+                    this.search();
+                    return false;
+                }
+
+                var opt = { method: "post", body: body };
+                $echo.getJson(path, opt).then((res) => {
+                    res = res['data'];
+                    if (id) { // 详情页面
+                        this.sortStatus = true;
+                        res.reverse();
+                        this.tags = this.tags.filter(item => {
+                            if (item.id === this.tagId) return item
+                        });
+                        this.title = res[0]['title'].slice(0, 11);
+                        res.forEach(item => {
+                            if (this.tagId == 3) {
+                                res.forEach(item => item.href = this.apiUrl + '/api/article/menuInfoWeb?id=' + item.id)
+                            } else {
+                                // item.href = item.video_url;
+                                item.href = './xuksji_video.html?id=' + id + '&vid=' + item.id
+                                item.video_time = this.myTime(item.video_time)
+                            }
+                        })
+                    } else { // 课程页面
+                        if (this.sortStatus) res.reverse();
+                        let reTit = /道德经.*?版本一/im
+                        res.forEach(item => {
+                            if (this.tagId === 3) {
+                                // item.href = './xuksji.html?id=' + item.id + '&tid=' + tagId;
+                                item.href = './xuksji_text.html?id=' + item.id;
+                            } else {
+                                item.href = './xuksji_video.html?id=' + item.id;
+                                // 判断道德经课程 给id为固定的lz
+                                if (reTit.test(item.title)) {
+                                    item.href = item.href + '&sid=lz';
+                                }
+
+                            }
+                            item.date = item.add_time.slice(0, 11)
+                        })
+
+                    }
+                    document.title = this.title;
+                    // 过滤论语
+                    /* if (this.tagId == 1 || this.tagId == 2) {
+                        var re_ke = /论语|孟子|老子|道德/im
+                        this.list = res.filter(item => {
+                            return re_ke.test(item.title);
+                        });
+                    } else {
+                        this.list = res;
+                    } */
+                    this.list = res;
+                    // 自定义添加心经的内容
+                    if ([2, 3].includes(this.tagId)) {
+                        this.list.push({
+                            "id": 1,
+                            "column_id": 1,
+                            "title": this.tagId === 2 ? "《心经》1-40讲浅解" : "《心经》文字浅解",
+                            "img_url": "./images/xj_pic.png",
+                            "zhaiyao": "",
+                            "date": "2023-05-20",
+                            "type": 3,
+                            "plays_num": 0,
+                            "menu_num": 40,
+                            "href": this.tagId === 2 ? './xuksji_video.html?id=xj' : './content.html?type=xukongji&key=xjw'
+                        })
+                        if (this.tagId === 2) {
+                            this.list.push({
+                                "id": 280,
+                                "title": "《道德经》原文诵读",
+                                "img_url": "https://api2022.xukongji.com/uploadFile/uploadFile/20240223020236-65d78c3ccce17.jpg",
+                                "date": '2024-2-21',
+                                "type": 2,
+                                "menu_num": 3,
+                                "href": './xuksji_video.html?id=280'
+                            })
+                        }
+
+                    }
+
+                    this.search();
+                    this.$set(this.allList, tagId + '', this.list)
+                })
+                window.scrollTo(0, 0);
+            }
+        },
+        created: function () {
+            that = this;
+        },
+        mounted: function () {
+            var tagId = sessionStorage.getItem('tagId');
+            this.tagId = tagId ? parseInt(tagId) : this.tagId;
+            this.switchTag(this.tagId)
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                this.isDark = true;
+            } else {
+                this.isDark = false;
+            }
+        }
+    })
+</script>
+
+</html>

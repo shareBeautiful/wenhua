@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="Cache" content="no-cache">
+    <meta name=App-Config content="fullscreen=yes,useHistoryState=yes,transition=yes">
+    <meta content=yes name=apple-mobile-web-app-capable>
+    <meta content=yes name=apple-touch-fullscreen>
+    <meta content="telephone=no,email=no" name=format-detection>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <meta name=viewport
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+    <title>个人笔记</title>
+</head>
+<style>
+    [v-cloak] {
+        display: none
+    }
+
+    html {
+        max-width: 960px;
+        margin: 0 auto;
+        height: 100%;
+        -webkit-user-select: none;
+
+    }
+    body {
+        background-image: url('images/bg.jpg');
+        background-repeat: repeat;
+    }
+
+    .panel .panel-heading {
+        font-size: 18px;
+    }
+
+    .panel {
+        margin-top: 36px;
+        background: transparent;
+    }
+
+    .box {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+    }
+
+    .intro-box {
+        position: fixed;
+        left: 0;
+        top: 0;
+        z-index: 1;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, .3)
+    }
+
+    .intro-wrap {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 90%;
+        min-height: 50px;
+
+        background: #fff;
+        z-index: 2;
+        border-radius: 10px;
+        box-shadow: #e3e3e3 0 0 5px;
+        padding: 15px;
+    }
+
+    .intro-box .close {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background: #ac3a39;
+        position: absolute;
+        right: -10px;
+        top: -10px;
+        z-index: 10;
+    }
+
+    .box-item {
+        display: flex;
+        padding: 6px;
+        width: 100%;
+        font-size: 18px;
+        color: #ac3a39;
+        vertical-align: bottom
+    }
+
+    .intro-box .intro {
+        font-size: 20px;
+        line-height: 1.5;
+        max-height: 80vh;
+        overflow-y: auto;
+        text-align: justify;
+    }
+
+    .fixed {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+    }
+
+    .form-control {
+        font-size: 16px;
+        text-align: center;
+        height: 36px;
+    }
+    .line {
+        width: 100%;
+        margin: 10px 0;
+        border-bottom: 5px dashed #666;
+    }
+</style>
+<body>
+<div id="app" v-cloak>
+    <div class="input-group fixed">
+        <input type="text" class="form-control" @input="search" v-model="keyword" placeholder="Search for...">
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            个人笔记
+        </div>
+        <div class="panel-body">
+            <div class="box">
+                <a href="javascript:"
+                   @click="toPage(item)" class="box-item" :key="idx" v-for="(item,idx) in subList">
+                    {{subList.length-idx}}. {{item.title}}
+                </a>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+</body>
+<script src="js/comm.js"></script>
+<script>
+    var that;
+    var list = [
+        {title: '老师语录', id: 'bGsPcTN8'},
+        {title: '佛法名词', id: 'EBCjs6mD'}
+    ]
+    new Vue({
+        el: '#app',
+        data: function () {
+            return {
+                list: list,
+                subList: list,
+                keyword: '',
+            }
+        },
+        methods: {
+            // 跳转
+            toPage: function (item) {
+                var href = "http://note.youdao.com/s/"
+                var otype = $echo.getBrowser('pc')? 'open':null;
+                $echo.open(href+item.id,{}, otype)
+            },
+            // 搜索
+            search: function () {
+                this.subList = this.list.filter(item => {
+                    if (item.title.indexOf(this.keyword) > -1) {
+                        return item;
+                    }
+                })
+            },
+        },
+        created: function () {
+            that = this;
+        },
+        mounted: function () {
+
+        }
+    })
+
+
+</script>
+
+</html>

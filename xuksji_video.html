@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="Cache" content="no-cache">
+    <meta name=App-Config content="fullscreen=yes,useHistoryState=yes,transition=yes">
+    <meta content=yes name=apple-mobile-web-app-capable>
+    <meta content=yes name=apple-touch-fullscreen>
+    <meta content="telephone=no,email=no" name=format-detection>
+    <meta name="theme-color" content="#1a1a1a">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name=viewport
+        content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+    <link rel="stylesheet" href="css/maokan.css">
+    <link rel="stylesheet" href="css/video.css">
+    <!-- <link rel="stylesheet" href="./js/jqselectortime/mobileSelect.css" />  -->
+    <title></title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+
+        #app {
+            min-height: 89vh;
+            width: 100%;
+            padding: 10px 5px;
+        }
+
+        #video-list {
+            position: relative;
+            width: 100%;
+            height: auto;
+        }
+
+        #video-list::-webkit-scrollbar {
+            width: 0 !important
+        }
+
+        #video-box {
+            position: sticky;
+            position: -webkit-sticky;
+            top: 0;
+            z-index: 3;
+            background: #000;
+        }
+
+        .video-wrapper {
+            position: relative;
+        }
+
+        .video-wrapper .tip-time {
+            position: absolute;
+            left: 5px;
+            top: 5px;
+            font-size: 14px;
+            color: #ac3a39;
+            /* text-shadow: 1px 1px 1px red; */
+        }
+
+        .video-js .vjs-tech {
+            border-radius: 20px;
+        }
+
+        #my-video {
+            width: 100%;
+            max-width: 720px;
+            min-height: 50px;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            border: 1px solid #222;
+            border-radius: 20px;
+            object-fit: cover;
+
+        }
+
+        #video-box .audio {
+            position: static;
+            width: 100%;
+            height: 50px !important;
+        }
+
+        #video-box .video {
+            position: static;
+            width: 100%;
+            /* height: 56vw;
+            max-height: 405px; */
+        }
+
+        .panel-heading {
+            align-items: center;
+            font-size: 16px;
+            color: #b3b3b3;
+            padding: 10px 5px;
+            border: 1px solid #ddd;
+            margin-top: 10px;
+            margin-bottom: 15px;
+        }
+
+        .panel-heading .rtime {
+            font-size: 14px;
+        }
+
+
+
+        .h {
+            position: sticky;
+            top: 0;
+            background: #000;
+        }
+
+        #video-box .select {
+            display: inline-block;
+            height: 24px;
+            color: #ac3a39 !important;
+            padding: 0 5px;
+            margin: 0 5px;
+            font-size: 14px;
+        }
+
+        #video-box .select option {
+            color: #ac3a39 !important;
+            padding: 3px 0 !important;
+        }
+
+        .video-js .vjs-control-bar {
+            display: flex;
+            background-color: rgba(43, 51, 63, 0.9);
+        }
+
+        .box-item {
+            position: relative;
+        }
+
+        .box-item.active {
+            color: #b3b3b3;
+
+        }
+
+        .box-item.no {
+            text-decoration: line-through;
+        }
+
+        .box-item .info {
+            position: relative;
+            z-index: 1;
+        }
+
+
+        .box-item .pg {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            /* background-color: rgba(0, 128, 0,.3); */
+            background: linear-gradient(90deg, rgba(5, 83, 136, .5), rgba(7, 176, 228, .5));
+            border-bottom: 2px solid;
+            border-image-source: linear-gradient(to right, rgb(5, 83, 136), rgb(7, 176, 228));
+            border-image-slice: 1;
+        }
+
+        .box-item .pg .pg-inner {
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 100%;
+            height: calc(100% + 2px);
+        }
+
+        .white {
+            background-color: #fff;
+        }
+
+        .box-item .pg .pg-num {
+            position: absolute;
+            right: -33px;
+            bottom: -10px;
+            font-size: 12px;
+        }
+
+        /* 以下为播放器自定义设置 */
+
+        @media screen and (max-width: 640px) {
+            .video-js .vjs-control-bar {
+                bottom: -10px;
+                z-index: 2;
+            }
+        }
+
+        /* 显示时间按钮通样式 */
+        .video-js .vjs-time-control {
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+
+        /* 已播时间和总时间样式 */
+        .video-js .vjs-current-time,
+        .video-js .vjs-duration {
+            display: inline;
+        }
+
+        /* 分割线‘/’样式 */
+        .video-js .vjs-time-divider {
+            display: inline;
+            padding: 0;
+            min-width: auto;
+        }
+
+        /* 进度条样式 */
+        .video-js .vjs-progress-control .vjs-progress-holder {
+            margin: 0 5px;
+        }
+
+        /* 后台播放按钮样式 */
+        .video-js .vjs-picture-in-picture-control {
+            width: 3em;
+        }
+
+        /* 全屏播放按钮样式 */
+        .video-js .vjs-fullscreen-control {
+            width: 3em;
+        }
+
+        .lock {
+            padding: 0 12px;
+        }
+
+        .lock .icon {
+            fill: #b3b3b3;
+            width: 26px;
+            height: 26px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" v-cloak :class="{dark: isDark}">
+        <!-- autoplay="autoplay" -->
+        <div id="video-box" v-show="videoSrc">
+            <div class="video-wrapper">
+                <video id="my-video" class="video-js" controls preload="auto" x5-playsinline="false" playsinline="false"
+                    webkit-playsinline="false">
+                    <!-- <source :src="videoSrc" type="video/mp4" /> -->
+                </video>
+                <div class="tip-time" v-if="countDown">{{countDown}}</div>
+            </div>
+
+            <div class="panel-heading h">
+                <div class="h-r">
+                    <span @click="switchAll">{{title.slice(0,15)}}</span>
+                    <!-- <select class="form-control select" @change="selectTimes">
+                        <option value="1">播完当前</option>
+                        <option value="0" v-if="selectJi>6">全部循环</option>
+                        <option :value="n" v-for="n in selectTime">{{n}}分钟</option>
+                        <option :value="n" v-if="n>1" v-for="n in selectJi" :key="n">
+                            播完{{n}}集
+                        </option>
+                    </select> -->
+                    <!-- <input type="text" id="selectTs" readonly   />  -->
+                    <!-- <span class="rtime">{{rtime}}</span> -->
+                    <span class="rtime" @click="copyVideoSrc()" v-show="play_pg">{{play_pg}}</span>
+                </div>
+                <div class="lock" @click="switchLock">
+                    <svg v-if="isLock" t="1710837960332" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                        xmlns="http://www.w3.org/2000/svg" p-id="7004" width="32" height="32">
+                        <path
+                            d="M385.150849 385.662338l-128.895105 0 0-150.377622q0-49.102897 19.436563-91.556444t53.706294-74.677323 80.815185-50.637363 101.786214-18.413586q49.102897 0 94.625375 18.413586t80.815185 50.637363 56.263736 74.677323 20.971029 91.556444l0 150.377622-123.78022 0 0-121.734266q0-64.447552-35.804196-99.74026t-97.182817-35.292707q-55.240759 0-88.999001 35.292707t-33.758242 99.74026l0 121.734266zM826.053946 447.040959q27.62038 0 47.568432 19.948052t19.948052 47.568432l0 317.122877q0 27.62038-9.718282 51.66034t-26.597403 41.942058-39.896104 28.131868-50.637363 10.22977l-516.603397 0q-27.62038 0-50.125874-10.22977t-38.361638-27.108891-24.551449-39.384615-8.695305-48.07992l0-324.283716q0-27.62038 19.436563-47.568432t47.056943-19.948052l61.378621 0 128.895105 0 255.744256 0 123.78022 0 61.378621 0z"
+                            p-id="7005"></path>
+                    </svg>
+                    <svg v-else t="1710837936688" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                        xmlns="http://www.w3.org/2000/svg" p-id="6858" width="32" height="32">
+                        <path
+                            d="M768.25422 0q48.810328 0 94.061569 18.303873t80.333664 50.33565 56.436941 74.740814 21.354518 91.519364l0 150.49851-123.042701 0 0-122.025819q0-64.063555-36.099305-99.654419t-97.112214-35.590864q-54.911619 0-88.468719 35.590864t-33.5571 99.654419l0 124.059583-128.12711 0 0-152.532274q0-48.810328 19.320755-91.519364t53.386296-74.740814 80.333664-50.33565 101.179742-18.303873zM766.220457 693.513406l0 87.451837 0 47.793446q0 27.455809-9.660377 51.860973t-26.438928 41.692155-39.658391 27.455809-50.33565 10.168818l-514.542205 0q-27.455809 0-49.82721-9.660377t-38.641509-26.438928-24.913605-39.14995-8.643496-47.793446l0-323.368421q0-28.472691 19.829196-47.793446t46.268123-19.320755l629.449851 0q28.472691 0 47.793446 19.320755t19.320755 47.793446l0 179.988083z"
+                            p-id="6859"></path>
+                    </svg>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div id="video-list">
+            <div class="panel panel-default">
+
+                <div class="panel-body">
+                    <div class="box">
+                        <!-- @click="toPage(item)" -->
+                        <div class="box-item" v-for="(item,idx) in list" :key="item.id" @click="switchVideo(item, idx)"
+                            v-show="!item.show" :ref="'v'+item.id"
+                            :class="{active:item.id === currId, 'no': !item.video_url}" :video-src="item.video_url">
+                            <div class="info">
+                                <div>
+                                    <span class="order">{{item.order}}.</span>
+                                    <span class="title">{{item.title}}</span>
+                                    <span v-if="item.video_time">{{item.video_time}}</span>
+                                </div>
+                                <div class="time" v-if="item.date">
+                                    <span>时间：{{item.date}}</span>
+                                </div>
+                            </div>
+                            <div class="pg" v-if="item.id === currId && play_pg !=0">
+                                <div class="pg-inner" :class="{dark: isDark, white: !isDark}"
+                                    :style="{width: 'calc(100% - '+play_pg+')'}"></div>
+                                <!-- <div class="pg-num">{{play_pg}}</div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="js/vue.js"></script>
+<script type="text/javascript" src="js/video.js"></script>
+<script>
+    var that;
+    new Vue({
+        el: '#app',
+        data: function () {
+            return {
+                title: '虚空济',
+                id: null,           // 课程的id
+                list: [],
+                isDark: false,
+                isVideo: 0, // 0 无状态，1 视频，2 音频
+                apiUrl: 'https://api2022.xukongji.com',
+                videoSrc: '',
+                rtime: 0,
+                currId: 0,
+                currTime: 0,
+                currIdx: 0,
+                currItem: {},
+                elevideo: null,
+                player: null,
+                options: {},        // 视频设置
+                xkj_video: {},      // 保存视频的信息
+                saveTimer: null,   // 定时保存进度定时器
+                selectTimer: null, // 选择定时暂停的定时器
+                selectTime: [],      // 选择定时的时间分钟
+                selectJi: 5,          // 可以选择定时播放的集数
+                currTimes: 0,      // 当前剩余的集数
+                countDown: 0,       // 选择倒计时显示
+                play_pg: 0,        // 播放进度0-100%
+                showAll: true,    // 是否显示所有
+                isLock: false,      // 是否锁定
+            }
+        },
+        methods: {
+            // 获取url参数
+            getParams: function (name) {
+                var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+                var r = window.location.search.substr(1).match(reg);
+                if (r != null) return decodeURI(r[2]);
+                return null;
+            },
+
+            // 将秒转换成分和秒
+            myTime: function (time) {
+                var hr = ~~(time / 3600);
+                var min = ~~((time % 3600) / 60);
+                var sec = time % 60;
+                var sec_min = "";
+                if (hr > 0) {
+                    sec_min += "" + hr + ":" + (min < 10 ? "0" : "");
+                }
+                sec_min += "" + min + ":" + (sec < 10 ? "0" : "");
+                sec_min += "" + sec;
+                return sec_min;
+            },
+            getJson: function (url, config) {
+                opt = {
+                    headers: {
+                        'Cache-Control': 'public,max-age=7200', //不缓存
+                        'Content-Type': 'application/json'
+                    }
+                }
+                if (config) Object.assign(opt, config)
+                return fetch(url, opt).then((res) => {
+                    if (res.ok) {
+                        // text() 获取字符串，json()获取json数据
+                        return res.json()
+                    } else {
+                        if (res.status === 404) {
+                            alert('当前网页维护中...，请点击确定关闭')
+                            window.close();
+                        }
+                        // 服务器异常
+                        throw Error('')
+                    }
+                }).catch((error) => {
+                    console.log('errorMessage', error)
+                })
+            },
+
+            // 保存本地视频位置
+            saveVideo: function () {
+                var xkj_video = localStorage.getItem('xkj_video');
+                if (xkj_video) this.xkj_video = JSON.parse(xkj_video);
+                // this.xkj_video['v' + this.id] = this.currId;
+                // localStorage.setItem('xkj_video', JSON.stringify(this.xkj_video));
+                this.xkj_video['vid'] = this.currId;
+                localStorage.setItem('v_' + this.id, JSON.stringify(this.xkj_video))
+            },
+
+            // 修改url
+            changeUrl: function (key, value) {
+                var uri = window.location.href;
+                var newurl;
+                if (!value) {
+                    newurl = uri;
+                }
+                var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+                var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+                if (uri.match(re)) {
+                    newurl = uri.replace(re, '$1' + key + "=" + value + '$2');
+                }
+                else {
+                    newurl = uri + separator + key + "=" + value;
+                }
+                //向当前url添加参数，没有历史记录
+                window.history.replaceState({
+                    path: newurl
+                }, '', newurl);
+            },
+
+            // 切换视频播放
+            switchVideo: function (item, idx, first) {
+                if (this.isLock) {
+                    return;
+                }
+                if (!item.video_url) {
+                    alert('此视频还不能播放！')
+                    return false;
+                }
+                if (this.currId === item.id) { // 是否是暂停状态
+                    this.player.paused() ? this.player.play() : this.player.pause();
+                    return false
+                };
+
+                // 判断是视频还是音频更新样式
+                this.isVideo = item.video_url.indexOf('.mp4') > -1 ? 1 : 2;
+                var $video = document.getElementById('my-video_html5_api');
+                if (this.isVideo === 1) {
+                    $video.classList.remove('audio')
+                    $video.classList.add('video')
+                } else {
+                    $video.classList.remove('video')
+                    $video.classList.add('audio')
+                }
+
+                // 更新视频连接
+                this.videoSrc = item.video_url;
+                this.title = this.padding(idx + 1) + '. ' + item.title;
+                this.currId = item.id;
+                this.currIdx = idx;
+                document.title = item.title;
+
+                this.player.src(this.videoSrc);
+                this.player.load();
+                this.$nextTick(() => {
+                    // 第一次进入页面时候调用
+                    if (first) {
+                        // 设置当前默认播放时间 
+                        this.player.currentTime(this.currTime);
+                        // 已播放的时间
+                        this.rtime = this.myTime(parseInt(this.currTime));
+                        setTimeout(() => {
+                            this.player.pause();
+                        }, 100)
+                        this.sumPer(this.currTime)
+
+                    } else {
+                        this.player.play();
+                        this.setPlayPos(); // 清零
+                    }
+
+                    // this.changeUrl('vid', this.currId) // 改变的URL
+                    // 开启自动保存播放进度
+                    this.savePlayPos();
+                })
+
+
+                // this.$nextTick(() => {
+                //     this.elevideo.load()
+                // })
+                this.setTimes(); // 设置当前可定时的集数
+                this.saveVideo(); // 保存当前播放的集
+            },
+
+            // 选择定时播放集数
+            selectTimes: function (e) {
+                var times = Number(e.target.value);
+                this.player.off('ended'); // 取消结束播放事件
+                clearInterval(this.selectTimer); // 清楚定时分钟定时器
+                this.countDown = 0;
+                if (times === 0) {
+                    // 全部循环
+                    this.player.on('ended', () => {
+                        var nextIdx = this.currIdx + 1;
+                        var item = this.list[nextIdx];
+                        this.switchVideo(item, nextIdx);
+                    })
+                } else if (times === 1) { // 播完当前
+                    this.player.off('ended'); // 取消结束播放事件
+                } else if (times < 10) {
+                    // 开启定时
+                    this.player.on('ended', () => {
+                        times--;
+                        if (times === 0) {
+                            this.player.off('ended')
+                        } else {
+                            var nextIdx = this.currIdx + 1;
+                            var item = this.list[nextIdx];
+                            this.switchVideo(item, nextIdx);
+                        }
+                    })
+                } else {
+                    times = times * 60;
+                    this.countDown = this.myTime(times);
+                    this.selectTimer = setInterval(() => {
+                        this.countDown = this.myTime(times);
+                        if (times === 0) {
+                            clearInterval(this.selectTimer);
+                            this.player.pause();
+                        }
+                        --times;
+                    }, 1000)
+                }
+            },
+
+            // 获取可设置的集数
+            setTimes: function () {
+                var len = this.list.length; // 获取全部集数
+                var currIdx = this.currIdx; // 当前集数位置
+                var times = 6; // 设置最多集数
+                if (currIdx + times > len) {
+                    this.selectJi = len - currIdx;
+                } else {
+                    this.selectJi = times;
+                }
+            },
+
+            // 开启自动播放下一集 废弃
+            switchAuto: function () {
+                this.$nextTick(() => {
+                    this.elevideo.addEventListener('ended', function () { //结束
+                        for (var idx = 0; idx < this.list.length; idx++) {
+                            if (idx === this.currIdx + 1) {
+                                var item = this.list[idx];
+                                this.switchVideo(item, idx);
+                                break;
+                            }
+                        }
+                    }.bind(this), false);
+                })
+            },
+
+            // 设置当前播放视频列表的位置
+            setDom: function () {
+                this.$nextTick(() => {
+                    document.title = this.currItem.title;
+                    var dom = this.$refs['v' + this.currItem.id];
+                    dom = dom[0]
+                    var toH = dom.offsetTop
+                    window.scrollTo(0, toH - 80)
+                });
+            },
+
+            // 获取设置视频播放位置
+            savePlayPos: function () {
+                clearInterval(this.saveTimer);
+                this.saveTimer = setInterval(() => {
+                    this.setPlayPos();
+                }, 3000);
+            },
+
+            // 计算播放百分比
+            sumPer(time) {
+                // 计算播放进度
+                var duration = null;
+                let timer = setInterval(() => {
+                    duration = this.player.duration();
+                    if (duration) {
+                        clearInterval(timer);
+                        this.play_pg = (time / duration * 100).toFixed(2) + '%';
+                    }
+                })
+            },
+
+            // 获取播放位置
+            setPlayPos: function () {
+
+                var time = this.player.currentTime();
+                this.currTime = time > 3 ? time : 0;
+                this.xkj_video['time'] = this.currTime;
+                localStorage.setItem('v_' + this.id, JSON.stringify(this.xkj_video));
+                this.sumPer(time)
+                // 获取剩余时间
+                // this.rtime = this.myTime(parseInt(this.player.remainingTime()));
+                // this.rtime = this.myTime(parseInt(this.xkj_video['time']));
+
+            },
+
+            padding: function (num) {
+                return num < 10 ? '0' + num : num;
+            },
+
+            copyVideoSrc: function () {
+                var textareaC = document.createElement("input");
+                textareaC.setAttribute("readonly", "readonly"); //设置只读属性防止手机上弹出软键盘
+                textareaC.value = this.videoSrc;
+                document.body.appendChild(textareaC); //将textarea添加为body子元素
+                textareaC.select();
+                var res = document.execCommand("copy");
+                document.body.removeChild(textareaC); //移除DOM元素
+            },
+
+            // 切换显示所有
+            switchAll: function () {
+                // 定位选中的视频信息
+                var re_name = /逢阳|孙菁|陶陶|佳涵|坤玉|海妮/
+                // 判断视频集中是否有人名，如果没有则不进行操作
+                if (!this.list.some(item => re_name.test(item.title))) {
+                    return false
+                }
+
+                this.list.forEach((item, i, self) => {
+                    // 是否显示人名
+                    if (this.showAll) {
+                        item.show = false
+                    } else {
+                        item.show = re_name.test(item.title);
+                    }
+                    this.$set(this.list, i, item)
+                });
+                this.showAll = !this.showAll;
+                this.$nextTick(() => {
+                    this.setDom()
+                    this.copyVideoSrc()
+                })
+                localStorage.setItem('xkj_showAll', this.showAll)
+            },
+
+            // 过滤只有老师数据
+            filterData: function (res) {
+                var vid = parseInt(this.getParams('vid')); // 视频id
+                this.list = res;
+
+                var currItem, idx;
+                var xkj_video = localStorage.getItem('v_' + this.id);
+                if (xkj_video) this.xkj_video = JSON.parse(xkj_video);
+                if (!vid) {// 默认本地哪一集参数优先
+                    vid = this.xkj_video['vid'];
+                    // 如果第一次访问且本地没有存在，则默认第一个视频id
+                    if (!vid) vid = this.list[0]['id'];
+                }
+
+                // 定位选中的视频信息
+                var re_name = /逢阳|孙菁|陶陶|佳涵|坤玉|海妮/
+                xkj_showAll = localStorage.getItem('xkj_showAll');
+                this.showAll = xkj_showAll == 'true'? true : false;
+
+                this.list.forEach((item, i) => {
+                    item.video_time = item.video_time ? this.myTime(item.video_time) : '';
+                    item.order = this.padding(i + 1);
+                    // 是否显示其它老师直播
+                    if (this.showAll) {
+                        if (item.title.indexOf('直播') !== -1) {
+                            item.show = re_name.test(item.title);
+                        }
+                    }
+
+                    item.title = item.title.replace(/直播音频回放|（免费）/img, '');
+                    // item.video_url = item.video_url.replace('http://', 'https://');
+
+                    // 当前处于位置
+                    if (vid && item.id === vid) {
+                        currItem = item;
+                        this.currItem = item;
+                        idx = i;
+                    }
+
+                    // 循环一遍判断是否是道德经给上固定的视频地址
+                    if (this.sid === 'lz' && !item.video_url) {
+                        item.video_url = `/audio2/道德经浅解/${i + 1}.m4a`
+                    }
+                });
+                this.$nextTick(() => {
+                    this.player = videojs('my-video', this.options, function onPlayerReady() {
+                        // this.play(); 
+                        // 自动播放下一集
+                        // this.on('ended', function () {
+                        //     var nextIdx = that.currIdx + 1;
+                        //     var item = that.list[nextIdx];
+                        //     that.switchVideo(item, nextIdx);
+                        // });
+                        // 初始化视频当前视频播放位置
+                        that.currTime = that.xkj_video['time'];
+                        that.currTime = that.currTime ? that.currTime : 0;
+
+                        // 初次加载播放视频
+                        that.switchVideo(currItem, idx, true);
+                        // 跳转播放的条目
+                        that.setDom();
+
+                        // 添加长按事件
+                        that.longPress()
+                    });
+
+                })
+            },
+
+            // 获取数据
+            getData: function () {
+                var path = this.apiUrl + '/api/article/menu';
+                var body = JSON.stringify({ "a_id": this.id });
+                var opt = { method: "post", body: body };
+                this.getJson(path, opt).then((res) => {
+                    res = res['data'];
+                    this.filterData(res);
+
+                    // if (this.currTime) {
+                    //     this.elevideo.currentTime = this.currTime;
+                    // } else {
+                    //     this.elevideo.currentTime = 0;
+                    // }
+                    // this.$nextTick(() => {
+                    //     this.elevideo.load()
+                    // })
+
+                })
+            },
+
+            // 获取心经内容
+            getXj: function () {
+                var res = [];
+                var obj = {};
+                var title = '';
+                for (i = 1; i <= 40; i++) {
+                    title = '《心经》第' + i + '讲';
+                    obj = {
+                        id: i,
+                        title: title,
+                        video_time: 0,
+                        video_url: '/audio/心经浅解/' + title + '.mp3'
+                    }
+                    res.push(obj)
+                }
+                this.filterData(res)
+            },
+
+            // 按左右键快进退15s
+            longPress() {
+                document.onkeydown = (e) => {
+                    let key = e.key;
+                    if (key === 'ArrowRight' || key === 'd') {
+                        if (this.player.remainingTime() >= 20) {
+                            this.currTime += 15;
+                            this.player.currentTime(this.currTime);
+                        }
+
+                    };
+                    if (key === 'ArrowLeft' || key === 'a') {
+                        this.currTime -= 15;
+                        if (this.currTime <= 0) this.currTime = 0;
+                        this.player.currentTime(this.currTime);
+                    };
+                }
+            },
+
+            // 判断设备类型
+            isPhone() {
+                //获取浏览器navigator对象的userAgent属性（浏览器用于HTTP请求的用户代理头的值）
+                var info = navigator.userAgent;
+                //通过正则表达式的test方法判断是否包含“Mobile”字符串
+                var isPhone = /mobile/i.test(info);
+                //如果包含“Mobile”（是手机设备）则返回true
+                return isPhone;
+            },
+
+            // 切换锁定
+            switchLock() {
+                this.isLock = !this.isLock;
+            }
+        },
+        created: function () {
+            that = this;
+
+        },
+        mounted: function () {
+            this.id = this.getParams('id'); // 当前课程id
+            this.sid = this.getParams('sid'); // 特殊固定id
+            this.elevideo = document.getElementById("my-video");
+            var children = [
+                { name: 'PlayToggle' },                     // 播放按钮
+                { name: 'volumePanel', inline: true },       // 音量调节 inline 是否水平
+                { name: 'CurrentTimeDisplay' },             // 当前已播时间
+                { name: 'ProgressControl' },                // 进度条
+                { name: 'RemainingTimeDisplay' },           // 剩余时间
+                // {name: 'timeDivider'},                      // 分割线‘/’
+                // {name: 'DurationDisplay'},                  // 总时间
+                { name: 'PictureInPictureToggle' },         // 后台播放
+                { name: 'FullscreenToggle' },               // 全屏按钮
+                // { name: 'playbackRateMenuButton' },         // 倍数播放
+                // {name: 'ControlBar'},                       // 显示所有控制信息
+
+            ]
+            // 如果是手机取消音量调节按钮
+            if (this.isPhone()) {
+                children.splice(1, 1);
+            }
+            this.options = {
+                autoplay: true,     // 自动播放
+                controls: true,      // 显示控制条
+                loop: false,        // 是否循环
+                muted: false,       // 是否静音
+                preload: 'metadata',    // 预加载auto-自动
+                language: 'zh-CN',     // 设置语音en
+                inactivityTimeout: 0, // 0不隐藏 多少毫秒自动隐藏进度条
+                // controlBar: true,   // 是否显示控制栏
+                controlBar: {
+                    children: children
+                },
+                playbackRates: [0.8, 0.9, 1, 1.1, 1.2, 1.25, 1.3, 1.4, 1.5, 1.6, 1.7, 1.75, 1.8, 1.9, 2, 2.1, 2.2, 2.3, 2.4, 2.5, 3],  // 设置倍数
+
+                // responsive: true,   // 启用响应模式
+
+                // fluid: true,     // 设置缩放以适合其容器
+                audioOnlyMode: false,   // 设置是否仅仅音频模式
+                // audioPosterMode: true,  // 设置是否海报音频显示
+                //metadata-元数据信息 ，比如视频长度，尺寸等
+                //none-不预加载任何数据，直到用户开始播放才开始下载
+                // poster: 'https://api2022.xukongji.com/upload_file/20220830111608-630d80f8e497c.jpg', // 播放前显示的视频画面
+                // width: 300,height: 300, // 设置宽高
+                //plugins:自动初始化要加载的插件
+            };
+            // 从哪里过来
+
+            if (this.id === 'xj') {// 心经
+                this.getXj();
+            } else {
+                this.getData();
+            }
+
+            // $.select_HH_MM_SS("#selectTs");
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                this.isDark = true;
+
+            } else {
+                this.isDark = false;
+            }
+        }
+    })
+</script>
+
+</html>

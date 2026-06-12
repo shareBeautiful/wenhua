@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="Cache" content="no-cache">
+    <meta name=App-Config content="fullscreen=yes,useHistoryState=yes,transition=yes">
+    <meta content=yes name=apple-mobile-web-app-capable>
+    <meta content=yes name=apple-touch-fullscreen>
+    <meta name="theme-color" content="#1a1a1a">
+    <meta content="telephone=no,email=no" name=format-detection>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name=viewport
+        content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+    <link rel="stylesheet" href="css/maokan.css">
+    <title></title>
+</head>
+
+<body>
+    <div id="app" v-cloak :class="{'dark': isDark}">
+        <div class="input-group fixed search-box">
+            <input type="text" class="form-control" @input="search" v-model="keyword" placeholder="Search for...">
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading h">
+                <div class="h-r">{{ title }}（音频）</div>
+                <div class="h-l" @click="switchSort">{{ sortStatus?"倒序":"正序" }}</div>
+            </div>
+            <div class="panel-body">
+                <div class="box">
+                    <a href="javascript:" @click="toPage(item)" class="box-item" :key="idx" v-show="!item.hide"
+                        v-for="(item,idx) in subList">
+                        <span class="order">{{sortStatus? idx+1:subList.length-idx}}. </span>
+                        <span class="title">{{item.title}}</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</body>
+<script src="js/comm.js"></script>
+<script>
+    var that, key, file, dirType;
+    key = $echo.getParams('key')
+    dirType = $echo.getParams('type')
+    // 获取文件名
+    $echo.getJson('./data/menu.json').then(res => {
+        res.forEach(function (itemA) {
+            itemA.list.forEach(function (itemB) {
+                if (itemB.key === key) {
+                    file = itemB.tit;
+                    document.title = file;
+                }
+            })
+        })
+        getContent();
+    })
+
+    function getContent() {
+        $echo.getJson('./data/' + dirType + '/' + file + '.json').then(function (res) {
+            new Vue({
+                el: '#app',
+                data: function () {
+                    return {
+                        title: file,
+                        list: res,
+                        subList: res,
+                        keyword: '',
+                        sortStatus: true, // 是否正序
+                        isDark: false
+                    }
+                },
+                methods: {
+                    // 跳转
+                    toPage: function (item) {
+                        this.list.forEach((obj, idx) => {
+                            if (obj.title === item.title) {
+                                var idxs = this.sortStatus ? idx : this.subList.length - (idx + 1)
+                                var params = { idx: idxs, type: dirType, key: key };
+                                var otype = $echo.getBrowser('pc') ? 'open' : null;
+                                $echo.open('content', params, true)
+                            }
+                        })
+                    },
+                    // 搜索
+                    search: function () {
+                        this.subList.forEach(function (item, idx) {
+                            if ((idx + item.title).indexOf(that.keyword) > -1) {
+                                item.hide = false
+                            } else {
+                                item.hide = true
+                            }
+                        });
+                        // this.subList = this.list.filter(item => {
+                        //     if (item.title.indexOf(this.keyword) > -1) {
+                        //         return item;
+                        //     }
+                        // })
+                    },
+
+                    // 切换排序
+                    switchSort: function () {
+                        this.sortStatus = !this.sortStatus;
+                        this.subList.reverse()
+                    }
+                },
+                created: function () {
+                    that = this;
+                },
+                mounted: function () {
+                    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                        this.isDark = true;
+                    } else {
+                        this.isDark = false;
+                    }
+                }
+            })
+        })
+    }
+
+
+</script>
+
+</html>

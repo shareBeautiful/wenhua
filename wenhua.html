@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="Cache" content="no-cache">
+    <meta name=App-Config content="fullscreen=yes,useHistoryState=yes,transition=yes">
+    <meta content=yes name=apple-mobile-web-app-capable>
+    <meta content=yes name=apple-touch-fullscreen>
+    <meta content="telephone=no,email=no" name=format-detection>
+    <meta name="theme-color" content="#1a1a1a">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name=viewport
+    content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+    <link rel="stylesheet" href="css/maokan.css">
+    <title></title>
+    <style>
+        .box-item {
+            padding: 10px 0;
+        }
+
+        .box-item .pic {
+            width: 100px;
+        }
+
+        .box-item .head {
+            position: relative;
+        }
+
+        .box-item .info {
+            flex: 1;
+            padding-left: 15px;
+        }
+
+        .info .time {
+            display: flex;
+        }
+
+        .info .time span:first-child {
+            padding-right: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" v-cloak :class="{'dark': isDark}">
+        <div class="input-group fixed search-box">
+            <input type="text" class="form-control" @input="search" v-model="keyword" placeholder="搜索...">
+        </div>
+        <div class="panel panel-default">
+            <!-- <div class="panel-heading h">
+                <div class="h-r">{{title}}</div>
+                <div class="h-l">
+                    <span @click="switchSort">{{ sortStatus?"倒序↑":"正序↓" }}</span>
+                </div>
+            </div> -->
+            <div class="panel-body">
+                <div class="box" v-for="(item,idx) in list" :key="idx">
+                    <!-- @click="toPage(item)" -->
+                    <a :href="item.href" class="box-item" target="_blank">
+                        <div class="info">
+                            <div>
+                                <span class="order">{{sortStatus? list.length-idx : idx+1}}.</span>
+                                <span class="title">{{item.title}}</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="js/comm.js"></script>
+<script>
+    var that;
+    new Vue({
+        el: '#app',
+        data: function () {
+            return {
+                list: [{
+                    title: '大学',
+                    key: 'daxue'
+                }],
+                keyword: '',
+                sortStatus: false,
+                isDark: false,
+                title: '',
+            }
+        },
+        methods: {
+            // 跳转
+            toPage: function (item) {
+                $echo.open(item.href)
+            },
+
+            // 搜索
+            search: function () {
+                this.list.forEach((item, idx) => {
+                    if ((idx + item.pinyin + item.title + item.date).indexOf(this.keyword) > -1) {
+                        item.hide = false
+                    } else {
+                        item.hide = true
+                    }
+                });
+            },
+            getCount: function (n) {
+                if (n >= 10000) {
+                    n = n / 10000 + 'w'
+                }
+                return n;
+            },
+            // 切换排序
+            switchSort: function () {
+                this.sortStatus = !this.sortStatus;
+                Object.keys(this.allList).forEach(item => {
+                    this.allList[item].reverse();
+                })
+            },
+
+            getList: function() {
+                $echo.getJson('/data/ahome/传统文化.json').then((res) => {
+                    res.forEach(item => {
+                        item.href = './xuksji_text.html?key='+item.key
+                    })
+                    this.list = res;
+                })
+            },
+        },
+        created: function () {
+            that = this;
+        },
+        mounted: function () {
+            this.getList();
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                this.isDark = true;
+            } else {
+                this.isDark = false;
+            }
+        }
+    })
+</script>
+
+</html>

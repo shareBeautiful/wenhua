@@ -1,0 +1,255 @@
+[
+    {
+        "tit": "二乘解脱",
+        "type": "erchengjietuo",
+        "list": [
+            {
+                "tit": "杂阿含经第一卷选讲",
+                "key": "zahjdyjxj",
+                "href": "/chapter/5.html"
+            },
+            {
+                "tit": "观行五蕴断我见(第二版)",
+                "key": "gxwydwjdeb",
+                "href": "/chapter/30.html"
+            },
+            {
+                "tit": "观行五蕴断我见(第二部)——更新内容",
+                "key": "gxwydwjdeb——gxnr",
+                "href": "/chapter/39.html"
+            },
+            {
+                "tit": "四念处经讲记",
+                "key": "sncjjj",
+                "href": "/chapter/6.html"
+            },
+            {
+                "tit": "七觉分略讲",
+                "key": "qjflj",
+                "href": "/chapter/25.html"
+            },
+            {
+                "tit": "阿含经十二因缘释",
+                "key": "ahjseyys",
+                "href": "/chapter/35.html"
+            },
+            {
+                "tit": "四念处观行体验",
+                "key": "sncgxty",
+                "href": "/chapter/44.html"
+            }
+        ]
+    },
+    {
+        "tit": "修定法门",
+        "type": "xiudingfamen",
+        "list": [
+            {
+                "tit": "修定与参禅证道(第二版)",
+                "key": "xdycczddeb",
+                "href": "/chapter/24.html"
+            },
+            {
+                "tit": "修定与参禅证道(续)",
+                "key": "xdycczdx",
+                "href": "/chapter/33.html"
+            },
+            {
+                "tit": "坐禅三昧经讲解 ",
+                "key": "zcsmjjj",
+                "href": "/chapter/3.html"
+            }
+        ]
+    },
+    {
+        "tit": "般若经典",
+        "type": "borejingdian",
+        "list": [
+            {
+                "tit": "父子合集经选讲(第二版)",
+                "key": "fzhjjxjdeb",
+                "href": "/chapter/8.html"
+            },
+            {
+                "tit": "大方等如来藏经略讲(第二版)",
+                "key": "dfdrlcjljdeb",
+                "href": "/chapter/2.html"
+            },
+            {
+                "tit": "大乘显识经讲记(第二版)",
+                "key": "dcxsjjjdeb",
+                "href": "/chapter/4.html"
+            },
+            {
+                "tit": "心经真义",
+                "key": "xjzy",
+                "href": "/chapter/23.html"
+            },
+            {
+                "tit": "祖师开示直解",
+                "key": "zskszj",
+                "href": "/chapter/31.html"
+            }
+        ]
+    },
+    {
+        "tit": "唯识法义",
+        "type": "weishifayi",
+        "list": [
+            {
+                "tit": "楞严经奥义（第二版）",
+                "key": "lyjaydeb",
+                "href": "/chapter/7.html"
+            },
+            {
+                "tit": "金刚经唯识深义",
+                "key": "jgjwssy",
+                "href": "/chapter/29.html"
+            },
+            {
+                "tit": "意识体性略说(第二版)",
+                "key": "ystxlsdeb",
+                "href": "/chapter/18.html"
+            },
+            {
+                "tit": "意根与意识",
+                "key": "ygyys",
+                "href": "/chapter/15.html"
+            },
+            {
+                "tit": "解悟与证悟",
+                "key": "jwyzw",
+                "href": "/chapter/19.html"
+            },
+            {
+                "tit": "意根正解",
+                "key": "ygzj",
+                "href": "/chapter/17.html"
+            },
+            {
+                "tit": "意根修证指归",
+                "key": "ygxzzg",
+                "href": "/chapter/16.html"
+            },
+            {
+                "tit": "意根修证指归(第二部)——更新",
+                "key": "ygxzzgdeb——gx",
+                "href": "/chapter/40.html"
+            },
+            {
+                "tit": "意根心所法",
+                "key": "ygxsf",
+                "href": "/chapter/38.html"
+            },
+            {
+                "tit": "黑匣子世界(第二版)",
+                "key": "hxzsjdeb",
+                "href": "/chapter/21.html"
+            },
+            {
+                "tit": "色法略说(草稿)",
+                "key": "sflscg",
+                "href": "/chapter/42.html"
+            }
+        ]
+    },
+    {
+        "tit": "如来藏法",
+        "type": "rulaicangfa",
+        "list": [
+            {
+                "tit": "细说如来藏(一)",
+                "key": "xsrlcy",
+                "href": "/chapter/12.html"
+            },
+            {
+                "tit": "细说如来藏(二)",
+                "key": "xsrlce",
+                "href": "/chapter/13.html"
+            },
+            {
+                "tit": "细说如来藏(三)",
+                "key": "xsrlcs",
+                "href": "/chapter/14.html"
+            },
+            {
+                "tit": "细说如来藏(四)",
+                "key": "xsrlcs",
+                "href": "/chapter/37.html"
+            }
+        ]
+    },
+    {
+        "tit": "论著讲解",
+        "type": "lunzhujiangjie",
+        "list": [
+            {
+                "tit": "成唯识论选讲",
+                "key": "cwslxj",
+                "href": "/chapter/20.html"
+            },
+            {
+                "tit": "瑜伽师地论选讲",
+                "key": "yjsdlxj",
+                "href": "/chapter/22.html"
+            },
+            {
+                "tit": "瑜伽师地论中十二因缘释",
+                "key": "yjsdlzseyys",
+                "href": "/chapter/46.html"
+            },
+            {
+                "tit": "瑜伽师地论第二十九卷（四正勤的修行）",
+                "key": "yjsdldesjjszqdxx",
+                "href": "/chapter/47.html"
+            },
+            {
+                "tit": "瑜伽师地论第三十四卷（四谛相）",
+                "key": "yjsdldsssjsdx",
+                "href": "/chapter/48.html"
+            },
+            {
+                "tit": "俱舍论第二十三卷（四加行）",
+                "key": "jsldessjsjx",
+                "href": "/chapter/49.html"
+            },
+            {
+                "tit": "俱舍论疏第二十三卷（闻慧和思慧）",
+                "key": "jslsdessjwhhsh",
+                "href": "/chapter/50.html"
+            }
+        ]
+    },
+    {
+        "tit": "戒律",
+        "type": "jielv",
+        "list": [
+            {
+                "tit": "戒律讲解(草稿)",
+                "key": "jljjcg",
+                "href": "/chapter/41.html"
+            }
+        ]
+    },
+    {
+        "tit": "综述",
+        "type": "zongshu",
+        "list": [
+            {
+                "tit": "佛法杂谈(第一部)(第二版)",
+                "key": "ffztdybdeb",
+                "href": "/chapter/32.html"
+            },
+            {
+                "tit": "佛法杂谈第二部",
+                "key": "ffztdeb",
+                "href": "/chapter/43.html"
+            },
+            {
+                "tit": "每日开示汇总",
+                "key": "mrkshz",
+                "href": "/chapter/45.html"
+            }
+        ]
+    }
+]

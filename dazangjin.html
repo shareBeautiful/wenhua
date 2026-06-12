@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="Cache" content="no-cache">
+    <meta name=App-Config content="fullscreen=yes,useHistoryState=yes,transition=yes">
+    <meta content=yes name=apple-mobile-web-app-capable>
+    <meta content=yes name=apple-touch-fullscreen>
+    <meta name="theme-color" content="#1a1a1a">
+    <meta content="telephone=no,email=no" name=format-detection>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name=viewport
+        content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=yes,viewport-fit=cover">
+    <title>典经</title>
+    <link rel="stylesheet" href="./css/index.css">
+</head>
+<style>
+    .count {
+        font-size: 12px;
+    }
+</style>
+
+<body>
+    <div id="app" v-cloak :class="{dark: isDark}">
+        <div class="input-group" id="search">
+            <input type="search" class="form-control search" @input="search" v-model="keyword" placeholder="搜索...">
+            <div class="del" @click="del()" v-show="keyword.length">×</div>
+        </div>
+        <!-- 内容列表 -->
+        <div class="list-box">
+            <!-- 所有 -->
+            <div class="panel panel-default" :key="idxA" v-for="(itemA,idxA) in subList">
+                <div class="panel-heading" @click="openMenu(itemA)" :class="{'sticky': itemA.open}">
+                    <div class="title">
+                        {{itemA.tit}}
+                        <span class="num">({{itemA.list.length}})</span>
+                        <span class="count">{{total(itemA.count)}}</span>
+                    </div>
+                    <div class="icon">{{itemA.open? '关闭' : '展开'}}</div>
+                </div>
+                <div class="panel-body" v-if="itemA.list.length" v-show="itemA.open">
+                    <div class="list-group panel-success">
+                        <!-- @click="clickItem(itemB, itemA)" -->
+                        <template v-for="(itemB,idxB) in itemA.list" :key="idxB">
+                            <a :href="itemB.href" target="_blank" class="list-group-item">
+                                <span class="l">{{idxB+1}}. {{itemB.tit}}
+                                    <span class="count">{{total(itemB.count)}}</span>
+                                </span>
+                                <span class="r">{{itemB.author}}</span>
+                                <!-- <span class="r" v-if="itemB.parent">{{itemB.parent}}</span> -->
+                            </a>
+                        </template>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="js/comm.js"></script>
+<script>
+    var that;
+    var key = $echo.getParams('key');
+    var path;
+    if(key === 'dzj') {
+        title = '大藏经'
+    }else if(key === 'qldzj') {
+        title = '乾隆大藏经'
+    }
+    path = './data/ahome/' + title + '.json'
+    document.title = title
+
+    $echo.getJson(path).then(function (res) {
+        $echo.setStorage('menuData', res)
+        new Vue({
+            el: '#app',
+            data: function () {
+                return {
+                    keyword: '',    // 搜索关键
+                    list: res,
+                    subList: [],
+                    currOpen: '',   // 当前打开
+                    isDark: false,  // 是否夜间
+                    t: null
+                }
+            },
+            methods: {
+                // 获取url地址
+                getUrl: function (itemA, itemB) {
+                    var params = { type: itemA.tit, key: itemB.tit, keyword: key };
+                    return $echo.open('content', params, 'get')
+                },
+
+
+                // 展开目录
+                openMenu: function (item) {
+                    this.subList.forEach(obj => {
+                        if (obj.type === item.type) {
+                            this.$set(obj, 'open', !item.open);
+                            this.currOpen = obj.open ? item.type : false;
+                        } else {
+                            this.$set(obj, 'open', false);
+                        }
+                    })
+
+                },
+
+                // 清空搜索关键词
+                del: function () {
+                    this.keyword = ''
+                    this.search();
+                },
+
+                // 搜索
+                search: function () {
+                    clearTimeout(this.t)
+                    if (this.keyword) {
+                        this.t = setTimeout(() => {
+                            if (this.keyword === 'dark') {
+                                this.isDark = true;
+                                this.updateList(); // 更新数据
+                                event.target.blur()
+                                this.keyword = ""
+                                return;
+                            } else if (this.keyword === 'white') {
+                                this.isDark = false;
+                                this.updateList(); // 更新数据
+                                event.target.blur()
+                                this.keyword = ""
+                                return;
+                            } else if (/[><=]/.test(this.keyword)) {
+                                var re = /(.*?)(>=|<=|>|<|=).*?(\d+)/img
+                                var s = re.exec(this.keyword)
+                                if (s) {
+                                    var keyword = s[1];
+                                    var sign = s[2];
+                                    var num = parseInt(s[3]);
+                                    var list = [];
+                                    this.copyList().forEach(itemA => {
+                                        itemA.list.forEach(itemB => {
+                                            var count = parseInt(itemB.count)
+                                            itemB.type = itemA.type;
+                                            itemB.parent = itemA.tit;
+                                            if (keyword) {
+                                                var key = itemB.tit + itemB.key;
+                                                if (key.indexOf(keyword.toLowerCase()) > -1) {
+                                                    this.searchS(sign, count, num, itemB, list)
+                                                }
+                                            } else {
+                                                this.searchS(sign, count, num, itemB, list)
+                                            }
+
+
+                                        })
+                                    })
+                                    this.subList = [{ tit: '搜索结果', open: true, list: list }];
+                                }
+                                return false;
+                            }
+
+                            // 过滤搜索的内容
+                            var list = []
+                            this.copyList(this.list).forEach(itemA => {
+                                itemA.list.forEach(itemB => {
+                                    var key = itemB.tit + itemB.key;
+                                    if (key.indexOf(this.keyword.toLowerCase()) > -1) {
+                                        itemB.type = itemA.type;
+                                        itemB.parent = itemA.tit;
+                                        list.push(itemB)
+                                    }
+                                })
+                            })
+                            this.subList = [{ tit: '搜索结果', open: true, list: list }];
+                        }, 300)
+                    } else {
+                        this.updateList();
+                    }
+
+                },
+
+                // 计算搜索
+                searchS: function (sign, count, num, itemB, list) {
+                    if (count >= num && ['>','>='].includes(sign)) {
+                        list.push(itemB)
+                    } else if (count <= num && ['<','<='].includes(sign)) {
+                        // itemB.type = itemA.type;
+                        //     itemB.parent = itemA.tit;
+                        list.push(itemB)
+                    } else if (count === num && sign === '=') {
+                        list.push(itemB)
+                    }
+                },
+
+
+                // 复制引用对象
+                copyList: function (list) {
+                    list = list || this.list;
+                    return JSON.parse(JSON.stringify(list))
+                },
+
+                total: function (num) {
+                    var str;
+                    if (num >= 1000 && num <= 10000) {
+                        str = num / 1000 + 'k'
+                    } else if (num > 10000) {
+                        str = num / 10000 + 'w'
+                    } else {
+                        str = num
+                    }
+                    return str;
+                },
+
+                // 初始化数据
+                updateList: function () {
+                    var list = this.copyList()
+                    if (this.currOpen) {
+                        list.forEach(item => {
+                            if (item.type === this.currOpen) {
+                                this.$set(item, 'open', true);
+                            }
+                        });
+                    }
+                    this.subList = list
+                }
+            },
+            created: function () {
+                that = this;
+
+                // 设置地址的url链接
+                this.list.forEach(itemA => {
+                    itemA.list.forEach(itemB => {
+                        itemB.href = this.getUrl(itemA, itemB);
+                    })
+                })
+
+                // 初始化更新数据
+                this.updateList();
+
+            },
+            mounted: function () {
+
+                // 白天还是黑夜
+                if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    this.isDark = true;
+                } else {
+                    this.isDark = false;
+                }
+                // var time = parseInt($echo.getTime().replace(/:.*/img, ''));
+                // if (21 <= time || time < 7) {
+                //     this.isDark = true;
+                // } else {
+                //     this.isDark = false;
+                // }
+
+            }
+        })
+    })
+
+
+</script>
+
+</html>
