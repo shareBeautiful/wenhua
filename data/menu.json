@@ -297,6 +297,119 @@
     ]
   },
   {
+    "tit": "经译",
+    "type": "jingyi",
+    "open": false,
+    "memory": true,
+    "list": [
+      {
+        "tit": "心经译文",
+        "id": 1,
+        "key": "xjyw"
+      },
+      {
+        "tit": "金刚经译文",
+        "id": 2,
+        "key": "jgjyw"
+      },
+      {
+        "tit": "地藏经译文",
+        "id": 3,
+        "key": "dzjyw"
+      },
+      {
+        "tit": "药师经译文",
+        "id": 4,
+        "key": "ysjyw"
+      },
+      {
+        "tit": "楞严经译文",
+        "id": 5,
+        "key": "lyjyw"
+      },
+      {
+        "tit": "法华经译文",
+        "id": 6,
+        "key": "fhjyw"
+      },
+      {
+        "tit": "华严经白话文",
+        "id": 13,
+        "key": "hyjbhw"
+      },
+      {
+        "tit": "维摩诘经译文",
+        "id": 7,
+        "key": "wmjjyw"
+      },
+      {
+        "tit": "六祖坛经译文",
+        "id": 8,
+        "key": "lztjyw"
+      },
+      {
+        "tit": "佛遗教经译文",
+        "id": 9,
+        "key": "fyjjyw"
+      },
+      {
+        "tit": "十善业道经译文",
+        "id": 10,
+        "key": "ssydjyw"
+      },
+      {
+        "tit": "四十二章经译文",
+        "id": 11,
+        "key": "ssezjyw"
+      },
+      {
+        "tit": "佛说阿弥陀经白话文",
+        "id": 12,
+        "key": "fsamtjbhw"
+      },
+      {
+        "tit": "无量寿经白话解",
+        "id": 13,
+        "key": "wlsjbhj"
+      },
+      {
+        "tit": "观无量寿经译文",
+        "id": 14,
+        "key": "gwlsjyw"
+      },
+      {
+        "tit": "解深密经白话文",
+        "id": 15,
+        "key": "jsmjbhw"
+      },
+      {
+        "tit": "大般涅槃经白话文",
+        "id": 16,
+        "key": "dbnpjbhw"
+      },
+      {
+        "tit": "大乘起信论译文",
+        "id": 17,
+        "key": "dcqxlyw"
+      },
+      {
+        "tit": "阿毗达磨俱舍论研究",
+        "id": 18,
+        "key": "apdmjslyj"
+      },
+      {
+        "tit": "成唯识论译文",
+        "id": 19,
+        "key": "cwslyw"
+      },
+      {
+        "tit": "瑜伽师地论白话文",
+        "id": 20,
+        "key": "yjsdlbhw"
+      }
+    ]
+  },
+  {
     "tit": "讲记",
     "type": "jiangji",
     "open": false,
@@ -538,119 +651,6 @@
         "tit": "论语人物",
         "id": 21,
         "href": "https://lunyu.5000yan.com/renwu/"
-      }
-    ]
-  },
-  {
-    "tit": "翻译",
-    "type": "fanyi",
-    "open": false,
-    "memory": true,
-    "list": [
-      {
-        "tit": "心经译文",
-        "id": 1,
-        "key": "xjyw"
-      },
-      {
-        "tit": "金刚经译文",
-        "id": 2,
-        "key": "jgjyw"
-      },
-      {
-        "tit": "地藏经译文",
-        "id": 3,
-        "key": "dzjyw"
-      },
-      {
-        "tit": "药师经译文",
-        "id": 4,
-        "key": "ysjyw"
-      },
-      {
-        "tit": "楞严经译文",
-        "id": 5,
-        "key": "lyjyw"
-      },
-      {
-        "tit": "法华经译文",
-        "id": 6,
-        "key": "fhjyw"
-      },
-      {
-        "tit": "华严经白话文",
-        "id": 13,
-        "key": "hyjbhw"
-      },
-      {
-        "tit": "维摩诘经译文",
-        "id": 7,
-        "key": "wmjjyw"
-      },
-      {
-        "tit": "六祖坛经译文",
-        "id": 8,
-        "key": "lztjyw"
-      },
-      {
-        "tit": "佛遗教经译文",
-        "id": 9,
-        "key": "fyjjyw"
-      },
-      {
-        "tit": "十善业道经译文",
-        "id": 10,
-        "key": "ssydjyw"
-      },
-      {
-        "tit": "四十二章经译文",
-        "id": 11,
-        "key": "ssezjyw"
-      },
-      {
-        "tit": "佛说阿弥陀经白话文",
-        "id": 12,
-        "key": "fsamtjbhw"
-      },
-      {
-        "tit": "无量寿经白话解",
-        "id": 13,
-        "key": "wlsjbhj"
-      },
-      {
-        "tit": "观无量寿经译文",
-        "id": 14,
-        "key": "gwlsjyw"
-      },
-      {
-        "tit": "解深密经白话文",
-        "id": 15,
-        "key": "jsmjbhw"
-      },
-      {
-        "tit": "大般涅槃经白话文",
-        "id": 16,
-        "key": "dbnpjbhw"
-      },
-      {
-        "tit": "大乘起信论译文",
-        "id": 17,
-        "key": "dcqxlyw"
-      },
-      {
-        "tit": "阿毗达磨俱舍论研究",
-        "id": 18,
-        "key": "apdmjslyj"
-      },
-      {
-        "tit": "成唯识论译文",
-        "id": 19,
-        "key": "cwslyw"
-      },
-      {
-        "tit": "瑜伽师地论白话文",
-        "id": 20,
-        "key": "yjsdlbhw"
       }
     ]
   },
