@@ -52,8 +52,8 @@
             <div class="panel-body" v-if="lookInfo.list.length" v-show="lookInfo.open">
               <div class="list-group panel-success">
                 <template v-for="(item,idx) in lookInfo.list" :key="idx">
-                  <div
-                    href=""
+                  <a
+                    :href="item.href"
                     @click.stop="saveLook2(item,idx)"
                     target="_blank"
                     class="list-group-item"
@@ -70,7 +70,7 @@
                         >删除</span
                       ></span
                     >
-                  </div>
+                  </a>
                 </template>
               </div>
             </div>
