@@ -12,6 +12,12 @@ function VueTouch(el, binding, type) {
     g.firstTouchTime = 0;
     g.callBack = typeof (binding.value) === "object" ? binding.value.fn : binding.value;
 
+    // 可选配置：支持通过 binding.value.options 传入自定义阈值
+    g.options = typeof (binding.value) === "object" ? (binding.value.options || {}) : {};
+    g.swipeDistance = g.options.swipeDistance || 20; // 最小滑动距离(px)
+    g.swipeTime = g.options.swipeTime || 300; // 最大滑动时间(ms)
+    g.angleTolerance = g.options.angleTolerance || 20; // 角度容差(度)
+
     g.moved = false;
     g.leaved = false;
     g.longTouched = false;
@@ -84,15 +90,17 @@ VueTouch.prototype = {
 
         var _angle = this.getAngle(_disX, _disY);
 
-        if (_dis > 20 && _timeDis < 300) {
+        if (_dis > g.swipeDistance && _timeDis < g.swipeTime) {
             g.touchType === "swipe" && g.callBack(e, g.binding.value);
-            if (_angle >= 60 && _angle <= 120)
+            var tol = g.angleTolerance;
+            // 更稳健的角度判断：基于目标角度与容差
+            if (Math.abs(_angle - 90) <= tol)
                 g.touchType === "swipedown" && g.callBack(e, g.binding.value);
-            if (_angle <= -60 && _angle >= -120)
+            if (Math.abs(_angle + 90) <= tol)
                 g.touchType === "swipeup" && g.callBack(e, g.binding.value);
-            if (_angle <= 10 && _angle >= -10) // 20,20
+            if (Math.abs(_angle) <= tol)
                 g.touchType === "swiperight" && g.callBack(e, g.binding.value);
-            if ((_angle <= -160 && _angle > -180) || (_angle >= 160 && _angle <= 180))
+            if (Math.abs(Math.abs(_angle) - 180) <= tol)
                 g.touchType === "swipeleft" && g.callBack(e, g.binding.value);
         } else {
             if (!g.longTouched && !g.moved) {
