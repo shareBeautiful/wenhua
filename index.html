@@ -439,9 +439,7 @@
           // 初始化更新数据
           this.updateList(len);
 
-          setTimeout(() => {
-            this.randomBg();
-          }, 16);
+          
         },
         mounted: function () {
           // 白天还是黑夜
@@ -450,6 +448,9 @@
           } else {
             this.isDark = false;
           }
+          setTimeout(() => {
+            this.randomBg();
+          }, 100);
           // var time = parseInt($echo.getTime().replace(/:.*/img, ''));
           // if (21 <= time || time < 7) {
           //     this.isDark = true;
