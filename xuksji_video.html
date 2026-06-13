@@ -824,9 +824,14 @@
                 preload: 'metadata',    // 预加载auto-自动
                 language: 'zh-CN',     // 设置语音en
                 inactivityTimeout: 0, // 0不隐藏 多少毫秒自动隐藏进度条
+                enableSmoothSeeking: true, // 启用平滑寻求
+                nativeControlsForTouch: true, // 在触摸设备上使用原生控件
                 // controlBar: true,   // 是否显示控制栏
                 controlBar: {
-                    children: children
+                    children: children,
+                    skipButtons: {
+                        backward: 10
+                    }
                 },
                 playbackRates: [0.8, 0.9, 1, 1.1, 1.2, 1.25, 1.3, 1.4, 1.5, 1.6, 1.7, 1.75, 1.8, 1.9, 2, 2.1, 2.2, 2.3, 2.4, 2.5, 3],  // 设置倍数
 
