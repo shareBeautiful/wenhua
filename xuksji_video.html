@@ -265,7 +265,9 @@
                     </select> -->
                     <!-- <input type="text" id="selectTs" readonly   />  -->
                     <!-- <span class="rtime">{{rtime}}</span> -->
+                    <span @click="copyVideoSrc()" v-show="currNum"> （{{currNum}}） </span>
                     <span class="rtime" @click="copyVideoSrc()" v-show="play_pg">{{play_pg}}</span>
+                    
                 </div>
                 <div class="lock" @click="switchLock">
                     <svg v-if="isLock" t="1710837960332" class="icon" viewBox="0 0 1024 1024" version="1.1"
@@ -332,6 +334,7 @@
                 isVideo: 0, // 0 无状态，1 视频，2 音频
                 apiUrl: 'https://api2022.xukongji.com',
                 videoSrc: '',
+                currNum:0,  // 当前集数  
                 rtime: 0,
                 currId: 0,
                 currTime: 0,
@@ -630,16 +633,21 @@
                 if (!this.list.some(item => re_name.test(item.title))) {
                     return false
                 }
-
+                var currNum = 0;
                 this.list.forEach((item, i, self) => {
                     // 是否显示人名
                     if (this.showAll) {
                         item.show = false
                     } else {
                         item.show = re_name.test(item.title);
+                        
+                    }
+                    if (!item.show) {
+                        currNum++;
                     }
                     this.$set(this.list, i, item)
                 });
+                this.currNum = currNum;
                 this.showAll = !this.showAll;
                 this.$nextTick(() => {
                     this.setDom()
@@ -666,7 +674,7 @@
                 var re_name = /逢阳|孙菁|陶陶|佳涵|坤玉|海妮/
                 xkj_showAll = localStorage.getItem('xkj_showAll');
                 this.showAll = xkj_showAll == 'true'? true : false;
-
+                var currNum = 0;
                 this.list.forEach((item, i) => {
                     item.video_time = item.video_time ? this.myTime(item.video_time) : '';
                     item.order = this.padding(i + 1);
@@ -676,7 +684,9 @@
                             item.show = re_name.test(item.title);
                         }
                     }
-
+                    if (!item.show) {
+                        currNum++;
+                    }
                     item.title = item.title.replace(/直播音频回放|（免费）/img, '');
                     // item.video_url = item.video_url.replace('http://', 'https://');
 
@@ -692,6 +702,7 @@
                         item.video_url = `/audio2/道德经浅解/${i + 1}.m4a`
                     }
                 });
+                this.currNum = currNum;
                 this.$nextTick(() => {
                     this.player = videojs('my-video', this.options, function onPlayerReady() {
                         // this.play(); 

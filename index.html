@@ -82,7 +82,7 @@
             v-for="(itemA,idxA) in subList"
             v-if="!itemA.hide"
           >
-            <div class="panel-heading" @click="openMenu(itemA)" :class="{'sticky': itemA.open}">
+            <div class="panel-heading" @click="openMenu(itemA, $event)" :class="{'sticky': itemA.open}">
               <div class="title">
                 {{itemA.tit}}
                 <span class="num">({{itemA.list.length}})</span>
@@ -229,7 +229,7 @@
           },
 
           // 展开目录
-          openMenu: function (item) {
+          openMenu: function (item, e) {
             if (!item.type) return false;
             if (item.type === "zuijin") {
               this.$set(item, "open", !item.open);
