@@ -93,15 +93,14 @@
             <div class="panel-body" v-if="itemA.list.length" v-show="itemA.open">
               <div class="list-group panel-success">
                 <!-- @click="clickItem(itemB, itemA)" -->
-                <template v-for="(itemB,idxB) in itemA.list" :key="idxB">
+                <template v-for="(itemB,idxB) in itemA.list" :key="idxB" >
                   <a
                     :href="itemB.href"
                     @click="saveLook(itemA,itemB)"
                     target="_blank"
                     class="list-group-item"
                   >
-                    <span class="l"
-                      >{{getOrder(idxB+1)}}. {{itemB.tit}}
+                    <span class="l">{{getOrder(idxB+1)}}. {{itemB.tit}}
                       <span v-if="itemB.pwd" class="pwd-icon">*</span>
                     </span>
                     <span class="r">{{itemB.parent}}</span>

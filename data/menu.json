@@ -427,13 +427,8 @@
       },
       {
         "tit": "心经讲义(圆瑛法师)",
-        "id": 2,
+        "id": 3,
         "key": "brxjjy"
-      },
-      {
-        "tit": "楞严经要解(元音老人)",
-        "id": 2,
-        "key": "lyjyj"
       },
       {
         "tit": "金刚经的秘密",
@@ -491,6 +486,11 @@
         "key": "ncqr"
       },
       {
+        "tit": "楞严经要解(元音老人)",
+        "id": 2,
+        "key": "lyjyj"
+      },
+      {
         "tit": "略论明心见性(元音老人)",
         "id": 13,
         "key": "llmxjx"
@@ -516,7 +516,7 @@
         "key": "wsxgyjj"
       },
       {
-        "tit": "成唯识论(净莲上师)",
+        "tit": "成唯识论(净莲)",
         "id": 20,
         "key": "cwsljl"
       }
@@ -894,7 +894,8 @@
     "type": "nahuaijin",
     "open": false,
     "memory": true,
-    "hide": true,
+    "hide": false,
+    "pwd": true,
     "list": [
       {
         "id": 1,
