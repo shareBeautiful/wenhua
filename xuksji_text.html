@@ -75,6 +75,7 @@
         <!-- 目录 -->
         <div id="menu" v-swipeleft="clickHideMenu" class="list-group" :class="{'show-a': showMenu}"
             @dblclick.stop="clickHideMenu">
+            
             <span class="menu-close" @click.stop="clickHideMenu">关闭</span>
             <div>
                 <div class="search-box" v-if="len>15">
