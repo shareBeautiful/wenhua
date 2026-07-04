@@ -73,9 +73,9 @@
             </div>
             <div class="panel-body">
                 <div class="box" v-for="(v,k) in allList" :key="k" v-show="k==tagId">
-                    <!-- @click="toPage(item)" -->
+                    <!-- @click="toPage(item)" target="_blank" -->
                     <a :href="item.href" class="box-item" v-for="(item,idx) in v" :key="item.id" v-show="!item.hide"
-                        target="_blank">
+                        >
                         <div class="head">
                             <img class="pic" :src="item.img_url" alt="" />
                         </div>

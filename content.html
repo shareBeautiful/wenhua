@@ -33,6 +33,7 @@
             <!-- 目录 -->
             <div id="menu" v-swipeleft="clickHideMenu" @dblclick.stop="clickHideMenu" class="list-group"
                 :class="{'show-a': showMenu}">
+                <span class="menu-close" @click.stop="clickHideMenu">关闭</span>
                 <div>
                     <div class="box-book">
                         <span @click="addBook" class="add-book btn btn-xs bg-danger">添加书签</span>

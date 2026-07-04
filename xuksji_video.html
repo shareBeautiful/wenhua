@@ -47,7 +47,7 @@
             position: -webkit-sticky;
             top: 0;
             z-index: 3;
-            background: #000;
+            /* background: #000; */
         }
 
         .video-wrapper {
@@ -74,7 +74,6 @@
             height: auto;
             display: block;
             margin: 0 auto;
-            border: 1px solid #222;
             border-radius: 20px;
             object-fit: cover;
 
@@ -97,10 +96,10 @@
             align-items: center;
             font-size: 16px;
             color: #b3b3b3;
-            padding: 10px 5px;
+            padding: 8px 5px;
             border: 1px solid #ddd;
             margin-top: 10px;
-            margin-bottom: 15px;
+            margin-bottom: 0px;
         }
 
         .panel-heading .rtime {
@@ -184,6 +183,19 @@
             bottom: -10px;
             font-size: 12px;
         }
+        .box-item .down-btn {
+            position: absolute;
+            z-index: 3;
+            color: #ac3a39;
+            line-height: 1;
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 14px;
+            padding: 2px 3px;
+            border-radius: 3px;
+            background-color: rgba(0, 0, 0, .3);
+        }
 
         /* 以下为播放器自定义设置 */
 
@@ -229,19 +241,29 @@
         }
 
         .lock {
-            padding: 0 12px;
+            padding: 0 8px;
+            line-height: 1;
         }
 
         .lock .icon {
             fill: #b3b3b3;
-            width: 26px;
-            height: 26px;
+            width: 23px;
+            height: 23px;
+        }
+        #app .home {
+            font-size:18px;
+            line-height: 1;
+            display: block;
+            text-align: center;
+            padding: 3px 0;
+            color: #e04d4b;
         }
     </style>
 </head>
 
 <body>
     <div id="app" v-cloak :class="{dark: isDark}">
+        
         <!-- autoplay="autoplay" -->
         <div id="video-box" v-show="videoSrc">
             <div class="video-wrapper">
@@ -265,8 +287,9 @@
                     </select> -->
                     <!-- <input type="text" id="selectTs" readonly   />  -->
                     <!-- <span class="rtime">{{rtime}}</span> -->
-                    <span @click="copyVideoSrc()" v-show="currNum"> （{{currNum}}/{{allNum}}） </span>
-                    <span class="rtime" @click="copyVideoSrc()" v-show="play_pg">{{play_pg}}</span>
+                    <!-- @click="copyVideoSrc()" -->
+                    <span v-show="currNum">（{{currNum}}/{{allNum}}）</span>
+                    <span class="rtime" v-show="play_pg">{{play_pg}}</span>
                     
                 </div>
                 <div class="lock" @click="switchLock">
@@ -287,14 +310,14 @@
             </div>
 
         </div>
-
+        <a class="home" href="./xuksji.html">点击返回主页</a>
         <div id="video-list">
             <div class="panel panel-default">
 
                 <div class="panel-body">
                     <div class="box">
                         <!-- @click="toPage(item)" -->
-                        <div class="box-item" v-for="(item,idx) in list" :key="item.id" @click="switchVideo(item, idx)"
+                        <div class="box-item" v-for="(item,idx) in list" :key="item.id" @click.stop="switchVideo(item, idx)"
                             v-show="!item.show" :ref="'v'+item.id"
                             :class="{active:item.id === currId, 'no': !item.video_url}" :video-src="item.video_url">
                             <div class="info">
@@ -306,7 +329,10 @@
                                 <div class="time" v-if="item.date">
                                     <span>时间：{{item.date}}</span>
                                 </div>
+                                
                             </div>
+                            <!-- @click.stop="downloadFun(item)" -->
+                            <a :href="item.video_url" class="down-btn" download target="_blank" @click.stop="copyVideoSrc()">下载</a>
                             <div class="pg" v-if="item.id === currId && play_pg !=0">
                                 <div class="pg-inner" :class="{dark: isDark, white: !isDark}"
                                     :style="{width: 'calc(100% - '+play_pg+')'}"></div>
@@ -615,7 +641,8 @@
             padding: function (num) {
                 return num < 10 ? '0' + num : num;
             },
-
+            
+            // 复制视频链接
             copyVideoSrc: function () {
                 var textareaC = document.createElement("input");
                 textareaC.setAttribute("readonly", "readonly"); //设置只读属性防止手机上弹出软键盘
@@ -624,6 +651,31 @@
                 textareaC.select();
                 var res = document.execCommand("copy");
                 document.body.removeChild(textareaC); //移除DOM元素
+            },
+
+            // 下载视频
+            downloadFun: async function (item) {
+                try {
+                    var filetype = '.mp3';
+                    var response = await fetch(item.video_url);
+                    var blob = await response.blob();
+                    var link = document.createElement('a');
+                    link.href = URL.createObjectURL(blob);
+                    if (item.video_url.indexOf('.mp4') > -1) {
+                        filetype = '.mp4';
+                    }
+                    if (item.video_url.indexOf('.m4a') > -1) {
+                        filetype = '.m4a';
+                    }
+                    link.download = item.title+filetype; // 自定义文件名
+                    link.target = "_blank" // 设置下载链接在新窗口打开
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    URL.revokeObjectURL(link.href);
+                } catch (e) {
+                    alert('下载失败，请检查网络或文件地址');
+                }
             },
 
             // 切换显示所有
