@@ -44,7 +44,6 @@
 
         #video-box {
             position: sticky;
-            position: -webkit-sticky;
             top: 0;
             z-index: 3;
             /* background: #000; */
@@ -149,6 +148,7 @@
         .box-item .info {
             position: relative;
             z-index: 1;
+            flex:1;
         }
 
 
@@ -184,17 +184,19 @@
             font-size: 12px;
         }
         .box-item .down-btn {
-            position: absolute;
-            z-index: 3;
+            /* position: absolute;
+            z-index: 1; */
             color: #ac3a39;
             line-height: 1;
-            right: 5px;
+            /* right: 5px;
             top: 50%;
-            transform: translateY(-50%);
-            font-size: 14px;
-            padding: 2px 3px;
+            transform: translateY(-50%); */
+            font-size: 15px;
+            padding: 0px 3px;
             border-radius: 3px;
             background-color: rgba(0, 0, 0, .3);
+            display:flex;
+            align-items:center;
         }
 
         /* 以下为播放器自定义设置 */
@@ -309,7 +311,7 @@
             </div>
 
         </div>
-        <a class="home" href="./xuksji.html">点击返回主页</a>
+        <a class="home" href="javascript:" @click.stop="goBack()">点击返回主页</a>
         <div id="video-list">
             <div class="panel panel-default">
 
@@ -328,15 +330,14 @@
                                 <div class="time" v-if="item.date">
                                     <span>时间：{{item.date}}</span>
                                 </div>
-                                
+                                <div class="pg" v-if="item.id === currId && play_pg !=0">
+                                    <div class="pg-inner" :class="{dark: isDark, white: !isDark}" :style="{width: 'calc(100% - '+play_pg+')'}"></div>
+                                    <!-- <div class="pg-num">{{play_pg}}</div> -->
+                                </div>
                             </div>
                             <!-- @click.stop="downloadFun(item)" -->
-                            <a :href="item.video_url" class="down-btn" download target="_blank" @click.stop="copyVideoSrc()">下载</a>
-                            <div class="pg" v-if="item.id === currId && play_pg !=0">
-                                <div class="pg-inner" :class="{dark: isDark, white: !isDark}"
-                                    :style="{width: 'calc(100% - '+play_pg+')'}"></div>
-                                <!-- <div class="pg-num">{{play_pg}}</div> -->
-                            </div>
+                            <a :href="item.video_url" v-show="item.video_url" class="down-btn" download target="_blank" @click.stop="copyVideoSrc()">下载</a>
+                            
                         </div>
                     </div>
                 </div>
@@ -457,6 +458,17 @@
                 window.history.replaceState({
                     path: newurl
                 }, '', newurl);
+            },
+
+            // 返回主页
+            goBack: function () {
+                // 如果从上一页过来返回，如果不是直接跳转主页
+                if (document.referrer && document.referrer.indexOf('xuksji.html') > -1) {
+                    console.log('返回上一页')
+                    window.history.back();
+                } else {
+                    window.location.href = './xuksji.html';
+                }
             },
 
             // 切换视频播放

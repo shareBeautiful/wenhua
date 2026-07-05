@@ -140,7 +140,7 @@
 
         <!-- 内容 -->
         <div id="bodyBox" v-show="articleD.html">
-            <a class="home" href="./xuksji.html">返回主页</a>
+            <a class="home" href="javascript:" @click.stop="goBack()">返回主页</a>
             <div class="tips">
                 温馨提示：点击文章中间区域，显示菜单
             </div>
@@ -286,6 +286,17 @@
                         },
                     });
                 });
+            },
+
+            // 返回主页
+            goBack: function () {
+                // 如果从上一页过来返回，如果不是直接跳转主页
+                if (document.referrer && document.referrer.indexOf('xuksji.html') > -1) {
+                    console.log('返回上一页')
+                    window.history.back();
+                } else {
+                    window.location.href = './xuksji.html';
+                }
             },
 
             // 跳转到顶部
