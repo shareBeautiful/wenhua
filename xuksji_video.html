@@ -134,6 +134,7 @@
 
         .box-item {
             position: relative;
+            padding: 6px 0;
         }
 
         .box-item.active {
@@ -150,10 +151,14 @@
             z-index: 1;
             flex:1;
         }
+        .box-item .info .name {
+            padding-left: 5px;
+        }
 
 
         .box-item .pg {
             position: absolute;
+            z-index: -1;
             left: 0;
             top: 0;
             width: 100%;
@@ -258,7 +263,7 @@
             line-height: 1;
             display: block;
             text-align: center;
-            padding: 3px 0;
+            padding: 5px 0;
             color: #e04d4b;
         }
     </style>
@@ -323,7 +328,7 @@
                             v-show="!item.show" :ref="'v'+item.id"
                             :class="{active:item.id === currId, 'no': !item.video_url}" :video-src="item.video_url">
                             <div class="info">
-                                <div>
+                                <div class="name">
                                     <span class="order">{{item.order}}.</span>
                                     <span class="title">{{item.title}}</span>
                                     <span v-if="item.video_time">{{item.video_time}}</span>
