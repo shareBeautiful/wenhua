@@ -43,24 +43,7 @@
             color: #993300;
             box-shadow: 3px 3px 10px 1px #666;
         }
-        .home {
-            font-size: 18px;
-            font-size: 18px;
-            font-weight: bolder;
-            display: block;
-            text-align: center;
-            line-height: 1;
-            padding: 3px 0;
-        }
-        .tips {
-            font-size: 14px;
-            font-weight: bolder;
-            display: block;
-            text-align: center;
-            line-height: 1;
-            padding: 3px 0;
-            color:#cc4502
-        }
+        
     </style>
 </head>
 
@@ -292,7 +275,6 @@
             goBack: function () {
                 // 如果从上一页过来返回，如果不是直接跳转主页
                 if (document.referrer && document.referrer.indexOf('xuksji.html') > -1) {
-                    console.log('返回上一页')
                     window.history.back();
                 } else {
                     window.location.href = './xuksji.html';

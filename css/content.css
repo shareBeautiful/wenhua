@@ -361,6 +361,8 @@ img {
     z-index: 1;
 }
 
+
+
 #menu .book .switch {
     vertical-align: middle;
     margin: 0 5px 0 0;
@@ -716,4 +718,24 @@ img {
 .copy-text {
     padding: 0 10px;
     color: #d6403e;
+}
+
+#bodyBox .home {
+    font-size: 18px;
+    font-size: 18px;
+    font-weight: bolder;
+    display: block;
+    text-align: center;
+    line-height: 1;
+    padding: 3px 0;
+}
+
+#bodyBox .tips {
+    font-size: 14px;
+    font-weight: bolder;
+    display: block;
+    text-align: center;
+    line-height: 1;
+    padding: 3px 0;
+    color: #cc4502
 }

@@ -109,6 +109,10 @@
 
             <!-- 内容 -->
             <div id="bodyBox">
+                <a class="home" href="javascript:" @click.stop="goBack()">返回主页</a>
+                <div class="tips">
+                    温馨提示：点击文章中间区域，显示菜单
+                </div>
                 <div class="panel-footer page-tap prev" v-if="isOnPage && memoryId > 0"
                     @click.stop="loadUpdate(memoryId, '-')">
                     上一章 - {{list[memoryId-1].title}} <span v-if="isOnPage && memoryId < len-1"

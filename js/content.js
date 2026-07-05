@@ -259,6 +259,15 @@ function getContent() {
 
             },
             methods: {
+                // 返回主页
+                goBack: function () {
+                    // 如果从上一页过来返回，如果不是直接跳转主页
+                    if (document.referrer && document.referrer.indexOf('index.html') > -1) {
+                        window.history.back();
+                    } else {
+                        window.location.href = './index.html';
+                    }
+                },
                 // 
                 saveInfo: function (k, v) {
                     this.localInfo[k] = v;

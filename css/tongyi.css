@@ -22,7 +22,7 @@ a img, img {
 
 a {
     text-decoration: none;
-    color: #323232;
+    /* color: #323232; */
 }
 
 a:hover {
