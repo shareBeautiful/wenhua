@@ -171,6 +171,7 @@
             top: 0;
             width: 100%;
             height: calc(100% + 2px);
+            background-color: transparent;
         }
 
         .white {
@@ -330,8 +331,8 @@
                                 <div class="time" v-if="item.date">
                                     <span>时间：{{item.date}}</span>
                                 </div>
-                                <div class="pg" v-if="item.id === currId && play_pg !=0">
-                                    <div class="pg-inner" :class="{dark: isDark, white: !isDark}" :style="{width: 'calc(100% - '+play_pg+')'}"></div>
+                                <div class="pg" v-if="item.id === currId && play_pg !=0" :style="{width: play_pg}">
+                                    <!-- <div class="pg-inner" :class="{dark: isDark, white: !isDark}" :style="{width: 'calc(100% - '+play_pg+')'}"></div> -->
                                     <!-- <div class="pg-num">{{play_pg}}</div> -->
                                 </div>
                             </div>
