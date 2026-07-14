@@ -51,17 +51,17 @@
             </div>
             <div class="panel-body" v-if="lookInfo.list.length" v-show="lookInfo.open">
               <div class="list-group panel-success">
+                <!-- @click.stop="saveLook2(item,idx)" -->
                 <template v-for="(item,idx) in lookInfo.list" :key="idx">
-                  <a
-                    :href="item.href"
-                    @click.stop="saveLook2(item,idx)"
-                    target="_blank"
+                  <div
+                    
                     class="list-group-item"
                   >
-                    <span class="l"
-                      >{{idx+1}}. {{sliceStr(item.tit)}}
+                    <a class="l" :href="item.href"
+                    target="_blank">
+                      {{idx+1}}. {{sliceStr(item.tit)}}
                       <span v-if="item.pwd" class="pwd-icon">*</span>
-                    </span>
+                    </a>
                     <span class="r"
                       >{{item.parent}}
                       <span
@@ -70,7 +70,7 @@
                         >删除</span
                       ></span
                     >
-                  </a>
+                  </div>
                 </template>
               </div>
             </div>

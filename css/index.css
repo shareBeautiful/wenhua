@@ -113,10 +113,13 @@ body {
     border: none;
     border-bottom: 1px solid #888;
 }
-
+.panel .list-group-item .l {
+   flex: 1;
+}
 .panel .list-group-item .r {
     font-size: 13px;
     color: #673921;
+    cursor: pointer;
 }
 
 .intro-box {
@@ -153,6 +156,7 @@ body {
     right: -10px;
     top: -10px;
     z-index: 10;
+    
 }
 
 #search {
