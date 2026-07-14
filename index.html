@@ -179,7 +179,9 @@
             if (currItem.href) {
               if (currType == 'fozhou') { // 判断日常去掉type参数
                 return $echo.open(currItem.href, { key: currItem.key }, "get");
-              } else {
+              }else if(currType == 'xukongji'){
+                return $echo.open(currItem.href, null, "get");
+              }else { 
                 return $echo.open(currItem.href, params, "get");
               }
               
