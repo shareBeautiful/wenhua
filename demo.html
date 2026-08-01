@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSON 下载为 TXT</title>
+</head>
+<body>
+  <h1>JSON 对象导出为 TXT 文件</h1>
+  <p>你可以在下面编辑 JSON 内容，然后点击“下载为 TXT”按钮。</p>
+  <textarea id="jsonInput" style="width:100%; height:180px;">{
+  "name": "张三",
+  "age": 30,
+  "city": "北京",
+  "skills": ["HTML", "JavaScript", "CSS"]
+}</textarea>
+  <br><br>
+  <button id="downloadBtn">下载为 TXT</button>
+
+  <script>
+    const downloadBtn = document.getElementById('downloadBtn');
+    downloadBtn.addEventListener('click', () => {
+      downloadExistingText();
+    });
+
+
+      function downloadExistingText() {
+          // 获取页面中某个元素里的文字内容
+          const textContent = document.getElementById('jsonInput').innerText;
+
+          const blob = new Blob([textContent], { type: 'text/plain' });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = 'page_content.txt';
+          a.click();
+          URL.revokeObjectURL(url);
+        }
+
+        
+  </script>
+</body>
+</html>

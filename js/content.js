@@ -159,7 +159,7 @@ function getContent() {
                     showMenu: false, // 切换显示菜单
                     allTotal: 0, // 总字数
                     noSleep: null, // 屏幕常亮对象
-                    font: [21, 22, 23, 24, 25, 26, 28],
+                    font: [21, 22, 23, 24, 25, 26, 28, 32, 36, 38, 42, 50],
                     currFontS: 23,
                     fontF: [{
                             n: '默认',
@@ -996,6 +996,18 @@ function getContent() {
                         ++n;
                         this.read_time = this.getTimes(n);
                     }, 1000);
+                },
+                // 下载当前页面的文本内容
+                downloadDomText: function (dom, filename = 'page_content') {
+                    // 如果dom是字符串，则视为选择器，获取第一个匹配元素
+                    const element = typeof dom === 'string' ? document.querySelector(dom) : dom;
+                    if (!element) {
+                        console.error('未找到指定的DOM元素');
+                        return;
+                    }
+                    const text = element.textContent || element.innerText || '';
+                    // 调用之前的下载函数（可以复用）
+                    downloadTxt(text, filename);
                 },
 
                 init: function () {
