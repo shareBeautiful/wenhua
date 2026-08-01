@@ -160,8 +160,11 @@ em, i {
 .B1_text_xin p {
     overflow: hidden;
     margin-bottom: 4px;
-    color: #993300;
+    color: #e2e2e2;
     line-height: 1.8 !important;
+}
+.B1_text_xin h2 {
+    color: #993300;
 }
 
 .B1_text_xin p span {
@@ -189,7 +192,7 @@ em, i {
     bottom: 12px;
 }
 .B1_text_xin.zhou p span {
-    color: #666;
+    color: #B2B2B2;
 
 }
 
