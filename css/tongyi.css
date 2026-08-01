@@ -160,11 +160,16 @@ em, i {
 .B1_text_xin p {
     overflow: hidden;
     margin-bottom: 4px;
-    color: #e2e2e2;
+    
     line-height: 1.8 !important;
+}
+.bg4 .B1_text_xin p {
+    color: #e2e2e2;
 }
 .B1_text_xin h2 {
     color: #993300;
+    padding-top: 15px;
+    margin-top: 15px;
 }
 
 .B1_text_xin p span {
@@ -176,7 +181,8 @@ em, i {
 }
 .B1_text_xin p span:first-line {
     font-weight: bolder;
-    color: #993300;
+    /* color: #993300; */
+    color: #aa3d06;
 }
 .B1_text_xin.zhou {
     
