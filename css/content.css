@@ -216,6 +216,17 @@ body {
     box-sizing: border-box;
 }
 
+img {
+    height: auto !important;
+    display: block !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.fz {
+    display: inline-block;
+}
+
 .body-box {
     margin-bottom: 0;
 }
@@ -321,18 +332,6 @@ button.btn {
 }
 
 
-img {
-    width: 80% !important;
-    max-width: 360px !important;
-    height: auto !important;
-    display: block !important;
-    padding: 0 !important;
-    margin: 0 !important;
-}
-
-.fz {
-    display: inline-block;
-}
 
 #menu .book {
     position: relative !important;
