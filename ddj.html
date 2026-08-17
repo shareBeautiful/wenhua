@@ -181,12 +181,11 @@
       }
 
       .toc {
-        left: initial;
-        right: 15px;
+        left: 0;
+        top: 0;
         width: auto;
-        border: none;
-        box-shadow: none;
-        background: transparent
+        /* border:none; */
+        /* box-shadow: none; */
       }
 
       .toc-text {
@@ -194,13 +193,16 @@
       }
 
       .toc-header {
-        justify-content: space-between;
+        justify-content: flex-start;
         padding: 0;
         border: none;
         background: transparent;
       }
 
       .toc-toggle {
+        position: fixed;
+        right: 15px;
+        top: 15px;
         display: inline-flex;
         align-items: center;
         justify-content: center;
