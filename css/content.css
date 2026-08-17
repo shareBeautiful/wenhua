@@ -217,10 +217,12 @@ body {
 }
 
 img {
-    height: auto !important;
-    display: block !important;
-    padding: 0 !important;
-    margin: 0 !important;
+    height: auto;
+    display: block;
+    padding: 0;
+    margin: 0;
+    line-height: 0;
+    font-size: 0;
 }
 
 .fz {
@@ -297,10 +299,9 @@ button.btn {
 .B1_text img {
     width: 100% !important;
     height: auto !important;
-    max-width: 640px;
-    font-size: 0;
+    max-width: 750px;
     padding:0;
-    margin: 0;
+    margin: 0 auto;
     object-fit: contain;
 }
 
