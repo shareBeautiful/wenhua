@@ -6,6 +6,12 @@
     "memory": false,
     "list": [
       {
+        "tit": "道德经",
+        "id": 0,
+        "key": "ddj",
+        "href": "ddj"
+      },
+      {
         "tit": "早诵功课",
         "id": 1,
         "key": "zsgk"
